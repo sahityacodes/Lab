@@ -1,14 +1,12 @@
-﻿using System;
-
-namespace BusinessEntityLayer
+﻿namespace BusinessEntityLayer
 {
     public class Customer
     {
         public int Id
         { get; set; }
-        public string CustomerName 
+        public string CustomerName
         { get; set; }
-        public string ContactName  
+        public string ContactName
         { get; set; }
         public string Phone
         { get; set; }

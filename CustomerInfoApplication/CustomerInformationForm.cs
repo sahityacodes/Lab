@@ -61,7 +61,7 @@ namespace CustomerInfoApplication
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
-        {   
+        {
             Customer.Id = int.Parse(textID.Text);
             Customer.CustomerName = txtBoxName.Text;
             Customer.ContactName = contactPersonName.Text;
@@ -90,7 +90,7 @@ namespace CustomerInfoApplication
         }
 
         private void btnInsert_Click(object sender, EventArgs e)
-        { 
+        {
             Customer.Id = int.Parse(textID.Text);
             Customer.CustomerName = txtBoxName.Text;
             Customer.ContactName = contactPersonName.Text;
@@ -136,7 +136,7 @@ namespace CustomerInfoApplication
             Customer = customerGrid.CurrentRow.DataBoundItem as Customer;
             if (CustomerBAL.DeleteCustomer(Customer))
             {
-               MessageBox.Show("Deleted Successfully");
+                MessageBox.Show("Deleted Successfully");
                 customerGrid.Refresh();
                 customerGrid.DataSource = CustomerBAL.GetCustomers();
             }

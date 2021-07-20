@@ -1,5 +1,5 @@
-﻿using DALayer;
-using BusinessEntityLayer;
+﻿using BusinessEntityLayer;
+using DALayer;
 using System.Collections.Generic;
 
 namespace BusinessLogic
