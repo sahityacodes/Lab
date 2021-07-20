@@ -24,4 +24,10 @@
     <Contact_Name>Jane Doe</Contact_Name>
     <Phone>3480586893</Phone>
   </record>
+  <record>
+    <id>5</id>
+    <Customer>Company</Customer>
+    <Contact_Name>Person</Contact_Name>
+    <Phone>123456789</Phone>
+  </record>
 </dataset>

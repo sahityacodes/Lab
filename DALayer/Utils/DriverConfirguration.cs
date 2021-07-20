@@ -5,6 +5,8 @@ namespace DALayer
     static class DriverConfirguration
     {
         private static DataSet ds;
+        
+        //reads xml file and returns as data source
         public static DataSet ReadXML()
         {
             if (ds == null)
