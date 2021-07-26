@@ -1,23 +1,26 @@
-﻿using BusinessEntityLayer;
-using BusinessLogic;
+﻿using BusinessEntityLayer.Model;
+using BusinessLogic.CustomerInfoLogic;
 using System;
 using System.Windows.Forms;
 
-namespace CustomerInfoApplication
+namespace CustomerInfoApplication.Forms
 {
     public partial class CustomerInformationForm : Form
     {
+        FormComponents _componentClass;
         Customer Customer = new();
         CustomerBAL CustomerBAL = new();
 
         public CustomerInformationForm()
         {
             InitializeComponent();
+            _componentClass = new FormComponents(this);
         }
 
         private void CustomerInformationForm_Load(object sender, EventArgs e)
         {
             customerGrid.DataSource = CustomerBAL.GetCustomers();
+            _componentClass.ChangeVisibility(false, false, false, true, true, false, false, true);
         }
 
         private void SearchByName_Click(object sender, EventArgs e)
@@ -30,48 +33,35 @@ namespace CustomerInfoApplication
 
         private void CustomerGrid_SelectionChanged(object sender, EventArgs e)
         {
-            GetCustomerToShow();
+            ShowCurrentClickedData();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            txtBoxName.Enabled = true;
-            contactPersonName.Enabled = true;
-            phone.Enabled = true;
-            button1.Visible = false;
-            button2.Visible = false;
-            btnInsert.Visible = false;
-            btnUpdate.Visible = true;
+            _componentClass.ChangeVisibility(true, true, true, false, false, false, true, true);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            txtBoxName.Enabled = true;
-            contactPersonName.Enabled = true;
-            phone.Enabled = true;
-
-            button1.Visible = false;
-            button2.Visible = false;
-            btnInsert.Visible = true;
-            btnUpdate.Visible = false;
             textID.Text = ((int)customerGrid.Rows[customerGrid.Rows.Count - 1].Cells[0].Value + 1).ToString();
-            txtBoxName.Text = "";
-            contactPersonName.Text = "";
-            phone.Text = "";
+            txtBoxName.Clear();
+            contactPersonName.Clear();
+            phone.Clear();
+            _componentClass.ChangeVisibility(true, true, true, false, false, true, false, true);
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            Customer.Id = int.Parse(textID.Text);
-            Customer.CustomerName = txtBoxName.Text;
-            Customer.ContactName = contactPersonName.Text;
-            Customer.Phone = phone.Text;
             if (txtBoxName.Text.Length == 0)
             {
                 MessageBox.Show("Please Enter a Customer Name");
             }
             else
             {
+                Customer.Id = int.Parse(textID.Text);
+                Customer.CustomerName = txtBoxName.Text;
+                Customer.ContactName = contactPersonName.Text;
+                Customer.Phone = phone.Text;
                 if (CustomerBAL.UpdateCustomer(Customer))
                 {
                     MessageBox.Show("Updated Successfully");
@@ -82,53 +72,35 @@ namespace CustomerInfoApplication
                 {
                     MessageBox.Show("Failed to update");
                 }
-                button1.Visible = true;
-                button2.Visible = true;
-                btnInsert.Visible = false;
-                btnUpdate.Visible = false;
+                _componentClass.ChangeVisibility(false, false, false, true, true, false, false, true);
             }
         }
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
-            Customer.Id = int.Parse(textID.Text);
-            Customer.CustomerName = txtBoxName.Text;
-            Customer.ContactName = contactPersonName.Text;
-            Customer.Phone = phone.Text;
             if (txtBoxName.Text.Length == 0)
             {
                 MessageBox.Show("Please Enter a Customer Name");
             }
             else
             {
+                Customer.Id = int.Parse(textID.Text);
+                Customer.CustomerName = txtBoxName.Text;
+                Customer.ContactName = contactPersonName.Text;
+                Customer.Phone = phone.Text;
                 if (CustomerBAL.InsertCustomer(Customer))
                 {
                     MessageBox.Show("Inserted Successfully");
-                    customerGrid.DataSource = null;
+                    customerGrid.Refresh();
                     customerGrid.DataSource = CustomerBAL.GetCustomers();
                 }
                 else
                 {
                     MessageBox.Show("Failed to Insert");
                 }
-                button1.Visible = true;
-                button2.Visible = true;
-                btnInsert.Visible = false;
-                btnUpdate.Visible = false;
-                GetCustomerToShow();
+                ShowCurrentClickedData();
+                _componentClass.ChangeVisibility(false, false, false, true, true, false, false, true);
             }
-        }
-
-        private void GetCustomerToShow()
-        {
-            Customer = customerGrid.CurrentRow.DataBoundItem as Customer;
-            textID.Text = Customer.Id.ToString();
-            txtBoxName.Text = Customer.CustomerName;
-            contactPersonName.Text = Customer.ContactName;
-            phone.Text = Customer.Phone;
-            txtBoxName.Enabled = false;
-            contactPersonName.Enabled = false;
-            phone.Enabled = false;
         }
 
         private void btnDel_Click(object sender, EventArgs e)
@@ -144,14 +116,27 @@ namespace CustomerInfoApplication
             {
                 MessageBox.Show("Failed to Delete");
             }
-
         }
 
         private void customerGrid_Click(object sender, EventArgs e)
         {
-            btnUpdate.Visible = false;
-            button2.Visible = true;
-            button1.Visible = true;
+            ShowCurrentClickedData();
+            _componentClass.ChangeVisibility(false, false, false, true, true, false, false, true);
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            ShowCurrentClickedData();
+            _componentClass.ChangeVisibility(false, false, false, true, true, false, false, true);
+        }
+
+        private void ShowCurrentClickedData()
+        {
+            Customer = customerGrid.CurrentRow.DataBoundItem as Customer;
+            textID.Text = Customer.Id.ToString();
+            txtBoxName.Text = Customer.CustomerName;
+            contactPersonName.Text = Customer.ContactName;
+            phone.Text = Customer.Phone;
         }
     }
 }

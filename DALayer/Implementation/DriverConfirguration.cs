@@ -1,6 +1,7 @@
 ﻿using System.Data;
+using DALayer.Utils;
 
-namespace DALayer
+namespace DALayer.Implementation
 {
     static class DriverConfirguration
     {

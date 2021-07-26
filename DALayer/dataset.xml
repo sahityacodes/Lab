@@ -1,14 +1,8 @@
 <?xml version="1.0" standalone="yes"?>
 <dataset>
   <record>
-    <id>1</id>
-    <Customer>Company ABC</Customer>
-    <Contact_Name>Sahitya Reddy</Contact_Name>
-    <Phone>3480586892</Phone>
-  </record>
-  <record>
     <id>2</id>
-    <Customer>EdiSoft</Customer>
+    <Customer>EdiSoft </Customer>
     <Contact_Name>Marco Abergo</Contact_Name>
     <Phone>3480586891</Phone>
   </record>
@@ -19,15 +13,15 @@
     <Phone>3480586891</Phone>
   </record>
   <record>
+    <id>1</id>
+    <Customer>Company ABC</Customer>
+    <Contact_Name>Sahitya Reddy</Contact_Name>
+    <Phone>3480586891</Phone>
+  </record>
+  <record>
     <id>4</id>
     <Customer>Company Y</Customer>
     <Contact_Name>Jane Doe</Contact_Name>
     <Phone>3480586893</Phone>
-  </record>
-  <record>
-    <id>5</id>
-    <Customer>Company</Customer>
-    <Contact_Name>Person</Contact_Name>
-    <Phone>123456789</Phone>
   </record>
 </dataset>

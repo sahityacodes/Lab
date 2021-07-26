@@ -1,8 +1,9 @@
-﻿using BusinessEntityLayer;
-using DALayer;
+﻿using BusinessEntityLayer.Model;
 using System.Collections.Generic;
+using DALayer.Interfaces;
+using DALayer.Implementation;
 
-namespace BusinessLogic
+namespace BusinessLogic.CustomerInfoLogic
 {
     public class CustomerBAL
     {

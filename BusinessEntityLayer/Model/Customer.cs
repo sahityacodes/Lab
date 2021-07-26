@@ -1,4 +1,4 @@
-﻿namespace BusinessEntityLayer
+﻿namespace BusinessEntityLayer.Model
 {
     public class Customer
     {
@@ -10,5 +10,6 @@
         { get; set; }
         public string Phone
         { get; set; }
+
     }
 }

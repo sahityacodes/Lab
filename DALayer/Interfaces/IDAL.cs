@@ -1,7 +1,8 @@
 ﻿using BusinessEntityLayer;
 using System.Collections.Generic;
+using BusinessEntityLayer.Model;
 
-namespace DALayer
+namespace DALayer.Interfaces
 {
     public interface IDAL
     {

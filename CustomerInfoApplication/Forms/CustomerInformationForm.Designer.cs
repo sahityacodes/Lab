@@ -1,5 +1,4 @@
-﻿
-namespace CustomerInfoApplication
+﻿namespace CustomerInfoApplication.Forms
 {
     partial class CustomerInformationForm
     {
@@ -32,7 +31,7 @@ namespace CustomerInfoApplication
             this.customerGrid = new System.Windows.Forms.DataGridView();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.searchByName = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_addNewRecord = new System.Windows.Forms.Button();
             this.txtBoxName = new System.Windows.Forms.TextBox();
             this.contactPersonName = new System.Windows.Forms.TextBox();
             this.phone = new System.Windows.Forms.TextBox();
@@ -41,6 +40,7 @@ namespace CustomerInfoApplication
             this.btnInsert = new System.Windows.Forms.Button();
             this.textID = new System.Windows.Forms.TextBox();
             this.btnDel = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.customerGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -81,21 +81,21 @@ namespace CustomerInfoApplication
             // 
             this.searchByName.Location = new System.Drawing.Point(537, 78);
             this.searchByName.Name = "searchByName";
-            this.searchByName.Size = new System.Drawing.Size(185, 43);
+            this.searchByName.Size = new System.Drawing.Size(294, 43);
             this.searchByName.TabIndex = 4;
-            this.searchByName.Text = "Search";
+            this.searchByName.Text = "Search By Name";
             this.searchByName.UseVisualStyleBackColor = true;
             this.searchByName.Click += new System.EventHandler(this.SearchByName_Click);
             // 
-            // button1
+            // btn_addNewRecord
             // 
-            this.button1.Location = new System.Drawing.Point(68, 653);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(239, 52);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Add New Record";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btn_addNewRecord.Location = new System.Drawing.Point(68, 653);
+            this.btn_addNewRecord.Name = "btn_addNewRecord";
+            this.btn_addNewRecord.Size = new System.Drawing.Size(239, 52);
+            this.btn_addNewRecord.TabIndex = 5;
+            this.btn_addNewRecord.Text = "Add New Record";
+            this.btn_addNewRecord.UseVisualStyleBackColor = true;
+            this.btn_addNewRecord.Click += new System.EventHandler(this.button1_Click);
             // 
             // txtBoxName
             // 
@@ -146,7 +146,7 @@ namespace CustomerInfoApplication
             // 
             this.btnInsert.Location = new System.Drawing.Point(68, 653);
             this.btnInsert.Name = "btnInsert";
-            this.btnInsert.Size = new System.Drawing.Size(188, 52);
+            this.btnInsert.Size = new System.Drawing.Size(239, 52);
             this.btnInsert.TabIndex = 11;
             this.btnInsert.Text = "Insert Record";
             this.btnInsert.UseVisualStyleBackColor = true;
@@ -171,11 +171,22 @@ namespace CustomerInfoApplication
             this.btnDel.UseVisualStyleBackColor = true;
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(313, 725);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(188, 53);
+            this.btnReset.TabIndex = 15;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
             // CustomerInformationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1672, 921);
+            this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnDel);
             this.Controls.Add(this.textID);
             this.Controls.Add(this.btnInsert);
@@ -184,7 +195,7 @@ namespace CustomerInfoApplication
             this.Controls.Add(this.phone);
             this.Controls.Add(this.contactPersonName);
             this.Controls.Add(this.txtBoxName);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_addNewRecord);
             this.Controls.Add(this.searchByName);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.customerGrid);
@@ -197,22 +208,23 @@ namespace CustomerInfoApplication
 
         }
         #endregion
-        private System.Windows.Forms.DataGridView customerGrid;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button searchByName;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox txtBoxName;
-        private System.Windows.Forms.TextBox contactPersonName;
-        private System.Windows.Forms.TextBox phoneName;
-        private System.Windows.Forms.TextBox phone;
-        private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Button btnInsert;
-        private System.Windows.Forms.TextBox textID;
-        private System.Windows.Forms.Button btnDel;
+        public System.Windows.Forms.DataGridView customerGrid;
+        public System.Windows.Forms.TextBox textBox1;
+        public System.Windows.Forms.Button searchByName;
+        public System.Windows.Forms.Button btn_addNewRecord;
+        public System.Windows.Forms.TextBox textBox2;
+        public System.Windows.Forms.TextBox textBox3;
+        public System.Windows.Forms.TextBox textBox4;
+        public System.Windows.Forms.Button button2;
+         public System.Windows.Forms.TextBox txtBoxName;
+        public System.Windows.Forms.TextBox contactPersonName;
+        public System.Windows.Forms.TextBox phoneName;
+        public System.Windows.Forms.TextBox phone;
+        public System.Windows.Forms.Button btnUpdate;
+        public System.Windows.Forms.Button btnInsert;
+        public System.Windows.Forms.TextBox textID;
+        public System.Windows.Forms.Button btnDel;
+        public System.Windows.Forms.Button btnReset;
     }
 }
 

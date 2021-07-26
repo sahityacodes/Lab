@@ -1,4 +1,4 @@
-﻿namespace DALayer
+﻿namespace DALayer.Utils
 {
     sealed class Constants
     {

@@ -1,9 +1,11 @@
-﻿using BusinessEntityLayer;
+﻿using BusinessEntityLayer.Model;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using DALayer.Utils;
+using DALayer.Interfaces;
 
-namespace DALayer
+namespace DALayer.Implementation
 {
     public class CustomerDAL : IDAL
     {
@@ -40,28 +42,36 @@ namespace DALayer
 
         public bool UpdateCustomer(Customer customer)
         {
-            DataRow dr = ds.Tables[0].AsEnumerable()
-             .Where(r => r.Field<string>("id").Equals(customer.Id.ToString())).First();
-            dr["Customer"] = customer.CustomerName;
-            dr["Contact_Name"] = customer.ContactName;
-            dr["Phone"] = customer.Phone;
-            //  ds.Tables[0].Rows.Add(dr.ItemArray);
-            ds.Tables[0].AcceptChanges();
-            saveChanges();
-            return true;
+
+            if (customer.CustomerName.Length > 0)
+            {
+                DataRow dr = ds.Tables[0].AsEnumerable()
+                    .Where(r => r.Field<string>("id").Equals(customer.Id.ToString())).First();
+                dr["Customer"] = customer.CustomerName;
+                dr["Contact_Name"] = customer.ContactName;
+                dr["Phone"] = customer.Phone;
+                ds.Tables[0].AcceptChanges();
+                saveChanges();
+                return true;
+            }
+            return false;
         }
 
         public bool InsertCustomer(Customer customer)
         {
-            DataRow dr = ds.Tables[0].NewRow();
-            dr["id"] = customer.Id.ToString();
-            dr["Customer"] = customer.CustomerName;
-            dr["Contact_Name"] = customer.ContactName;
-            dr["Phone"] = customer.Phone;
-            ds.Tables[0].Rows.Add(dr);
-            ds.Tables[0].AcceptChanges();
-            saveChanges();
-            return true;
+            if (customer.CustomerName.Length > 0)
+            {
+                DataRow dr = ds.Tables[0].NewRow();
+                dr["id"] = customer.Id.ToString();
+                dr["Customer"] = customer.CustomerName;
+                dr["Contact_Name"] = customer.ContactName;
+                dr["Phone"] = customer.Phone;
+                ds.Tables[0].Rows.Add(dr);
+                ds.Tables[0].AcceptChanges();
+                saveChanges();
+                return true;
+            }
+            return false;
         }
 
         public bool DeleteCustomer(Customer customer)
