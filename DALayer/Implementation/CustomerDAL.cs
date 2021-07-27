@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using DALayer.Utils;
 using DALayer.Interfaces;
 
 namespace DALayer.Implementation
@@ -13,7 +12,7 @@ namespace DALayer.Implementation
         List<Customer> customerList;
         DataSet ds = DriverConfirguration.ReadXML();
 
-        public List<Customer> GetCustomers()
+        public List<Customer> GetAll()
         {
             customerList = ds.Tables[0].AsEnumerable()
                             .Select(dataRow => new Customer
@@ -26,7 +25,7 @@ namespace DALayer.Implementation
             return customerList;
         }
 
-        public List<Customer> GetCustomersByName(string name)
+        public List<Customer> GetOneByName(string name)
         {
             customerList = ds.Tables[0].AsEnumerable()
             .Where(r => r.Field<string>("Customer").Contains(name)).Select(dataRow => new Customer
@@ -40,7 +39,7 @@ namespace DALayer.Implementation
             return customerList;
         }
 
-        public bool UpdateCustomer(Customer customer)
+        public bool UpdateOne(Customer customer)
         {
 
             if (customer.CustomerName.Length > 0)
@@ -51,13 +50,13 @@ namespace DALayer.Implementation
                 dr["Contact_Name"] = customer.ContactName;
                 dr["Phone"] = customer.Phone;
                 ds.Tables[0].AcceptChanges();
-                saveChanges();
+                DriverConfirguration.SaveChanges(ds);
                 return true;
             }
             return false;
         }
 
-        public bool InsertCustomer(Customer customer)
+        public bool InsertOne(Customer customer)
         {
             if (customer.CustomerName.Length > 0)
             {
@@ -68,13 +67,13 @@ namespace DALayer.Implementation
                 dr["Phone"] = customer.Phone;
                 ds.Tables[0].Rows.Add(dr);
                 ds.Tables[0].AcceptChanges();
-                saveChanges();
+                DriverConfirguration.SaveChanges(ds);
                 return true;
             }
             return false;
         }
 
-        public bool DeleteCustomer(Customer customer)
+        public bool DeleteOne(Customer customer)
         {
             var dr = (from row in ds.Tables[0].AsEnumerable()
                       where row.Field<string>("id").Equals(customer.Id.ToString())
@@ -83,15 +82,10 @@ namespace DALayer.Implementation
             {
                 ds.Tables[0].Rows.Remove(dr);
                 ds.Tables[0].AcceptChanges();
-                saveChanges();
+                DriverConfirguration.SaveChanges(ds);
                 return true;
             }
             return false;
-        }
-
-        public void saveChanges()
-        {
-            ds.WriteXml(Constants.FilePath);
         }
     }
 }

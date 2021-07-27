@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DALayer.Implementation.CustomerDAL" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAiAAAAAAAAAAAAAgAAEAAAAAAAAgACAAAAAQA=</HashCode>
+      <FileName>Implementation\CustomerDAL.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="ds" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="customerList" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.681" Collapsed="true" />
+  </Class>
+  <Class Name="DALayer.Implementation.DriverConfirguration">
+    <Position X="7.25" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAACAAAAAAA=</HashCode>
+      <FileName>Implementation\DriverConfirguration.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="ds" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DALayer.Utils.Constants">
+    <Position X="5" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Utils\Constants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusinessEntityLayer.Model.Customer">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.Data.DataSet" Collapsed="true">
+    <Position X="10.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="DALayer.Interfaces.IDAL">
+    <Position X="5.75" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAiAAAAAAAAAAAAAgAAAAAAAAAAAgAAAAAAAQA=</HashCode>
+      <FileName>Interfaces\IDAL.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -10,27 +10,27 @@ namespace BusinessLogic.CustomerInfoLogic
         IDAL CustomerDal = new CustomerDAL();
         public List<Customer> GetCustomers()
         {
-            return CustomerDal.GetCustomers();
+            return CustomerDal.GetAll();
         }
 
         public List<Customer> GetCustomersByName(string name)
         {
-            return CustomerDal.GetCustomersByName(name);
+            return CustomerDal.GetOneByName(name);
         }
 
         public bool InsertCustomer(Customer customer)
         {
-            return CustomerDal.InsertCustomer(customer);
+            return CustomerDal.InsertOne(customer);
         }
 
         public bool UpdateCustomer(Customer customer)
         {
-            return CustomerDal.UpdateCustomer(customer);
+            return CustomerDal.UpdateOne(customer);
         }
 
         public bool DeleteCustomer(Customer customer)
         {
-            return CustomerDal.DeleteCustomer(customer);
+            return CustomerDal.DeleteOne(customer);
         }
     }
 }

@@ -2,7 +2,7 @@
 <dataset>
   <record>
     <id>2</id>
-    <Customer>EdiSoft </Customer>
+    <Customer>EdiSoft S.R.L.</Customer>
     <Contact_Name>Marco Abergo</Contact_Name>
     <Phone>3480586891</Phone>
   </record>
@@ -23,5 +23,17 @@
     <Customer>Company Y</Customer>
     <Contact_Name>Jane Doe</Contact_Name>
     <Phone>3480586893</Phone>
+  </record>
+  <record>
+    <id>5</id>
+    <Customer>Microsoft</Customer>
+    <Contact_Name>Bill Gates</Contact_Name>
+    <Phone>34805868911</Phone>
+  </record>
+  <record>
+    <id>6</id>
+    <Customer>Google</Customer>
+    <Contact_Name>Sundar Pichai</Contact_Name>
+    <Phone>123456789</Phone>
   </record>
 </dataset>
