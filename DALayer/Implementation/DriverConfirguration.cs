@@ -1,7 +1,7 @@
-﻿using System.IO;
+﻿using DALayer.Utils;
 using System.Data;
-using DALayer.Utils;
 using System.Diagnostics;
+using System.IO;
 
 namespace DALayer.Implementation
 {

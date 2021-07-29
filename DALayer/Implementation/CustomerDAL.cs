@@ -1,9 +1,9 @@
 ﻿using BusinessEntityLayer.Model;
+using DALayer.Interfaces;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using DALayer.Interfaces;
 using System.Diagnostics;
+using System.Linq;
 
 namespace DALayer.Implementation
 {
@@ -109,8 +109,8 @@ namespace DALayer.Implementation
             try
             {
                 dr = (from row in ds.Tables[0].AsEnumerable()
-                          where row.Field<string>("id").Equals(customer.Id.ToString())
-                          select row).First();
+                      where row.Field<string>("id").Equals(customer.Id.ToString())
+                      select row).First();
                 if (dr != null)
                 {
                     ds.Tables[0].Rows.Remove(dr);
