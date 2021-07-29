@@ -1,14 +1,14 @@
 ﻿using System.IO;
 using System.Data;
 using DALayer.Utils;
-using System;
+using System.Diagnostics;
 
 namespace DALayer.Implementation
 {
     static class DriverConfirguration
     {
         private static DataSet ds;
-        
+
         //reads xml file and returns as data source
         public static DataSet ReadXML()
         {
@@ -19,17 +19,26 @@ namespace DALayer.Implementation
                     ds = new DataSet();
                     ds.ReadXml(Constants.FilePath);
                 }
-               
-            }catch(IOException exc)
+
+            }
+            catch (IOException exc)
             {
-                Console.WriteLine("Error reading files", exc);
+                Debug.WriteLine("Error reading files", exc);
             }
             return ds;
         }
 
+        //saves dataset to xml file
         public static void SaveChanges(DataSet ds1)
         {
-            ds1.WriteXml(Constants.FilePath);
+            try
+            {
+                ds1.WriteXml(Constants.FilePath);
+            }
+            catch (IOException exc)
+            {
+                Debug.WriteLine("Error reading files", exc);
+            }
         }
     }
 }

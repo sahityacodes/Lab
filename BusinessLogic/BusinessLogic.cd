@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="BusinessLogic.CustomerInfoLogic.CustomerBAL">
-    <Position X="2.5" Y="2.25" Width="2.5" />
+    <Position X="2.5" Y="1.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAQAAAAAABAAAAAAAAAAAAAEAAAAAAAABAIA=</HashCode>
       <FileName>CustomerInfoLogic\CustomerBAL.cs</FileName>
@@ -11,7 +11,7 @@
     </ShowAsAssociation>
   </Class>
   <Interface Name="DALayer.Interfaces.IDAL">
-    <Position X="2.75" Y="5.25" Width="1.5" />
+    <Position X="3" Y="4.75" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

@@ -11,7 +11,8 @@ namespace DALayer.Implementation
     {
 
         List<Customer> customerList;
-        DataSet ds = DriverConfirguration.ReadXML();
+        readonly DataSet ds = DriverConfirguration.ReadXML();
+        DataRow dr;
 
         public List<Customer> GetAll()
         {
@@ -55,19 +56,21 @@ namespace DALayer.Implementation
 
         public bool UpdateOne(Customer customer)
         {
-
             try
             {
                 if (customer.CustomerName.Length > 0)
                 {
-                    DataRow dr = ds.Tables[0].AsEnumerable()
+                    dr = ds.Tables[0].AsEnumerable()
                         .Where(r => r.Field<string>("id").Equals(customer.Id.ToString())).First();
-                    dr["Customer"] = customer.CustomerName;
-                    dr["Contact_Name"] = customer.ContactName;
-                    dr["Phone"] = customer.Phone;
-                    ds.Tables[0].AcceptChanges();
-                    DriverConfirguration.SaveChanges(ds);
-                    return true;
+                    if (dr != null)
+                    {
+                        dr["Customer"] = customer.CustomerName;
+                        dr["Contact_Name"] = customer.ContactName;
+                        dr["Phone"] = customer.Phone;
+                        ds.Tables[0].AcceptChanges();
+                        DriverConfirguration.SaveChanges(ds);
+                        return true;
+                    }
                 }
             }
             catch (DataException Dexce)
@@ -83,7 +86,7 @@ namespace DALayer.Implementation
             {
                 if (customer.CustomerName.Length > 0)
                 {
-                    DataRow dr = ds.Tables[0].NewRow();
+                    dr = ds.Tables[0].NewRow();
                     dr["id"] = customer.Id.ToString();
                     dr["Customer"] = customer.CustomerName;
                     dr["Contact_Name"] = customer.ContactName;
@@ -105,7 +108,7 @@ namespace DALayer.Implementation
         {
             try
             {
-                var dr = (from row in ds.Tables[0].AsEnumerable()
+                dr = (from row in ds.Tables[0].AsEnumerable()
                           where row.Field<string>("id").Equals(customer.Id.ToString())
                           select row).First();
                 if (dr != null)
