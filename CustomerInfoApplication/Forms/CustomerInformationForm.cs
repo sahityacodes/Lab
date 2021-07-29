@@ -138,5 +138,13 @@ namespace CustomerInfoApplication.Forms
             contactPersonName.Text = Customer.ContactName;
             phone.Text = Customer.Phone;
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox1.Text != null || textBox1.Text.Length != 0)
+            {
+                customerGrid.DataSource = CustomerBAL.GetCustomersByName(textBox1.Text);
+            }
+        }
     }
 }

@@ -2,7 +2,7 @@
 <dataset>
   <record>
     <id>2</id>
-    <Customer>EdiSoft S.R.L.</Customer>
+    <Customer>EdiSoft </Customer>
     <Contact_Name>Marco Abergo</Contact_Name>
     <Phone>3480586891</Phone>
   </record>
@@ -10,12 +10,6 @@
     <id>3</id>
     <Customer>IronMan</Customer>
     <Contact_Name>RDJ</Contact_Name>
-    <Phone>3480586891</Phone>
-  </record>
-  <record>
-    <id>1</id>
-    <Customer>Company ABC</Customer>
-    <Contact_Name>Sahitya Reddy</Contact_Name>
     <Phone>3480586891</Phone>
   </record>
   <record>
@@ -35,5 +29,11 @@
     <Customer>Google</Customer>
     <Contact_Name>Sundar Pichai</Contact_Name>
     <Phone>123456789</Phone>
+  </record>
+  <record>
+    <id>7</id>
+    <Customer>Company</Customer>
+    <Contact_Name>Sahitya</Contact_Name>
+    <Phone>3480586891</Phone>
   </record>
 </dataset>

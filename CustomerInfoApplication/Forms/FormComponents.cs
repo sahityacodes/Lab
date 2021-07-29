@@ -21,5 +21,6 @@
             CustomerForm.btnUpdate.Visible = enableBtnUpdate;
             CustomerForm.btnReset.Visible = enableReset;
         }
+
     }
 }
