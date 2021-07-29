@@ -4,6 +4,7 @@ using DALayer.Interfaces;
 using DALayer.Implementation;
 using System;
 using BusinessLogic.Interfaces;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogic.CustomerInfoLogic
 {
@@ -24,7 +25,7 @@ namespace BusinessLogic.CustomerInfoLogic
         {
             if (customer.CustomerName.Length == 0)
             {
-                throw new NullReferenceException("Please enter a valid name");
+                throw new UserDefinedException("Please enter a valid name");
             }
             else { 
                 return CustomerDal.InsertOne(customer);
@@ -35,7 +36,7 @@ namespace BusinessLogic.CustomerInfoLogic
         {
             if (customer.CustomerName.Length == 0)
             {
-                throw new NullReferenceException("Please enter a valid name");
+                throw new UserDefinedException("Please enter a valid name");
             }
             else
             {

@@ -4,7 +4,7 @@ using BusinessLogic.CustomerInfoLogic;
 using System;
 using System.Windows.Forms;
 using System.Diagnostics;
-
+using BusinessLogic.Exceptions;
 namespace CustomerInfoApplication.Forms
 {
     public partial class CustomerInformationForm : Form
@@ -82,7 +82,7 @@ namespace CustomerInfoApplication.Forms
                     customerGrid.DataSource = CustomerBal.GetAll();
                 }
             }
-            catch (NullReferenceException)
+            catch (UserDefinedException)
             {
                 MessageBox.Show("Please enter a valid name.");
             }
@@ -110,10 +110,9 @@ namespace CustomerInfoApplication.Forms
                     customerGrid.DataSource = CustomerBal.GetAll();
                 }
             }
-            catch (NullReferenceException ne)
+            catch (UserDefinedException)
             {
-                Debug.WriteLine("Length of the name is 0", ne);
-                MessageBox.Show(ne.Message);
+                MessageBox.Show("Please enter a valid name.");
             }
             catch (Exception exc)
             {
