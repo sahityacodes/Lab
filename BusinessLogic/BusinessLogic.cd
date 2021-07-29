@@ -11,7 +11,7 @@
     </ShowAsAssociation>
   </Class>
   <Interface Name="DALayer.Interfaces.IDAL">
-    <Position X="3" Y="4.75" Width="1.5" />
+    <Position X="2.75" Y="5" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

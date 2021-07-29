@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CustomerInfoApplication.Forms.CustomerInformationForm">
-    <Position X="5.5" Y="2.75" Width="2.5" />
+    <Position X="2.75" Y="3" Width="2.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>ACEQAgABBSBAAgAUIACAQABCLEAQAABisGAAAAAACAo=</HashCode>
+      <HashCode>ACEQAgABBSBAAgAUIACAQABSLEAQAABisGAAAAAACAo=</HashCode>
       <FileName>Forms\CustomerInformationForm.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -17,7 +17,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="CustomerInfoApplication.Forms.FormComponents">
-    <Position X="4.25" Y="5.5" Width="2.25" />
+    <Position X="1.5" Y="5.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAIAAAAAAA=</HashCode>
       <FileName>Forms\FormComponents.cs</FileName>
@@ -27,18 +27,18 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="CustomerInfoApplication.Program">
-    <Position X="6" Y="0.75" Width="1.5" />
+    <Position X="3.25" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BusinessLogic.CustomerInfoLogic.CustomerBAL">
-    <Position X="7" Y="5.5" Width="2.5" />
+    <Position X="4.25" Y="5.75" Width="2.5" />
     <TypeIdentifier />
   </Class>
   <Class Name="BusinessEntityLayer.Model.Customer">
-    <Position X="10.75" Y="1.75" Width="1.5" />
+    <Position X="8" Y="2" Width="1.5" />
     <TypeIdentifier />
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -2,7 +2,7 @@
 <dataset>
   <record>
     <id>2</id>
-    <Customer>EdiSoft S.R.L</Customer>
+    <Customer>EdiSoft S.R.L.</Customer>
     <Contact_Name>Marco Abergo</Contact_Name>
     <Phone>3480586891</Phone>
   </record>
@@ -10,7 +10,7 @@
     <id>3</id>
     <Customer>IronMan</Customer>
     <Contact_Name>RDJ</Contact_Name>
-    <Phone>3480586891</Phone>
+    <Phone>3480586892</Phone>
   </record>
   <record>
     <id>4</id>

@@ -14,12 +14,8 @@ namespace DALayer.Implementation
         {
             try
             {
-                if (ds == null)
-                {
-                    ds = new DataSet();
-                    ds.ReadXml(Constants.FilePath);
-                }
-
+                ds = new DataSet();
+                ds.ReadXml(Constants.FilePath);
             }
             catch (IOException exc)
             {
