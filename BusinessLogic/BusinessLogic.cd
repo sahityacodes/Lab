@@ -6,9 +6,6 @@
       <HashCode>IAAAAAAAAQAAAAAABAAAAAAAAAAAAAEAAAAAAAABAIA=</HashCode>
       <FileName>CustomerInfoLogic\CustomerBAL.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="CustomerDal" />
-    </ShowAsAssociation>
   </Class>
   <Interface Name="DALayer.Interfaces.IDAL">
     <Position X="2.75" Y="5" Width="1.5" />

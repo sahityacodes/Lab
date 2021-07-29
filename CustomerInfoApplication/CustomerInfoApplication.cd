@@ -7,24 +7,20 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>ACEQAgABBSBAAgAUIACAQABSLEAQAABisGAAAAAACAo=</HashCode>
+      <HashCode>ACAQAgABBSBAAgAUIACAQABSLEAQAABisGAAAAAACAo=</HashCode>
       <FileName>Forms\CustomerInformationForm.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="_componentClass" />
-      <Field Name="Customer" />
       <Field Name="CustomerBAL" />
     </ShowAsAssociation>
   </Class>
   <Class Name="CustomerInfoApplication.Forms.FormComponents">
     <Position X="1.5" Y="5.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAIAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
       <FileName>Forms\FormComponents.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="CustomerForm" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="CustomerInfoApplication.Program">
     <Position X="3.25" Y="1" Width="1.5" />

@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using BusinessEntityLayer.Model;
 
 namespace DALayer.Interfaces
 {
-    public interface IDAL
+    public interface IDAL<T>
     {
-        List<Customer> GetAll();
-        List<Customer> GetOneByName(string name);
-        bool UpdateOne(Customer customer);
-        bool InsertOne(Customer customer);
-        bool DeleteOne(Customer customer);
+        List<T> GetAll();
+        List<T> GetOneByName(string name);
+        bool UpdateOne(T obj);
+        bool InsertOne(T obj);
+        bool DeleteOne(T obj);
     }
 }

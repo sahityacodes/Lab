@@ -40,7 +40,7 @@
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="DALayer.Interfaces.IDAL">
+  <Interface Name="DALayer.Interfaces.IDAL&lt;T&gt;">
     <Position X="2.5" Y="1" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAiAAAAAAAAAAAAAgAAAAAAAAAAAgAAAAAAAQA=</HashCode>

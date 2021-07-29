@@ -4,15 +4,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System;
 
 namespace DALayer.Implementation
 {
-    public class CustomerDAL : IDAL
+    public class CustomerDAL : IDAL<Customer>
     {
-
         List<Customer> customerList;
         readonly DataSet ds = DriverConfirguration.ReadXML();
-        DataRow dr;
 
         public List<Customer> GetAll()
         {
@@ -30,6 +29,12 @@ namespace DALayer.Implementation
             catch (DataException Dexce)
             {
                 Debug.WriteLine("Error occured while reading table in GetAll Method", Dexce);
+                throw new DataException("Failed to fetch records. Please contact support.", Dexce);
+            }
+            catch (IndexOutOfRangeException ior)
+            {
+                Debug.WriteLine("Error occured while reading table in GetAll Method", ior);
+                throw new IndexOutOfRangeException("Failed to fetch records. Please contact support.", ior);
             }
             return customerList;
         }
@@ -47,9 +52,10 @@ namespace DALayer.Implementation
                 Phone = dataRow.Field<string>("Phone"),
             }).ToList();
             }
-            catch (DataException Dexce)
+            catch (IndexOutOfRangeException ior)
             {
-                Debug.WriteLine("Error occured while reading table in GetOneByName Method", Dexce);
+                Debug.WriteLine("Error occured while reading table in GetOneByName Method", ior);
+                throw new IndexOutOfRangeException("Failed to fetch records. Please contact support.", ior);
             }
             return customerList;
         }
@@ -60,7 +66,7 @@ namespace DALayer.Implementation
             {
                 if (customer.CustomerName.Length > 0)
                 {
-                    dr = ds.Tables[0].AsEnumerable()
+                    DataRow dr = ds.Tables[0].AsEnumerable()
                         .Where(r => r.Field<string>("id").Equals(customer.Id.ToString())).First();
                     if (dr != null)
                     {
@@ -73,9 +79,10 @@ namespace DALayer.Implementation
                     }
                 }
             }
-            catch (DataException Dexce)
+            catch (IndexOutOfRangeException ior)
             {
-                Debug.WriteLine("Error occured while reading table in UpdateOne Method", Dexce);
+                Debug.WriteLine("Error occured while reading table in UpdateOne Method", ior);
+                throw new IndexOutOfRangeException("Failed to fetch records. Please contact support.", ior);
             }
             return false;
         }
@@ -86,7 +93,7 @@ namespace DALayer.Implementation
             {
                 if (customer.CustomerName.Length > 0)
                 {
-                    dr = ds.Tables[0].NewRow();
+                    DataRow dr = ds.Tables[0].NewRow();
                     dr["id"] = customer.Id.ToString();
                     dr["Customer"] = customer.CustomerName;
                     dr["Contact_Name"] = customer.ContactName;
@@ -97,9 +104,10 @@ namespace DALayer.Implementation
                     return true;
                 }
             }
-            catch (DataException Dexce)
+            catch (IndexOutOfRangeException ior)
             {
-                Debug.WriteLine("Error occured while reading table in InsertOne Method", Dexce);
+                Debug.WriteLine("Error occured while reading table in InsertOne Method", ior);
+                throw new IndexOutOfRangeException("Failed to fetch records. Please contact support.", ior);
             }
             return false;
         }
@@ -108,7 +116,7 @@ namespace DALayer.Implementation
         {
             try
             {
-                dr = (from row in ds.Tables[0].AsEnumerable()
+                DataRow dr = (from row in ds.Tables[0].AsEnumerable()
                       where row.Field<string>("id").Equals(customer.Id.ToString())
                       select row).First();
                 if (dr != null)
@@ -119,9 +127,10 @@ namespace DALayer.Implementation
                     return true;
                 }
             }
-            catch (DataException Dexce)
+            catch (IndexOutOfRangeException ior)
             {
-                Debug.WriteLine("Error occured while reading table in DeleteOne Method", Dexce);
+                Debug.WriteLine("Error occured while reading table in InsertOne Method", ior);
+                throw new IndexOutOfRangeException("Failed to fetch records. Please contact support.", ior);
             }
             return false;
         }

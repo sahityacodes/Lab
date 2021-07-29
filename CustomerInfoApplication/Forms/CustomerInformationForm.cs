@@ -2,32 +2,45 @@
 using BusinessLogic.CustomerInfoLogic;
 using System;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace CustomerInfoApplication.Forms
 {
     public partial class CustomerInformationForm : Form
     {
-        FormComponents _componentClass;
-        Customer Customer = new();
-        CustomerBAL CustomerBAL = new();
+        FormComponents _componentClass = new();
+        readonly CustomerBAL CustomerBAL = new();
 
         public CustomerInformationForm()
         {
             InitializeComponent();
-            _componentClass = new FormComponents(this);
         }
 
         private void CustomerInformationForm_Load(object sender, EventArgs e)
         {
-            customerGrid.DataSource = CustomerBAL.GetCustomers();
-            _componentClass.ChangeVisibility(false, false, false, true, true, false, false, true);
+            try
+            {
+                customerGrid.DataSource = CustomerBAL.GetCustomers();
+            }
+            catch (IndexOutOfRangeException io)
+            {
+                MessageBox.Show(io.Message);
+            }
+            _componentClass.ChangeVisibility(this, false, false, false, true, true, false, false, true);
         }
 
         private void SearchByName_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text != null || textBox1.Text.Length != 0)
+            try
             {
-                customerGrid.DataSource = CustomerBAL.GetCustomersByName(textBox1.Text);
+                if (textBox1.Text != null || textBox1.Text.Length != 0)
+                {
+                    customerGrid.DataSource = CustomerBAL.GetCustomersByName(textBox1.Text);
+                }
+            }
+            catch (IndexOutOfRangeException io)
+            {
+                MessageBox.Show(io.Message);
             }
         }
 
@@ -38,7 +51,7 @@ namespace CustomerInfoApplication.Forms
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _componentClass.ChangeVisibility(true, true, true, false, false, false, true, true);
+            _componentClass.ChangeVisibility(this, true, true, true, false, false, false, true, true);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -47,103 +60,119 @@ namespace CustomerInfoApplication.Forms
             txtBoxName.Clear();
             contactPersonName.Clear();
             phone.Clear();
-            _componentClass.ChangeVisibility(true, true, true, false, false, true, false, true);
+            _componentClass.ChangeVisibility(this, true, true, true, false, false, true, false, true);
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (txtBoxName.Text.Length == 0)
+            Customer Customer = new();
+            Customer.Id = int.Parse(textID.Text);
+            Customer.CustomerName = txtBoxName.Text;
+            Customer.ContactName = contactPersonName.Text;
+            Customer.Phone = phone.Text;
+            try
             {
-                MessageBox.Show("Please Enter a Customer Name");
-            }
-            else
-            {
-                Customer.Id = int.Parse(textID.Text);
-                Customer.CustomerName = txtBoxName.Text;
-                Customer.ContactName = contactPersonName.Text;
-                Customer.Phone = phone.Text;
                 if (CustomerBAL.UpdateCustomer(Customer))
                 {
                     MessageBox.Show("Updated Successfully");
                     customerGrid.DataSource = null;
                     customerGrid.DataSource = CustomerBAL.GetCustomers();
                 }
-                else
-                {
-                    MessageBox.Show("Failed to update");
-                }
-                _componentClass.ChangeVisibility(false, false, false, true, true, false, false, true);
             }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Please enter a valid name.");
+            }
+            catch (IndexOutOfRangeException io)
+            {
+                Debug.WriteLine("Error in btnUpdate_Click", io);
+                MessageBox.Show(io.Message);
+            }
+            _componentClass.ChangeVisibility(this, false, false, false, true, true, false, false, true);
         }
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
-            if (txtBoxName.Text.Length == 0)
+            Customer Customer = new();
+            Customer.Id = int.Parse(textID.Text);
+            Customer.CustomerName = txtBoxName.Text;
+            Customer.ContactName = contactPersonName.Text;
+            Customer.Phone = phone.Text;
+            try
             {
-                MessageBox.Show("Please Enter a Customer Name");
-            }
-            else
-            {
-                Customer.Id = int.Parse(textID.Text);
-                Customer.CustomerName = txtBoxName.Text;
-                Customer.ContactName = contactPersonName.Text;
-                Customer.Phone = phone.Text;
                 if (CustomerBAL.InsertCustomer(Customer))
                 {
                     MessageBox.Show("Inserted Successfully");
                     customerGrid.Refresh();
                     customerGrid.DataSource = CustomerBAL.GetCustomers();
                 }
-                else
-                {
-                    MessageBox.Show("Failed to Insert");
-                }
-                ShowCurrentClickedData();
-                _componentClass.ChangeVisibility(false, false, false, true, true, false, false, true);
             }
+            catch (NullReferenceException ne)
+            {
+                Debug.WriteLine("Length of the name is 0", ne);
+                MessageBox.Show(ne.Message);
+            }
+            catch (IndexOutOfRangeException ior)
+            {
+                Debug.WriteLine("Error in btnInsert_Click", ior);
+                MessageBox.Show("Error while reading data");
+            }
+            ShowCurrentClickedData();
+            _componentClass.ChangeVisibility(this, false, false, false, true, true, false, false, true);
         }
 
         private void btnDel_Click(object sender, EventArgs e)
         {
-            Customer = customerGrid.CurrentRow.DataBoundItem as Customer;
-            if (CustomerBAL.DeleteCustomer(Customer))
+            Customer Customer = customerGrid.CurrentRow.DataBoundItem as Customer;
+            try
             {
-                MessageBox.Show("Deleted Successfully");
-                customerGrid.Refresh();
-                customerGrid.DataSource = CustomerBAL.GetCustomers();
+                if (CustomerBAL.DeleteCustomer(Customer))
+                {
+                    MessageBox.Show("Deleted Successfully");
+                    customerGrid.Refresh();
+                    customerGrid.DataSource = CustomerBAL.GetCustomers();
+                }
             }
-            else
+            catch (IndexOutOfRangeException io)
             {
-                MessageBox.Show("Failed to Delete");
+                Debug.WriteLine("Error in btnDel_Click", io);
+                MessageBox.Show(io.Message);
             }
         }
 
         private void customerGrid_Click(object sender, EventArgs e)
         {
             ShowCurrentClickedData();
-            _componentClass.ChangeVisibility(false, false, false, true, true, false, false, true);
+            _componentClass.ChangeVisibility(this, false, false, false, true, true, false, false, true);
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
             ShowCurrentClickedData();
-            _componentClass.ChangeVisibility(false, false, false, true, true, false, false, true);
+            _componentClass.ChangeVisibility(this, false, false, false, true, true, false, false, true);
         }
 
         private void ShowCurrentClickedData()
         {
-            Customer = customerGrid.CurrentRow.DataBoundItem as Customer;
+            Customer Customer = customerGrid.CurrentRow.DataBoundItem as Customer;
             textID.Text = Customer.Id.ToString();
             txtBoxName.Text = Customer.CustomerName;
             contactPersonName.Text = Customer.ContactName;
             phone.Text = Customer.Phone;
         }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (textBox1.Text != null || textBox1.Text.Length != 0)
+            try
             {
-                customerGrid.DataSource = CustomerBAL.GetCustomersByName(textBox1.Text);
+                if (textBox1.Text != null || textBox1.Text.Length != 0)
+                {
+                    customerGrid.DataSource = CustomerBAL.GetCustomersByName(textBox1.Text);
+                }
+            }
+            catch (IndexOutOfRangeException io)
+            {
+                Debug.WriteLine("Error in intextBox1_TextChanged ", io);
+                MessageBox.Show(io.Message);
             }
         }
     }

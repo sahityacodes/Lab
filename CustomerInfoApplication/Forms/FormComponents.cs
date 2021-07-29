@@ -1,25 +1,18 @@
 ﻿namespace CustomerInfoApplication.Forms
 {
-    public class FormComponents
+    class FormComponents
     {
-        CustomerInformationForm CustomerForm;
-
-        public FormComponents(CustomerInformationForm customerInformationForm)
-        {
-            CustomerForm = customerInformationForm;
-        }
-
-        public void ChangeVisibility(bool enableTextName, bool enableContactPersonName, bool enablePhone, bool enableBtnaddNewRecord,
+        internal void ChangeVisibility(CustomerInformationForm customerForm, bool enableTextName, bool enableContactPersonName, bool enablePhone, bool enableBtnaddNewRecord,
             bool enableBtn2, bool enableBtnInsert, bool enableBtnUpdate, bool enableReset)
         {
-            CustomerForm.txtBoxName.Enabled = enableTextName;
-            CustomerForm.contactPersonName.Enabled = enableContactPersonName;
-            CustomerForm.phone.Enabled = enablePhone;
-            CustomerForm.btn_addNewRecord.Visible = enableBtnaddNewRecord;
-            CustomerForm.button2.Visible = enableBtn2;
-            CustomerForm.btnInsert.Visible = enableBtnInsert;
-            CustomerForm.btnUpdate.Visible = enableBtnUpdate;
-            CustomerForm.btnReset.Visible = enableReset;
+            customerForm.txtBoxName.Enabled = enableTextName;
+            customerForm.contactPersonName.Enabled = enableContactPersonName;
+            customerForm.phone.Enabled = enablePhone;
+            customerForm.btn_addNewRecord.Visible = enableBtnaddNewRecord;
+            customerForm.button2.Visible = enableBtn2;
+            customerForm.btnInsert.Visible = enableBtnInsert;
+            customerForm.btnUpdate.Visible = enableBtnUpdate;
+            customerForm.btnReset.Visible = enableReset;
         }
 
     }
