@@ -15,35 +15,20 @@ namespace DALayer.Implementation
 
         public List<Customer> GetAll()
         {
-            try
-            {
-                customerList = ds.Tables[0].AsEnumerable()
-                                .Select(dataRow => new Customer
-                                {
-                                    Id = int.Parse(dataRow.Field<string>("id")),
-                                    CustomerName = dataRow.Field<string>("Customer"),
-                                    ContactName = dataRow.Field<string>("Contact_Name"),
-                                    Phone = dataRow.Field<string>("Phone"),
-                                }).ToList();
-            }
-            catch (DataException Dexce)
-            {
-                Debug.WriteLine("Error occured while reading table in GetAll Method", Dexce);
-                throw new DataException("Failed to fetch records. Please contact support.", Dexce);
-            }
-            catch (IndexOutOfRangeException ior)
-            {
-                Debug.WriteLine("Error occured while reading table in GetAll Method", ior);
-                throw new IndexOutOfRangeException("Failed to fetch records. Please contact support.", ior);
-            }
+            customerList = ds.Tables[0].AsEnumerable()
+                            .Select(dataRow => new Customer
+                            {
+                                Id = int.Parse(dataRow.Field<string>("id")),
+                                CustomerName = dataRow.Field<string>("Customer"),
+                                ContactName = dataRow.Field<string>("Contact_Name"),
+                                Phone = dataRow.Field<string>("Phone"),
+                            }).ToList();
             return customerList;
         }
 
         public List<Customer> GetOneByName(string name)
         {
-            try
-            {
-                customerList = ds.Tables[0].AsEnumerable()
+            customerList = ds.Tables[0].AsEnumerable()
             .Where(r => r.Field<string>("Customer").Contains(name)).Select(dataRow => new Customer
             {
                 Id = int.Parse(dataRow.Field<string>("id")),
@@ -51,38 +36,24 @@ namespace DALayer.Implementation
                 ContactName = dataRow.Field<string>("Contact_Name"),
                 Phone = dataRow.Field<string>("Phone"),
             }).ToList();
-            }
-            catch (IndexOutOfRangeException ior)
-            {
-                Debug.WriteLine("Error occured while reading table in GetOneByName Method", ior);
-                throw new IndexOutOfRangeException("Failed to fetch records. Please contact support.", ior);
-            }
             return customerList;
         }
 
         public bool UpdateOne(Customer customer)
         {
-            try
+            if (customer.CustomerName.Length > 0)
             {
-                if (customer.CustomerName.Length > 0)
+                DataRow dr = ds.Tables[0].AsEnumerable()
+                    .Where(r => r.Field<string>("id").Equals(customer.Id.ToString())).First();
+                if (dr != null)
                 {
-                    DataRow dr = ds.Tables[0].AsEnumerable()
-                        .Where(r => r.Field<string>("id").Equals(customer.Id.ToString())).First();
-                    if (dr != null)
-                    {
-                        dr["Customer"] = customer.CustomerName;
-                        dr["Contact_Name"] = customer.ContactName;
-                        dr["Phone"] = customer.Phone;
-                        ds.Tables[0].AcceptChanges();
-                        DriverConfirguration.SaveChanges(ds);
-                        return true;
-                    }
+                    dr["Customer"] = customer.CustomerName;
+                    dr["Contact_Name"] = customer.ContactName;
+                    dr["Phone"] = customer.Phone;
+                    ds.Tables[0].AcceptChanges();
+                    DriverConfirguration.SaveChanges(ds);
+                    return true;
                 }
-            }
-            catch (IndexOutOfRangeException ior)
-            {
-                Debug.WriteLine("Error occured while reading table in UpdateOne Method", ior);
-                throw new IndexOutOfRangeException("Failed to fetch records. Please contact support.", ior);
             }
             return false;
         }
@@ -114,23 +85,15 @@ namespace DALayer.Implementation
 
         public bool DeleteOne(Customer customer)
         {
-            try
+            DataRow dr = (from row in ds.Tables[0].AsEnumerable()
+                          where row.Field<string>("id").Equals(customer.Id.ToString())
+                          select row).First();
+            if (dr != null)
             {
-                DataRow dr = (from row in ds.Tables[0].AsEnumerable()
-                      where row.Field<string>("id").Equals(customer.Id.ToString())
-                      select row).First();
-                if (dr != null)
-                {
-                    ds.Tables[0].Rows.Remove(dr);
-                    ds.Tables[0].AcceptChanges();
-                    DriverConfirguration.SaveChanges(ds);
-                    return true;
-                }
-            }
-            catch (IndexOutOfRangeException ior)
-            {
-                Debug.WriteLine("Error occured while reading table in InsertOne Method", ior);
-                throw new IndexOutOfRangeException("Failed to fetch records. Please contact support.", ior);
+                ds.Tables[0].Rows.Remove(dr);
+                ds.Tables[0].AcceptChanges();
+                DriverConfirguration.SaveChanges(ds);
+                return true;
             }
             return false;
         }

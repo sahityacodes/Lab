@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using DALayer.Interfaces;
 using DALayer.Implementation;
 using System;
+using BusinessLogic.Interfaces;
 
 namespace BusinessLogic.CustomerInfoLogic
 {
-    public class CustomerBAL
+    public class CustomerBAL : IBLL<Customer>
     {
         readonly IDAL<Customer> CustomerDal = new CustomerDAL();
-        public List<Customer> GetCustomers()
+        public List<Customer> GetAll()
         {
             return CustomerDal.GetAll();
         }
 
-        public List<Customer> GetCustomersByName(string name)
+        public List<Customer> GetOneByName(string name)
         {
             return CustomerDal.GetOneByName(name);
         }
 
-        public bool InsertCustomer(Customer customer)
+        public bool InsertOne(Customer customer)
         {
             if (customer.CustomerName.Length == 0)
             {
@@ -30,7 +31,7 @@ namespace BusinessLogic.CustomerInfoLogic
             }
         }
 
-        public bool UpdateCustomer(Customer customer)
+        public bool UpdateOne(Customer customer)
         {
             if (customer.CustomerName.Length == 0)
             {
@@ -42,7 +43,7 @@ namespace BusinessLogic.CustomerInfoLogic
             }
         }
 
-        public bool DeleteCustomer(Customer customer)
+        public bool DeleteOne(Customer customer)
         {
             return CustomerDal.DeleteOne(customer);
         }

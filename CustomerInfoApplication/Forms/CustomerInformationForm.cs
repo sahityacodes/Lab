@@ -1,4 +1,5 @@
 ﻿using BusinessEntityLayer.Model;
+using BusinessLogic.Interfaces;
 using BusinessLogic.CustomerInfoLogic;
 using System;
 using System.Windows.Forms;
@@ -9,7 +10,7 @@ namespace CustomerInfoApplication.Forms
     public partial class CustomerInformationForm : Form
     {
         FormComponents _componentClass = new();
-        readonly CustomerBAL CustomerBAL = new();
+        readonly IBLL<Customer> CustomerBal = new CustomerBAL();
 
         public CustomerInformationForm()
         {
@@ -20,11 +21,12 @@ namespace CustomerInfoApplication.Forms
         {
             try
             {
-                customerGrid.DataSource = CustomerBAL.GetCustomers();
+                customerGrid.DataSource = CustomerBal.GetAll();
             }
-            catch (IndexOutOfRangeException io)
+            catch (Exception io)
             {
-                MessageBox.Show(io.Message);
+                Debug.WriteLine("Error in CustomerInformationForm_Load", io);
+                MessageBox.Show("Error while fetching data");
             }
             _componentClass.ChangeVisibility(this, false, false, false, true, true, false, false, true);
         }
@@ -35,12 +37,13 @@ namespace CustomerInfoApplication.Forms
             {
                 if (textBox1.Text != null || textBox1.Text.Length != 0)
                 {
-                    customerGrid.DataSource = CustomerBAL.GetCustomersByName(textBox1.Text);
+                    customerGrid.DataSource = CustomerBal.GetOneByName(textBox1.Text);
                 }
             }
-            catch (IndexOutOfRangeException io)
+            catch (Exception io)
             {
-                MessageBox.Show(io.Message);
+                Debug.WriteLine("Error in btnDel_Click", io);
+                MessageBox.Show("Error while searching for records");
             }
         }
 
@@ -72,21 +75,21 @@ namespace CustomerInfoApplication.Forms
             Customer.Phone = phone.Text;
             try
             {
-                if (CustomerBAL.UpdateCustomer(Customer))
+                if (CustomerBal.UpdateOne(Customer))
                 {
                     MessageBox.Show("Updated Successfully");
                     customerGrid.DataSource = null;
-                    customerGrid.DataSource = CustomerBAL.GetCustomers();
+                    customerGrid.DataSource = CustomerBal.GetAll();
                 }
             }
             catch (NullReferenceException)
             {
                 MessageBox.Show("Please enter a valid name.");
             }
-            catch (IndexOutOfRangeException io)
+            catch (Exception exc)
             {
-                Debug.WriteLine("Error in btnUpdate_Click", io);
-                MessageBox.Show(io.Message);
+                Debug.WriteLine("Error in btnUpdate_Click", exc);
+                MessageBox.Show(exc.Message);
             }
             _componentClass.ChangeVisibility(this, false, false, false, true, true, false, false, true);
         }
@@ -100,11 +103,11 @@ namespace CustomerInfoApplication.Forms
             Customer.Phone = phone.Text;
             try
             {
-                if (CustomerBAL.InsertCustomer(Customer))
+                if (CustomerBal.InsertOne(Customer))
                 {
                     MessageBox.Show("Inserted Successfully");
                     customerGrid.Refresh();
-                    customerGrid.DataSource = CustomerBAL.GetCustomers();
+                    customerGrid.DataSource = CustomerBal.GetAll();
                 }
             }
             catch (NullReferenceException ne)
@@ -112,9 +115,9 @@ namespace CustomerInfoApplication.Forms
                 Debug.WriteLine("Length of the name is 0", ne);
                 MessageBox.Show(ne.Message);
             }
-            catch (IndexOutOfRangeException ior)
+            catch (Exception exc)
             {
-                Debug.WriteLine("Error in btnInsert_Click", ior);
+                Debug.WriteLine("Error in btnInsert_Click", exc);
                 MessageBox.Show("Error while reading data");
             }
             ShowCurrentClickedData();
@@ -126,17 +129,17 @@ namespace CustomerInfoApplication.Forms
             Customer Customer = customerGrid.CurrentRow.DataBoundItem as Customer;
             try
             {
-                if (CustomerBAL.DeleteCustomer(Customer))
+                if (CustomerBal.DeleteOne(Customer))
                 {
                     MessageBox.Show("Deleted Successfully");
                     customerGrid.Refresh();
-                    customerGrid.DataSource = CustomerBAL.GetCustomers();
+                    customerGrid.DataSource = CustomerBal.GetAll();
                 }
             }
-            catch (IndexOutOfRangeException io)
+            catch (Exception io)
             {
                 Debug.WriteLine("Error in btnDel_Click", io);
-                MessageBox.Show(io.Message);
+                MessageBox.Show("Error :", io.Message);
             }
         }
 
@@ -166,13 +169,13 @@ namespace CustomerInfoApplication.Forms
             {
                 if (textBox1.Text != null || textBox1.Text.Length != 0)
                 {
-                    customerGrid.DataSource = CustomerBAL.GetCustomersByName(textBox1.Text);
+                    customerGrid.DataSource = CustomerBal.GetOneByName(textBox1.Text);
                 }
             }
-            catch (IndexOutOfRangeException io)
+            catch (Exception io)
             {
-                Debug.WriteLine("Error in intextBox1_TextChanged ", io);
-                MessageBox.Show(io.Message);
+                Debug.WriteLine("Error in btnDel_Click", io);
+                MessageBox.Show("Error :", io.Message);
             }
         }
     }

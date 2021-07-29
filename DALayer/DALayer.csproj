@@ -8,4 +8,8 @@
     <ProjectReference Include="..\BusinessEntityLayer\BusinessEntityLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>
