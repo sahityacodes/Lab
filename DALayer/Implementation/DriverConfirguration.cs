@@ -1,5 +1,6 @@
 ﻿using DALayer.Utils;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 
@@ -7,33 +8,17 @@ namespace DALayer.Implementation
 {
     static class DriverConfirguration
     {
-
-        //reads xml file and returns as data source
-        public static DataSet ReadXML()
+       public static SqlConnection OpenConnection()
         {
-            DataSet ds = new();
-            try
-            {
-                ds.ReadXml(Constants.FilePath);
-            }
-            catch (FileNotFoundException exc)
-            {
-                Debug.WriteLine("Error reading files", exc);
-            }
-            return ds;
+            SqlConnection objSqlConnection = new(Constants.ConnectionString);
+            objSqlConnection.Open();
+            return objSqlConnection;
         }
 
-        //saves dataset to xml file
-        public static void SaveChanges(DataSet ds)
+
+        public static void SaveChanges(DataTable dataTable)
         {
-            try
-            {
-                ds.WriteXml(Constants.FilePath);
-            }
-            catch (FileNotFoundException exc)
-            {
-                Debug.WriteLine("Error reading files", exc);
-            }
+                dataTable.WriteXml(Constants.FilePath);
         }
     }
 }
