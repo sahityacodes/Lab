@@ -16,9 +16,9 @@ namespace DALayer.Implementation
         }
 
 
-        public static void SaveChanges(DataTable dataTable)
+        public static void closeDriver(SqlConnection objSqlConnection)
         {
-                dataTable.WriteXml(Constants.FilePath);
+            objSqlConnection.Close();
         }
     }
 }
