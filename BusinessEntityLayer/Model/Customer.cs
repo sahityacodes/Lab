@@ -4,12 +4,17 @@
     {
         public int Id
         { get; set; }
-        public string CustomerName
-        { get; set; }
-        public string ContactName
+        public string Name
         { get; set; }
         public string Phone
         { get; set; }
-
+        public string VAT
+        { get; set; }
+        public string Address
+        { get; set; }
+        public string City
+        { get; set; }
+        public decimal AnnualRevenue
+        { get; set; }
     }
 }

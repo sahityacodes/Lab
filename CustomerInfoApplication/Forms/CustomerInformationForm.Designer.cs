@@ -29,25 +29,27 @@
         private void InitializeComponent()
         {
             this.customerGrid = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.searchByName = new System.Windows.Forms.Button();
-            this.btn_addNewRecord = new System.Windows.Forms.Button();
-            this.txtBoxName = new System.Windows.Forms.TextBox();
-            this.contactPersonName = new System.Windows.Forms.TextBox();
-            this.phone = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnInsert = new System.Windows.Forms.Button();
-            this.textID = new System.Windows.Forms.TextBox();
-            this.btnDel = new System.Windows.Forms.Button();
-            this.btnReset = new System.Windows.Forms.Button();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.City = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AnnualRevenue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.delBtn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.updateBtn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.entityCommand1 = new System.Data.Entity.Core.EntityClient.EntityCommand();
+            this.searchBox = new System.Windows.Forms.TextBox();
+            this.addBtn = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.customerGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.addBtn)).BeginInit();
             this.SuspendLayout();
             // 
             // customerGrid
             // 
             this.customerGrid.AllowDrop = true;
-            this.customerGrid.AllowUserToResizeColumns = false;
+            this.customerGrid.AllowUserToAddRows = false;
+            this.customerGrid.AllowUserToDeleteRows = false;
             this.customerGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.customerGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -56,176 +58,186 @@
             this.customerGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.customerGrid.ColumnHeadersHeight = 52;
             this.customerGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.customerGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.CustomerName,
+            this.VAT,
+            this.Phone,
+            this.Address,
+            this.City,
+            this.AnnualRevenue,
+            this.delBtn,
+            this.updateBtn});
             this.customerGrid.GridColor = System.Drawing.SystemColors.ButtonShadow;
-            this.customerGrid.Location = new System.Drawing.Point(615, 171);
+            this.customerGrid.Location = new System.Drawing.Point(129, 117);
             this.customerGrid.Name = "customerGrid";
+            this.customerGrid.ReadOnly = true;
             this.customerGrid.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.customerGrid.RowHeadersVisible = false;
             this.customerGrid.RowHeadersWidth = 92;
             this.customerGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.customerGrid.RowTemplate.Height = 45;
             this.customerGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.customerGrid.Size = new System.Drawing.Size(1030, 508);
+            this.customerGrid.Size = new System.Drawing.Size(1738, 712);
             this.customerGrid.TabIndex = 11;
-            this.customerGrid.SelectionChanged += new System.EventHandler(this.CustomerGrid_SelectionChanged);
-            this.customerGrid.Click += new System.EventHandler(this.customerGrid_Click);
+            this.customerGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerGrid_CellClick);
+            this.customerGrid.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.customerGrid_ColumnHeaderMouseClick);
             // 
-            // textBox1
+            // Id
             // 
-            this.textBox1.Location = new System.Drawing.Point(68, 78);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(408, 43);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.Id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Id.FillWeight = 30F;
+            this.Id.HeaderText = "ID";
+            this.Id.MinimumWidth = 15;
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.Id.ToolTipText = "Customer Identity Number";
+            this.Id.Width = 50;
             // 
-            // searchByName
+            // CustomerName
             // 
-            this.searchByName.Location = new System.Drawing.Point(537, 78);
-            this.searchByName.Name = "searchByName";
-            this.searchByName.Size = new System.Drawing.Size(294, 43);
-            this.searchByName.TabIndex = 4;
-            this.searchByName.Text = "Search By Name";
-            this.searchByName.UseVisualStyleBackColor = true;
-            this.searchByName.Click += new System.EventHandler(this.SearchByName_Click);
+            this.CustomerName.FillWeight = 69.33961F;
+            this.CustomerName.HeaderText = "Name";
+            this.CustomerName.MinimumWidth = 11;
+            this.CustomerName.Name = "CustomerName";
+            this.CustomerName.ReadOnly = true;
+            this.CustomerName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.CustomerName.ToolTipText = "Customer Name";
             // 
-            // btn_addNewRecord
+            // VAT
             // 
-            this.btn_addNewRecord.Location = new System.Drawing.Point(68, 653);
-            this.btn_addNewRecord.Name = "btn_addNewRecord";
-            this.btn_addNewRecord.Size = new System.Drawing.Size(239, 52);
-            this.btn_addNewRecord.TabIndex = 5;
-            this.btn_addNewRecord.Text = "Add New Record";
-            this.btn_addNewRecord.UseVisualStyleBackColor = true;
-            this.btn_addNewRecord.Click += new System.EventHandler(this.button1_Click);
+            this.VAT.FillWeight = 69.33961F;
+            this.VAT.HeaderText = "VAT";
+            this.VAT.MinimumWidth = 11;
+            this.VAT.Name = "VAT";
+            this.VAT.ReadOnly = true;
+            this.VAT.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.VAT.ToolTipText = "Tax Code";
             // 
-            // txtBoxName
+            // Phone
             // 
-            this.txtBoxName.Enabled = false;
-            this.txtBoxName.Location = new System.Drawing.Point(68, 324);
-            this.txtBoxName.Name = "txtBoxName";
-            this.txtBoxName.Size = new System.Drawing.Size(433, 43);
-            this.txtBoxName.TabIndex = 6;
+            this.Phone.FillWeight = 69.33961F;
+            this.Phone.HeaderText = "Phone";
+            this.Phone.MinimumWidth = 11;
+            this.Phone.Name = "Phone";
+            this.Phone.ReadOnly = true;
+            this.Phone.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Phone.ToolTipText = "Phone Number";
             // 
-            // contactPersonName
+            // Address
             // 
-            this.contactPersonName.Enabled = false;
-            this.contactPersonName.Location = new System.Drawing.Point(68, 415);
-            this.contactPersonName.Name = "contactPersonName";
-            this.contactPersonName.Size = new System.Drawing.Size(433, 43);
-            this.contactPersonName.TabIndex = 7;
+            this.Address.FillWeight = 69.33961F;
+            this.Address.HeaderText = "Address";
+            this.Address.MinimumWidth = 11;
+            this.Address.Name = "Address";
+            this.Address.ReadOnly = true;
+            this.Address.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Address.ToolTipText = "Address";
             // 
-            // phone
+            // City
             // 
-            this.phone.Enabled = false;
-            this.phone.Location = new System.Drawing.Point(68, 512);
-            this.phone.Name = "phone";
-            this.phone.Size = new System.Drawing.Size(433, 43);
-            this.phone.TabIndex = 8;
+            this.City.FillWeight = 69.33961F;
+            this.City.HeaderText = "City";
+            this.City.MinimumWidth = 11;
+            this.City.Name = "City";
+            this.City.ReadOnly = true;
+            this.City.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.City.ToolTipText = "City";
             // 
-            // button2
+            // AnnualRevenue
             // 
-            this.button2.Location = new System.Drawing.Point(313, 653);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(188, 52);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "Update";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.AnnualRevenue.FillWeight = 69.33961F;
+            this.AnnualRevenue.HeaderText = "Annual Income";
+            this.AnnualRevenue.MinimumWidth = 11;
+            this.AnnualRevenue.Name = "AnnualRevenue";
+            this.AnnualRevenue.ReadOnly = true;
+            this.AnnualRevenue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.AnnualRevenue.ToolTipText = "Income";
             // 
-            // btnUpdate
+            // delBtn
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(68, 653);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(214, 52);
-            this.btnUpdate.TabIndex = 10;
-            this.btnUpdate.Text = "Update Record";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Visible = false;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            this.delBtn.FillWeight = 17.71948F;
+            this.delBtn.HeaderText = "";
+            this.delBtn.Image = global::CustomerInfoApplication.Properties.Resources.del;
+            this.delBtn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.delBtn.MinimumWidth = 11;
+            this.delBtn.Name = "delBtn";
+            this.delBtn.ReadOnly = true;
             // 
-            // btnInsert
+            // updateBtn
             // 
-            this.btnInsert.Location = new System.Drawing.Point(68, 653);
-            this.btnInsert.Name = "btnInsert";
-            this.btnInsert.Size = new System.Drawing.Size(239, 52);
-            this.btnInsert.TabIndex = 11;
-            this.btnInsert.Text = "Insert Record";
-            this.btnInsert.UseVisualStyleBackColor = true;
-            this.btnInsert.Visible = false;
-            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
+            this.updateBtn.FillWeight = 17F;
+            this.updateBtn.HeaderText = "";
+            this.updateBtn.Image = global::CustomerInfoApplication.Properties.Resources.account_edit;
+            this.updateBtn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.updateBtn.MinimumWidth = 11;
+            this.updateBtn.Name = "updateBtn";
+            this.updateBtn.ReadOnly = true;
             // 
-            // textID
+            // entityCommand1
             // 
-            this.textID.Enabled = false;
-            this.textID.Location = new System.Drawing.Point(68, 243);
-            this.textID.Name = "textID";
-            this.textID.Size = new System.Drawing.Size(100, 43);
-            this.textID.TabIndex = 13;
+            this.entityCommand1.CommandTimeout = 0;
+            this.entityCommand1.CommandTree = null;
+            this.entityCommand1.Connection = null;
+            this.entityCommand1.EnablePlanCaching = true;
+            this.entityCommand1.Transaction = null;
             // 
-            // btnDel
+            // searchBox
             // 
-            this.btnDel.Location = new System.Drawing.Point(68, 726);
-            this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(214, 52);
-            this.btnDel.TabIndex = 14;
-            this.btnDel.Text = "Delete Record";
-            this.btnDel.UseVisualStyleBackColor = true;
-            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
+            this.searchBox.Location = new System.Drawing.Point(129, 59);
+            this.searchBox.Name = "searchBox";
+            this.searchBox.Size = new System.Drawing.Size(611, 43);
+            this.searchBox.TabIndex = 17;
+            this.searchBox.TextChanged += new System.EventHandler(this.searchBox_TextChanged);
             // 
-            // btnReset
+            // addBtn
             // 
-            this.btnReset.Location = new System.Drawing.Point(313, 725);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(188, 53);
-            this.btnReset.TabIndex = 15;
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.addBtn.Image = global::CustomerInfoApplication.Properties.Resources.add;
+            this.addBtn.Location = new System.Drawing.Point(62, 117);
+            this.addBtn.Name = "addBtn";
+            this.addBtn.Size = new System.Drawing.Size(61, 54);
+            this.addBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.addBtn.TabIndex = 18;
+            this.addBtn.TabStop = false;
+            this.addBtn.Click += new System.EventHandler(this.addBtn_Click);
             // 
             // CustomerInformationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1672, 921);
-            this.Controls.Add(this.btnReset);
-            this.Controls.Add(this.btnDel);
-            this.Controls.Add(this.textID);
-            this.Controls.Add(this.btnInsert);
-            this.Controls.Add(this.btnUpdate);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.phone);
-            this.Controls.Add(this.contactPersonName);
-            this.Controls.Add(this.txtBoxName);
-            this.Controls.Add(this.btn_addNewRecord);
-            this.Controls.Add(this.searchByName);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(2004, 933);
+            this.Controls.Add(this.addBtn);
             this.Controls.Add(this.customerGrid);
+            this.Controls.Add(this.searchBox);
             this.Name = "CustomerInformationForm";
             this.Text = "Customer Information Form";
             this.Load += new System.EventHandler(this.CustomerInformationForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.customerGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.addBtn)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
         #endregion
-        public System.Windows.Forms.DataGridView customerGrid;
-        public System.Windows.Forms.TextBox textBox1;
-        public System.Windows.Forms.Button searchByName;
-        public System.Windows.Forms.Button btn_addNewRecord;
-        public System.Windows.Forms.TextBox textBox2;
         public System.Windows.Forms.TextBox textBox3;
         public System.Windows.Forms.TextBox textBox4;
-        public System.Windows.Forms.Button button2;
-         public System.Windows.Forms.TextBox txtBoxName;
-        public System.Windows.Forms.TextBox contactPersonName;
         public System.Windows.Forms.TextBox phoneName;
-        public System.Windows.Forms.TextBox phone;
-        public System.Windows.Forms.Button btnUpdate;
-        public System.Windows.Forms.Button btnInsert;
-        public System.Windows.Forms.TextBox textID;
-        public System.Windows.Forms.Button btnDel;
         public System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.DataGridView customerGrid;
+        private System.Data.Entity.Core.EntityClient.EntityCommand entityCommand1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox searchBox;
+        private System.Windows.Forms.PictureBox addBtn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VAT;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Phone;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Address;
+        private System.Windows.Forms.DataGridViewTextBoxColumn City;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AnnualRevenue;
+        private System.Windows.Forms.DataGridViewImageColumn delBtn;
+        private System.Windows.Forms.DataGridViewImageColumn updateBtn;
     }
 }
 

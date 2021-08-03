@@ -25,9 +25,6 @@
     <ProjectReference Include="..\BusinessEntityLayer\BusinessEntityLayer.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
   </ItemGroup>
   <ItemGroup Condition="$(VisualStudioVersion) == '16.0'">

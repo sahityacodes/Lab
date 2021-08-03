@@ -1,10 +1,10 @@
 ﻿CREATE TABLE [dbo].[Customer] (
     [Id]            INT IDENTITY NOT NULL ,
     [Name]          CHAR (20)     NOT NULL,
-    [Phone]         NCHAR (10)    NULL,
-    [VAT]           NVARCHAR (16) NOT NULL,
-    [Address]       NVARCHAR (50) NULL,
-    [City]          NCHAR (16)    NULL,
+    [Phone]         CHAR (10)    NULL,
+    [VAT]           VARCHAR (16) NOT NULL,
+    [Address]       VARCHAR (50) NULL,
+    [City]          CHAR (16)    NULL,
     [AnnualRevenue] DECIMAL (18)  NULL,
     PRIMARY KEY  NONCLUSTERED ([Id] ASC),
     UNIQUE NONCLUSTERED ([VAT] ASC)

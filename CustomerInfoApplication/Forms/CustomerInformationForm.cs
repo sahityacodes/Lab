@@ -4,13 +4,13 @@ using BusinessLogic.CustomerInfoLogic;
 using System;
 using System.Windows.Forms;
 using System.Diagnostics;
-using BusinessLogic.Exceptions;
+
 namespace CustomerInfoApplication.Forms
 {
     public partial class CustomerInformationForm : Form
     {
-        FormComponents _componentClass = new();
         readonly IBLL<Customer> CustomerBal = new CustomerBAL();
+        bool SortCounter = true;
 
         public CustomerInformationForm()
         {
@@ -21,160 +21,126 @@ namespace CustomerInfoApplication.Forms
         {
             try
             {
-                customerGrid.DataSource = CustomerBal.GetAll();
+                foreach (Customer customer in CustomerBal.GetAll())
+                {
+                    customerGrid.Rows.Add(new object[]{customer.Id,
+                          customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
+                }
             }
             catch (Exception io)
             {
+                Debug.WriteLine(io.StackTrace);
                 Debug.WriteLine("Error in CustomerInformationForm_Load", io);
                 MessageBox.Show("Error while fetching data");
             }
-            _componentClass.ChangeVisibility(this, false, false, false, true, true, false, false, true);
         }
-
-        private void SearchByName_Click(object sender, EventArgs e)
+        private void searchBox_TextChanged(object sender, EventArgs e)
         {
             try
             {
-                if (textBox1.Text != null || textBox1.Text.Length != 0)
+                if (searchBox.Text != null || searchBox.Text.Length != 0)
                 {
-                    customerGrid.DataSource = CustomerBal.GetOneByName(textBox1.Text);
+                    customerGrid.Rows.Clear();
+                    foreach (Customer customer in CustomerBal.GetOneByName(searchBox.Text))
+                    {
+                        customerGrid.Rows.Add(new object[]{customer.Id,
+                          customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
+                    }
                 }
             }
             catch (Exception io)
             {
-                Debug.WriteLine("Error in btnDel_Click", io);
-                MessageBox.Show("Error while searching for records");
+                Debug.WriteLine("Error in searchBox_TextChanged", io);
+                MessageBox.Show("Error in the system.");
             }
         }
 
-        private void CustomerGrid_SelectionChanged(object sender, EventArgs e)
+        private void UpdateFormClosing(object sender, FormClosingEventArgs e)
         {
-            ShowCurrentClickedData();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            _componentClass.ChangeVisibility(this, true, true, true, false, false, false, true, true);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            textID.Text = ((int)customerGrid.Rows[customerGrid.Rows.Count - 1].Cells[0].Value + 1).ToString();
-            txtBoxName.Clear();
-            contactPersonName.Clear();
-            phone.Clear();
-            _componentClass.ChangeVisibility(this, true, true, true, false, false, true, false, true);
-        }
-
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            Customer Customer = new();
-            Customer.Id = int.Parse(textID.Text);
-            Customer.CustomerName = txtBoxName.Text;
-            Customer.ContactName = contactPersonName.Text;
-            Customer.Phone = phone.Text;
-            try
+            customerGrid.Rows.Clear();
+            foreach (Customer customer in CustomerBal.GetOneByName(searchBox.Text))
             {
-                if (CustomerBal.UpdateOne(Customer))
+                customerGrid.Rows.Add(new object[]{customer.Id,
+                          customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
+            }
+        }
+
+        private void customerGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                if (SortCounter)
                 {
-                    MessageBox.Show("Updated Successfully");
-                    customerGrid.DataSource = null;
-                    customerGrid.DataSource = CustomerBal.GetAll();
+                    customerGrid.Rows.Clear();
+                    foreach (Customer customer in CustomerBal.SortByColumnAscending())
+                    {
+                        Debug.WriteLine(customer.Name, customer.VAT, customer.Phone, customer.Address, customer.City, customer.AnnualRevenue);
+                        customerGrid.Rows.Add(new object[]{customer.Id,
+                          customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
+                    }
+                    SortCounter = false;
+                }
+                else
+                {
+                    customerGrid.Rows.Clear();
+                    foreach (Customer customer in CustomerBal.SortByColumnDescending())
+                    {
+                        customerGrid.Rows.Add(new object[]{customer.Id,
+                          customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
+                    }
+                    SortCounter = true;
                 }
             }
-            catch (UserDefinedException)
-            {
-                MessageBox.Show("Please enter a valid name.");
-            }
-            catch (Exception exc)
-            {
-                Debug.WriteLine("Error in btnUpdate_Click", exc);
-                MessageBox.Show(exc.Message);
-            }
-            _componentClass.ChangeVisibility(this, false, false, false, true, true, false, false, true);
         }
 
-        private void btnInsert_Click(object sender, EventArgs e)
+        private void addBtn_Click(object sender, EventArgs e)
         {
-            Customer Customer = new();
-            Customer.Id = int.Parse(textID.Text);
-            Customer.CustomerName = txtBoxName.Text;
-            Customer.ContactName = contactPersonName.Text;
-            Customer.Phone = phone.Text;
-            try
+            UpdateForm updateForm = new();
+            updateForm.Show();
+            updateForm.label7.Visible = false;
+            updateForm.txtID.Visible = false;
+            updateForm.btnInsert.Visible = true;
+            updateForm.btnSave.Visible = false;
+            updateForm.FormClosing += new FormClosingEventHandler(UpdateFormClosing);
+        }
+
+        private void customerGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1 && e.ColumnIndex == 8)
             {
-                if (CustomerBal.InsertOne(Customer))
+                UpdateForm updateForm = new();
+                updateForm.showData(customerGrid.Rows[e.RowIndex]);
+                updateForm.Show();
+                updateForm.btnSave.Visible = true;
+                updateForm.btnInsert.Visible = false;
+                updateForm.FormClosing += new FormClosingEventHandler(UpdateFormClosing);
+            }
+            if (e.RowIndex > -1 && e.ColumnIndex == 7)
+            {
+                try
                 {
-                    MessageBox.Show("Inserted Successfully");
-                    customerGrid.Refresh();
-                    customerGrid.DataSource = CustomerBal.GetAll();
+                    MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                    DialogResult dialog = MessageBox.Show("Are you sure you want to delete?", "Delete Record", buttons);
+                    if (dialog == DialogResult.Yes)
+                    {
+                        if (CustomerBal.DeleteOne(Convert.ToInt32(customerGrid.Rows[e.RowIndex].Cells[0].Value.ToString())))
+                        {
+                            MessageBox.Show("Deleted Successfully");
+                            customerGrid.Rows.Clear();
+                            foreach (Customer customer in CustomerBal.SortByColumnAscending())
+                            {
+                                Debug.WriteLine(customer.Name, customer.VAT, customer.Phone, customer.Address, customer.City, customer.AnnualRevenue);
+                                customerGrid.Rows.Add(new object[]{customer.Id,
+                          customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
+                            }
+                        }
+                    }
                 }
-            }
-            catch (UserDefinedException)
-            {
-                MessageBox.Show("Please enter a valid name.");
-            }
-            catch (Exception exc)
-            {
-                Debug.WriteLine("Error in btnInsert_Click", exc);
-                MessageBox.Show("Error while reading data");
-            }
-            ShowCurrentClickedData();
-            _componentClass.ChangeVisibility(this, false, false, false, true, true, false, false, true);
-        }
-
-        private void btnDel_Click(object sender, EventArgs e)
-        {
-            Customer Customer = customerGrid.CurrentRow.DataBoundItem as Customer;
-            try
-            {
-                if (CustomerBal.DeleteOne(Customer))
+                catch (Exception io)
                 {
-                    MessageBox.Show("Deleted Successfully");
-                    customerGrid.Refresh();
-                    customerGrid.DataSource = CustomerBal.GetAll();
+                    Debug.WriteLine("Error in btnDel_Click", io.Message);
+                    MessageBox.Show("Error in the system.");
                 }
-            }
-            catch (Exception io)
-            {
-                Debug.WriteLine("Error in btnDel_Click", io);
-                MessageBox.Show("Error :", io.Message);
-            }
-        }
-
-        private void customerGrid_Click(object sender, EventArgs e)
-        {
-            ShowCurrentClickedData();
-            _componentClass.ChangeVisibility(this, false, false, false, true, true, false, false, true);
-        }
-
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-            ShowCurrentClickedData();
-            _componentClass.ChangeVisibility(this, false, false, false, true, true, false, false, true);
-        }
-
-        private void ShowCurrentClickedData()
-        {
-            Customer Customer = customerGrid.CurrentRow.DataBoundItem as Customer;
-            textID.Text = Customer.Id.ToString();
-            txtBoxName.Text = Customer.CustomerName;
-            contactPersonName.Text = Customer.ContactName;
-            phone.Text = Customer.Phone;
-        }
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (textBox1.Text != null || textBox1.Text.Length != 0)
-                {
-                    customerGrid.DataSource = CustomerBal.GetOneByName(textBox1.Text);
-                }
-            }
-            catch (Exception io)
-            {
-                Debug.WriteLine("Error in btnDel_Click", io);
-                MessageBox.Show("Error :", io.Message);
             }
         }
     }

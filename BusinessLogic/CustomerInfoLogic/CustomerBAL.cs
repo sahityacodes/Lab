@@ -18,12 +18,12 @@ namespace BusinessLogic.CustomerInfoLogic
 
         public List<Customer> GetOneByName(string name)
         {
-            return CustomerDal.GetOneByName(name);
+            return CustomerDal.GetAllByKeyWord(name);
         }
 
         public bool InsertOne(Customer customer)
         {
-            if (customer.CustomerName.Length == 0)
+            if (customer.Name.Length == 0)
             {
                 throw new UserDefinedException("Please enter a valid name");
             }
@@ -34,7 +34,7 @@ namespace BusinessLogic.CustomerInfoLogic
 
         public bool UpdateOne(Customer customer)
         {
-            if (customer.CustomerName.Length == 0)
+            if (customer.Name.Length == 0)
             {
                 throw new UserDefinedException("Please enter a valid name");
             }
@@ -44,9 +44,19 @@ namespace BusinessLogic.CustomerInfoLogic
             }
         }
 
-        public bool DeleteOne(Customer customer)
+        public bool DeleteOne(int Id)
         {
-            return CustomerDal.DeleteOne(customer);
+            return CustomerDal.DeleteOne(Id);
+        }
+
+        public List<Customer> SortByColumnAscending()
+        {
+            return CustomerDal.SortByColumnAscending();
+        }
+
+        public List<Customer> SortByColumnDescending()
+        {
+            return CustomerDal.SortByColumnDescending();
         }
     }
 }

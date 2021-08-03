@@ -8,6 +8,8 @@ namespace BusinessLogic.Interfaces
             public List<T> GetOneByName(string name);
             public bool InsertOne(T obj);
             public bool UpdateOne(T obj);
-            public bool DeleteOne(T obj);
+            public bool DeleteOne(int Id);
+            public List<T> SortByColumnAscending();
+            public List<T> SortByColumnDescending();
     }
 }

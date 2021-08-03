@@ -10,16 +10,11 @@ namespace DALayer.Implementation
 {
     public class CustomerDAL : IDAL<Customer>
     {
-        SqlConnection objSqlConnection = DriverConfirguration.OpenConnection();
-        
         public List<Customer> GetAll()
         {
-            List<Customer> customerList = new();
-            DataTable customerDataTable = new();
-            SqlCommand com = new SqlCommand(Constants.QUERY_GETALL, objSqlConnection);
-            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(com);
-            sqlDataAdapter.Fill(customerDataTable);
-            customerList = customerDataTable.AsEnumerable()
+            SqlDB_DAL driver = new();
+            DataTable customerDataTable = driver.GetRecords(Constants.QUERY_GETALL);
+            List<Customer> customerList = customerDataTable.AsEnumerable()
                             .Select(dataRow => new Customer
                             {
                                 Id = dataRow.Field<int>("Id"),
@@ -33,15 +28,15 @@ namespace DALayer.Implementation
             return customerList;
         }
 
-        public List<Customer> GetOneByName(string name)
+        public List<Customer> GetAllByKeyWord(string searchKeyWord)
         {
-            List<Customer> customerList = new();
-            DataTable CustomerDataTable = new();
-            SqlCommand com = new(Constants.QUERY_GETBYNAME, objSqlConnection);
-            com.Parameters.AddWithValue("@Name","%"+name+"%");
-            SqlDataAdapter adapter = new(com);
-            adapter.Fill(CustomerDataTable);
-            customerList = CustomerDataTable.AsEnumerable().Select(dataRow => new Customer
+            SqlDB_DAL driver = new();
+            SqlParameter[] parameters =
+            {
+              new SqlParameter("@Word", SqlDbType.VarChar) { Value = "%"+searchKeyWord+"%"},
+            };
+            DataTable customerDataTable = driver.GetRecords(Constants.QUERY_GETBYNAME, parameters);
+            List<Customer> customerList = customerDataTable.AsEnumerable().Select(dataRow => new Customer
             {
                 Id = dataRow.Field<int>("Id"),
                 Name = dataRow.Field<string>("Name"),
@@ -56,41 +51,80 @@ namespace DALayer.Implementation
 
         public bool UpdateOne(Customer customer)
         {
-            int rows;
-            SqlCommand com = new(Constants.QUERY_UPDATE, objSqlConnection);
-            com.Parameters.AddWithValue("@Id", customer.Id);
-            com.Parameters.AddWithValue("@Name", customer.Name);
-            com.Parameters.AddWithValue("@VAT", customer.VAT);
-            com.Parameters.AddWithValue("@Phone", customer.Phone ?? Constants.DBNull);
-            com.Parameters.AddWithValue("@Address", customer.Address ?? Constants.DBNull);
-            com.Parameters.AddWithValue("@City", customer.City ?? Constants.DBNull);
-            com.Parameters.AddWithValue("@AnnualRevenue", customer.AnnualRevenue);
-            rows = com.ExecuteNonQuery();
-            return (rows > 0);
+            SqlDB_DAL driver = new();
+            SqlParameter[] parameters =
+            {
+              new SqlParameter("@Id", SqlDbType.Int) { Value = customer.Id },
+              new SqlParameter("@Name", SqlDbType.VarChar) { Value = customer.Name },
+              new SqlParameter("@VAT", SqlDbType.VarChar) { Value = customer.VAT },
+              new SqlParameter("@Address", SqlDbType.VarChar) { Value = customer.Address ?? Constants.DBNull},
+              new SqlParameter("@City", SqlDbType.VarChar) { Value = customer.City?? Constants.DBNull },
+              new SqlParameter("@Phone", SqlDbType.VarChar) { Value = customer.Phone ?? Constants.DBNull},
+              new SqlParameter("@AnnualRevenue", SqlDbType.Decimal) { Value = customer.AnnualRevenue }
+            };
+            return driver.WriteToTable(Constants.QUERY_UPDATE, parameters);
         }
 
         public bool InsertOne(Customer customer)
         {
-            int rows;
-            SqlCommand com = new(Constants.QUERY_INSERT, objSqlConnection);
-            com.Parameters.AddWithValue("@Id", customer.Id);
-            com.Parameters.AddWithValue("@Name", customer.Name);
-            com.Parameters.AddWithValue("@VAT", customer.VAT);
-            com.Parameters.AddWithValue("@Phone", customer.Phone ?? Constants.DBNull);
-            com.Parameters.AddWithValue("@Address", customer.Address ?? Constants.DBNull);
-            com.Parameters.AddWithValue("@City", customer.City ?? Constants.DBNull);
-            com.Parameters.AddWithValue("@AnnualRevenue", customer.AnnualRevenue);
-            rows = com.ExecuteNonQuery();
-            return (rows > 0);
+            SqlDB_DAL driver = new();
+            SqlParameter[] parameters =
+            {
+              new SqlParameter("@Name", SqlDbType.VarChar) { Value = customer.Name },
+              new SqlParameter("@VAT", SqlDbType.VarChar) { Value = customer.VAT },
+              new SqlParameter("@Address", SqlDbType.VarChar) { Value = customer.Address ?? Constants.DBNull},
+              new SqlParameter("@City", SqlDbType.VarChar) { Value = customer.City?? Constants.DBNull },
+              new SqlParameter("@Phone", SqlDbType.VarChar) { Value = customer.Phone ?? Constants.DBNull},
+              new SqlParameter("@AnnualRevenue", SqlDbType.Decimal) { Value = customer.AnnualRevenue }
+            };
+            return driver.WriteToTable(Constants.QUERY_INSERT, parameters);
         }
 
-        public bool DeleteOne(Customer customer)
+        public bool DeleteOne(int Id)
         {
-            int rows;
-            SqlCommand com = new(Constants.QUERY_DELETEONE, objSqlConnection);
-            com.Parameters.AddWithValue("@Id", customer.Id);
-            rows = com.ExecuteNonQuery();
-            return (rows > 0);
+            SqlDB_DAL driver = new();
+            SqlParameter[] parameters =
+            {
+              new SqlParameter("@Id", SqlDbType.Int) { Value = Id }
+            };
+            return driver.WriteToTable(Constants.QUERY_DELETEONE, parameters);
         }
-    }
+
+        public List<Customer> SortByColumnAscending()
+        {
+            SqlDB_DAL driver = new();
+            DataTable customerDataTable = driver.GetRecords(Constants.QUERY_SORTBYCOLUMNASC);
+            List<Customer> customerList = customerDataTable.AsEnumerable()
+                            .Select(dataRow => new Customer
+                            {
+                                Id = dataRow.Field<int>("Id"),
+                                Name = dataRow.Field<string>("Name"),
+                                VAT = dataRow.Field<string>("VAT"),
+                                Phone = dataRow.Field<string>("Phone"),
+                                Address = dataRow.Field<string>("Address"),
+                                City = dataRow.Field<string>("City"),
+                                AnnualRevenue = dataRow.Field<decimal>("AnnualRevenue")
+                            }).ToList();
+            return customerList;
+        }
+
+
+        public List<Customer> SortByColumnDescending()
+        {
+                SqlDB_DAL driver = new();
+                DataTable customerDataTable = driver.GetRecords(Constants.QUERY_SORTBYCOLUMNDESC);
+                List<Customer> customerList = customerDataTable.AsEnumerable()
+                                .Select(dataRow => new Customer
+                                {
+                                    Id = dataRow.Field<int>("Id"),
+                                    Name = dataRow.Field<string>("Name"),
+                                    VAT = dataRow.Field<string>("VAT"),
+                                    Phone = dataRow.Field<string>("Phone"),
+                                    Address = dataRow.Field<string>("Address"),
+                                    City = dataRow.Field<string>("City"),
+                                    AnnualRevenue = dataRow.Field<decimal>("AnnualRevenue")
+                                }).ToList();
+                return customerList;
+            }
+        }
 }
