@@ -28,9 +28,7 @@ namespace CustomerInfoApplication.Forms
                 Customer.VAT = txtVAT.Text;
                 Customer.Address = txtAddress.Text ?? "";
                 Customer.City = txtCity.Text ?? "";
-                if (txtIncome.Text.Length > 0)
-                    Customer.AnnualRevenue = Convert.ToDecimal(txtIncome.Text);
-                else Customer.AnnualRevenue = 0;
+                Customer.AnnualRevenue = (txtIncome.Text.Length > 0) ? Convert.ToDecimal(txtIncome.Text) : 0;
                 if (CustomerBal.UpdateOne(Customer))
                 {
                     DialogResult dialog = MessageBox.Show("Updated Successfully");
@@ -80,9 +78,7 @@ namespace CustomerInfoApplication.Forms
                 Customer.VAT = txtVAT.Text;
                 Customer.Address = txtAddress.Text ?? "";
                 Customer.City = txtCity.Text ?? "";
-                if (txtIncome.Text.Length > 0)
-                    Customer.AnnualRevenue = Convert.ToDecimal(txtIncome.Text);
-                else Customer.AnnualRevenue = 0;
+                Customer.AnnualRevenue = (txtIncome.Text.Length > 0) ? Convert.ToDecimal(txtIncome.Text) : 0;
                 if (CustomerBal.InsertOne(Customer))
                 {
                     DialogResult dialog = MessageBox.Show("Inserted Successfully");
