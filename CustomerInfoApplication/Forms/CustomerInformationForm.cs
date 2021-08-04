@@ -30,7 +30,6 @@ namespace CustomerInfoApplication.Forms
             catch (Exception io)
             {
                 Debug.WriteLine(io.StackTrace);
-                Debug.WriteLine("Error in CustomerInformationForm_Load", io);
                 MessageBox.Show("Error while fetching data");
             }
         }
@@ -50,6 +49,7 @@ namespace CustomerInfoApplication.Forms
             }
             catch (Exception io)
             {
+                Debug.WriteLine(io.StackTrace);
                 Debug.WriteLine("Error in searchBox_TextChanged", io);
                 MessageBox.Show("Error in the system.");
             }

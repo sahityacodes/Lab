@@ -6,7 +6,7 @@ namespace DALayer.Implementation
 {
     class SqlDB_DAL
     {
-        public DataTable GetRecords(string queryStr, params IDataParameter[] sqlParams)
+        internal DataTable GetRecords(string queryStr, params IDataParameter[] sqlParams)
         {
             SqlConnection objSqlConnection = new(Constants.ConnectionString);
             objSqlConnection.Open();
@@ -25,7 +25,7 @@ namespace DALayer.Implementation
             return dt;
         }
 
-        public bool WriteToTable(string queryStr, params IDataParameter[] sqlParams)
+        internal bool WriteToTable(string queryStr, params IDataParameter[] sqlParams)
         {
             int rows;
             SqlConnection objSqlConnection = new SqlConnection(Constants.ConnectionString);
