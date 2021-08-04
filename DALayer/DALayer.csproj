@@ -16,12 +16,6 @@
     <Win32Resource />
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="DBDesign\InsertData.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="DBDesign\InsertData.sql" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\BusinessEntityLayer\BusinessEntityLayer.csproj" />
   </ItemGroup>
   <ItemGroup>

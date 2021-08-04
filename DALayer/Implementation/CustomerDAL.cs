@@ -55,11 +55,11 @@ namespace DALayer.Implementation
             SqlParameter[] parameters =
             {
               new SqlParameter("@Id", SqlDbType.Int) { Value = customer.Id },
-              new SqlParameter("@Name", SqlDbType.VarChar) { Value = customer.Name },
-              new SqlParameter("@VAT", SqlDbType.VarChar) { Value = customer.VAT },
+              new SqlParameter("@Name", SqlDbType.Char) { Value = customer.Name },
+              new SqlParameter("@VAT", SqlDbType.Char) { Value = customer.VAT },
               new SqlParameter("@Address", SqlDbType.VarChar) { Value = customer.Address ?? Constants.DBNull},
-              new SqlParameter("@City", SqlDbType.VarChar) { Value = customer.City?? Constants.DBNull },
-              new SqlParameter("@Phone", SqlDbType.VarChar) { Value = customer.Phone ?? Constants.DBNull},
+              new SqlParameter("@City", SqlDbType.Char) { Value = customer.City?? Constants.DBNull },
+              new SqlParameter("@Phone", SqlDbType.Char) { Value = customer.Phone ?? Constants.DBNull},
               new SqlParameter("@AnnualRevenue", SqlDbType.Decimal) { Value = customer.AnnualRevenue }
             };
             return driver.WriteToTable(Constants.QUERY_UPDATE, parameters);
@@ -70,11 +70,11 @@ namespace DALayer.Implementation
             SqlDB_DAL driver = new();
             SqlParameter[] parameters =
             {
-              new SqlParameter("@Name", SqlDbType.VarChar) { Value = customer.Name },
-              new SqlParameter("@VAT", SqlDbType.VarChar) { Value = customer.VAT },
+              new SqlParameter("@Name", SqlDbType.Char) { Value = customer.Name },
+              new SqlParameter("@VAT", SqlDbType.Char) { Value = customer.VAT },
               new SqlParameter("@Address", SqlDbType.VarChar) { Value = customer.Address ?? Constants.DBNull},
-              new SqlParameter("@City", SqlDbType.VarChar) { Value = customer.City?? Constants.DBNull },
-              new SqlParameter("@Phone", SqlDbType.VarChar) { Value = customer.Phone ?? Constants.DBNull},
+              new SqlParameter("@City", SqlDbType.Char) { Value = customer.City?? Constants.DBNull },
+              new SqlParameter("@Phone", SqlDbType.Char) { Value = customer.Phone ?? Constants.DBNull},
               new SqlParameter("@AnnualRevenue", SqlDbType.Decimal) { Value = customer.AnnualRevenue }
             };
             return driver.WriteToTable(Constants.QUERY_INSERT, parameters);

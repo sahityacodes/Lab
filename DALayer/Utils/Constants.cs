@@ -5,7 +5,7 @@
         //xml file path
         public static string FilePath = @"C:\Users\sahit\source\repos\Lab\DALayer\dataset.xml";
 
-        public static string ConnectionString = @"Data Source=(LocalDB)\LocalDb;Initial Catalog=CustomerDB;Integrated Security=True";
+        public static string ConnectionString = @"Data Source=np:\\.\pipe\LOCALDB#2A396B76\tsql\query;Initial Catalog=CustomerDB;Integrated Security=True";
 
         public static string QUERY_GETALL = "SELECT * FROM Customer";
 

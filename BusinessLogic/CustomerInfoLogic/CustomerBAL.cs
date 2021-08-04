@@ -27,6 +27,10 @@ namespace BusinessLogic.CustomerInfoLogic
             {
                 throw new UserDefinedException("Please enter a valid name");
             }
+            else if (customer.VAT.Length == 0)
+            {
+                throw new UserDefinedException("VAT is Mandatory");
+            }
             else { 
                 return CustomerDal.InsertOne(customer);
             }
@@ -37,6 +41,9 @@ namespace BusinessLogic.CustomerInfoLogic
             if (customer.Name.Length == 0)
             {
                 throw new UserDefinedException("Please enter a valid name");
+            }else if(customer.VAT.Length == 0)
+            {
+                throw new UserDefinedException("VAT is Mandatory");
             }
             else
             {

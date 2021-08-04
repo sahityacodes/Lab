@@ -19,16 +19,24 @@ namespace CustomerInfoApplication.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Customer Customer = new();
-            Customer.Id = int.Parse(txtID.Text);
-            Customer.Name = inputName.Text;
-            Customer.Phone = txtPhone.Text;
-            Customer.VAT = txtVAT.Text;
-            Customer.Address = txtAddress.Text;
-            Customer.City = txtCity.Text;
-            Customer.AnnualRevenue = decimal.Parse(txtIncome.Text);
             try
             {
+                Customer Customer = new();
+                Customer.Id = int.Parse(txtID.Text);
+                Customer.Name = inputName.Text;
+                Customer.Phone = txtPhone.Text ?? "";
+                Customer.VAT = txtVAT.Text;
+                Customer.Address = txtAddress.Text ?? "";
+                Customer.City = txtCity.Text ?? "";
+                if (txtIncome.Text.Length > 0)
+                {
+                    if (System.Text.RegularExpressions.Regex.IsMatch(txtIncome.Text, "^[a-zA-Z ]"))
+                        throw new UserDefinedException("Alphabets not allowed in Income field.");
+                    else
+                    {
+                        Customer.AnnualRevenue = Convert.ToDecimal(txtIncome.Text);
+                    }
+                }
                 if (CustomerBal.UpdateOne(Customer))
                 {
                     DialogResult dialog = MessageBox.Show("Updated Successfully");
@@ -38,9 +46,9 @@ namespace CustomerInfoApplication.Forms
                     }
                 }
             }
-            catch (UserDefinedException)
+            catch (UserDefinedException ude)
             {
-                MessageBox.Show("Please enter a valid name.");
+                MessageBox.Show(ude.Message);
             }
             catch (SqlException sqlExc)
             {
@@ -52,6 +60,7 @@ namespace CustomerInfoApplication.Forms
             }
             catch (Exception exc)
             {
+                Debug.WriteLine(exc.StackTrace);
                 MessageBox.Show("Error in the system.");
             }
         }
@@ -73,17 +82,18 @@ namespace CustomerInfoApplication.Forms
             {
                 Customer Customer = new();
                 Customer.Name = inputName.Text;
-                Customer.Phone = txtPhone.Text;
+                Customer.Phone = txtPhone.Text ?? "";
                 Customer.VAT = txtVAT.Text;
-                Customer.Address = txtAddress.Text;
-                Customer.City = txtCity.Text;
-                if (System.Text.RegularExpressions.Regex.IsMatch(txtIncome.Text, "^[a-zA-Z ]"))
+                Customer.Address = txtAddress.Text ?? "";
+                Customer.City = txtCity.Text ?? "";
+                if (txtIncome.Text.Length > 0)
                 {
-                    throw new UserDefinedException("Alphabets not allowed in Income field.");
-                }
-                else
-                {
-                    Customer.AnnualRevenue = decimal.Parse(txtIncome.Text);
+                    if(System.Text.RegularExpressions.Regex.IsMatch(txtIncome.Text, "^[a-zA-Z ]"))
+                        throw new UserDefinedException("Alphabets not allowed in Income field.");
+                    else
+                    {
+                        Customer.AnnualRevenue = Convert.ToDecimal(txtIncome.Text);
+                    }
                 }
                 if (CustomerBal.InsertOne(Customer))
                 {
@@ -112,6 +122,7 @@ namespace CustomerInfoApplication.Forms
             }
             catch (Exception exc)
             {
+                Debug.WriteLine(exc.StackTrace);
                 MessageBox.Show("Error in the system.");
             }
         }

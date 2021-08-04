@@ -57,6 +57,7 @@ namespace CustomerInfoApplication.Forms
 
         private void UpdateFormClosing(object sender, FormClosingEventArgs e)
         {
+            addBtn.Enabled = true;
             customerGrid.Rows.Clear();
             foreach (Customer customer in CustomerBal.GetOneByName(searchBox.Text))
             {
@@ -95,6 +96,7 @@ namespace CustomerInfoApplication.Forms
 
         private void addBtn_Click(object sender, EventArgs e)
         {
+            addBtn.Enabled = false;
             UpdateForm updateForm = new();
             updateForm.Show();
             updateForm.label7.Visible = false;
