@@ -29,14 +29,8 @@ namespace CustomerInfoApplication.Forms
                 Customer.Address = txtAddress.Text ?? "";
                 Customer.City = txtCity.Text ?? "";
                 if (txtIncome.Text.Length > 0)
-                {
-                    if (System.Text.RegularExpressions.Regex.IsMatch(txtIncome.Text, "^[a-zA-Z ]"))
-                        throw new UserDefinedException("Alphabets not allowed in Income field.");
-                    else
-                    {
-                        Customer.AnnualRevenue = Convert.ToDecimal(txtIncome.Text);
-                    }
-                }
+                    Customer.AnnualRevenue = Convert.ToDecimal(txtIncome.Text);
+                else Customer.AnnualRevenue = 0;
                 if (CustomerBal.UpdateOne(Customer))
                 {
                     DialogResult dialog = MessageBox.Show("Updated Successfully");
@@ -87,14 +81,8 @@ namespace CustomerInfoApplication.Forms
                 Customer.Address = txtAddress.Text ?? "";
                 Customer.City = txtCity.Text ?? "";
                 if (txtIncome.Text.Length > 0)
-                {
-                    if(System.Text.RegularExpressions.Regex.IsMatch(txtIncome.Text, "^[a-zA-Z ]"))
-                        throw new UserDefinedException("Alphabets not allowed in Income field.");
-                    else
-                    {
-                        Customer.AnnualRevenue = Convert.ToDecimal(txtIncome.Text);
-                    }
-                }
+                    Customer.AnnualRevenue = Convert.ToDecimal(txtIncome.Text);
+                else Customer.AnnualRevenue = 0;
                 if (CustomerBal.InsertOne(Customer))
                 {
                     DialogResult dialog = MessageBox.Show("Inserted Successfully");
@@ -124,6 +112,15 @@ namespace CustomerInfoApplication.Forms
             {
                 Debug.WriteLine(exc.StackTrace);
                 MessageBox.Show("Error in the system.");
+            }
+        }
+
+        private void txtIncome_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                  (e.KeyChar != '.'))
+            {
+                e.Handled = true;
             }
         }
     }

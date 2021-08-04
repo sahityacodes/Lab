@@ -94,6 +94,7 @@ namespace CustomerInfoApplication.Forms
             this.txtIncome.Name = "txtIncome";
             this.txtIncome.Size = new System.Drawing.Size(261, 43);
             this.txtIncome.TabIndex = 2;
+            this.txtIncome.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtIncome_KeyPress);
             // 
             // btnSave
             // 
