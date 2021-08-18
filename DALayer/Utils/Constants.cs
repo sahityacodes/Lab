@@ -17,9 +17,9 @@
         public static string QUERY_INSERT = "Insert into Customer(Name,Phone,VAT,Address,City,AnnualRevenue) Values (@Name, @Phone, @VAT, @Address, @City, @AnnualRevenue)";
         public static string QUERY_DELETEONE = "Delete from Customer where Id=@Id";
 
-        public static string QUERY_SORTBYCOLUMNASC = "Select * from Customer Order By case WHEN @orderby = Id ASC Then Id ELSE null END ASC,case WHEN @orderby = AnnualRevenue ASC Then AnnualRevenue ELSE null END ASC";
+        public static string QUERY_SORTBYCOLUMNASC = "Select * from Customer Order By case WHEN @orderby = '0' Then Id ELSE null END ASC,case WHEN @orderby = '6' Then AnnualRevenue ELSE null END ASC";
 
-        public static string QUERY_SORTBYCOLUMNDESC = "Select * from Customer Order By @Name DESC";
+        public static string QUERY_SORTBYCOLUMNDESC = "Select * from Customer Order By case WHEN @orderby = '0' Then Id ELSE null END DESC,case WHEN @orderby = '6' Then AnnualRevenue ELSE null END DESC";
 
         public static string QUERY_GETBYNAME_ORDERS = "Select * from SalesOrders where (OrderID + CustomerID)  LIKE @Word";
 

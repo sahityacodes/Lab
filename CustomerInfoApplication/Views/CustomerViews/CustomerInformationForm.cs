@@ -75,7 +75,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
                 {
                     SortCounter = false;
                     customerGrid.Rows.Clear();
-                    foreach (Customer customer in custController.SortByColumnAscending("Id"))
+                    foreach (Customer customer in custController.SortByColumnAscending(Convert.ToString(e.ColumnIndex)))
                     {
                         customerGrid.Rows.Add(new object[]{customer.Id,
                           customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
@@ -84,7 +84,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
                 else if (!SortCounter)
                 {
                     customerGrid.Rows.Clear();
-                    foreach (Customer customer in custController.SortByColumnDescending(Convert.ToString(customerGrid.Columns[e.ColumnIndex].HeaderText)))
+                    foreach (Customer customer in custController.SortByColumnDescending(Convert.ToString(e.ColumnIndex)))
                     {
                         customerGrid.Rows.Add(new object[]{customer.Id,
                           customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });

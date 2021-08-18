@@ -113,7 +113,7 @@ namespace DALayer.Implementation
             SqlDB_DAL driver = new();
             SqlParameter[] parameters =
             {
-              new SqlParameter("@orderby", SqlDbType.VarChar) { Value = colName +" ASC "},
+              new SqlParameter("@orderby", SqlDbType.VarChar) { Value = colName},
             };
             DataTable customerDataTable = driver.GetRecords(Constants.QUERY_SORTBYCOLUMNASC, parameters);
             List<Customer> customerList = customerDataTable.AsEnumerable()
@@ -136,7 +136,7 @@ namespace DALayer.Implementation
             SqlDB_DAL driver = new();
             SqlParameter[] parameters =
             {
-              new SqlParameter("@Name", SqlDbType.VarChar) { Value = colName},
+              new SqlParameter("@orderby", SqlDbType.VarChar) { Value = colName},
             };
             DataTable customerDataTable = driver.GetRecords(Constants.QUERY_SORTBYCOLUMNDESC, parameters);
             List<Customer> customerList = customerDataTable.AsEnumerable()
