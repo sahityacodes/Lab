@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALayer", "DALayer\DALayer.csproj", "{C7896179-AD0E-4606-80F1-E680899F6534}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessEntityLayer", "BusinessEntityLayer\BusinessEntityLayer.csproj", "{C138F3D1-DE4C-4B1A-865A-5DFD47A36704}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessEntityLayer", "BusinessEntityLayer\BusinessEntityLayer.csproj", "{C138F3D1-DE4C-4B1A-865A-5DFD47A36704}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerInfoApplication", "CustomerInfoApplication\CustomerInfoApplication.csproj", "{40DACFD8-B41B-4929-BADF-ED08F1CDA020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerInfoApplication", "CustomerInfoApplication\CustomerInfoApplication.csproj", "{40DACFD8-B41B-4929-BADF-ED08F1CDA020}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayer", "ServiceLayer\ServiceLayer.csproj", "{6AF22314-008D-429F-B437-DCFEDF994FCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{40DACFD8-B41B-4929-BADF-ED08F1CDA020}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40DACFD8-B41B-4929-BADF-ED08F1CDA020}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40DACFD8-B41B-4929-BADF-ED08F1CDA020}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AF22314-008D-429F-B437-DCFEDF994FCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF22314-008D-429F-B437-DCFEDF994FCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF22314-008D-429F-B437-DCFEDF994FCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF22314-008D-429F-B437-DCFEDF994FCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-﻿namespace CustomerInfoApplication.Forms
+﻿namespace CustomerInfoApplication.Views.CustomerViews
 {
     partial class CustomerInformationForm
     {
@@ -28,7 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.searchBox = new System.Windows.Forms.TextBox();
+            this.addBtn = new System.Windows.Forms.PictureBox();
             this.customerGrid = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -38,20 +41,35 @@
             this.AnnualRevenue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.delBtn = new System.Windows.Forms.DataGridViewImageColumn();
             this.updateBtn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.entityCommand1 = new System.Data.Entity.Core.EntityClient.EntityCommand();
-            this.searchBox = new System.Windows.Forms.TextBox();
-            this.addBtn = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.customerGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.addBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.customerGrid)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // searchBox
+            // 
+            this.searchBox.Location = new System.Drawing.Point(102, 56);
+            this.searchBox.Name = "searchBox";
+            this.searchBox.Size = new System.Drawing.Size(611, 43);
+            this.searchBox.TabIndex = 17;
+            this.searchBox.TextChanged += new System.EventHandler(this.searchBox_TextChanged);
+            // 
+            // addBtn
+            // 
+            this.addBtn.Image = global::CustomerInfoApplication.Properties.Resources.add;
+            this.addBtn.Location = new System.Drawing.Point(48, 150);
+            this.addBtn.Name = "addBtn";
+            this.addBtn.Size = new System.Drawing.Size(61, 54);
+            this.addBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.addBtn.TabIndex = 18;
+            this.addBtn.TabStop = false;
+            this.addBtn.Click += new System.EventHandler(this.addBtn_Click);
             // 
             // customerGrid
             // 
             this.customerGrid.AllowDrop = true;
             this.customerGrid.AllowUserToAddRows = false;
             this.customerGrid.AllowUserToDeleteRows = false;
-            this.customerGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.customerGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.customerGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.customerGrid.BackgroundColor = System.Drawing.SystemColors.Control;
@@ -68,8 +86,9 @@
             this.AnnualRevenue,
             this.delBtn,
             this.updateBtn});
+            this.customerGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.customerGrid.GridColor = System.Drawing.SystemColors.ButtonShadow;
-            this.customerGrid.Location = new System.Drawing.Point(129, 117);
+            this.customerGrid.Location = new System.Drawing.Point(0, 0);
             this.customerGrid.Name = "customerGrid";
             this.customerGrid.ReadOnly = true;
             this.customerGrid.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -78,10 +97,20 @@
             this.customerGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.customerGrid.RowTemplate.Height = 45;
             this.customerGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.customerGrid.Size = new System.Drawing.Size(1738, 712);
+            this.customerGrid.Size = new System.Drawing.Size(2240, 819);
             this.customerGrid.TabIndex = 11;
             this.customerGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerGrid_CellClick);
             this.customerGrid.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.customerGrid_ColumnHeaderMouseClick);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.customerGrid);
+            this.panel1.Location = new System.Drawing.Point(102, 150);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(2240, 819);
+            this.panel1.TabIndex = 19;
             // 
             // Id
             // 
@@ -97,7 +126,7 @@
             // 
             // CustomerName
             // 
-            this.CustomerName.FillWeight = 69.33961F;
+            this.CustomerName.FillWeight = 57.89191F;
             this.CustomerName.HeaderText = "Name";
             this.CustomerName.MinimumWidth = 11;
             this.CustomerName.Name = "CustomerName";
@@ -107,7 +136,7 @@
             // 
             // VAT
             // 
-            this.VAT.FillWeight = 69.33961F;
+            this.VAT.FillWeight = 57.89191F;
             this.VAT.HeaderText = "VAT";
             this.VAT.MinimumWidth = 11;
             this.VAT.Name = "VAT";
@@ -117,7 +146,7 @@
             // 
             // Phone
             // 
-            this.Phone.FillWeight = 69.33961F;
+            this.Phone.FillWeight = 57.89191F;
             this.Phone.HeaderText = "Phone";
             this.Phone.MinimumWidth = 11;
             this.Phone.Name = "Phone";
@@ -127,7 +156,7 @@
             // 
             // Address
             // 
-            this.Address.FillWeight = 69.33961F;
+            this.Address.FillWeight = 57.89191F;
             this.Address.HeaderText = "Address";
             this.Address.MinimumWidth = 11;
             this.Address.Name = "Address";
@@ -137,7 +166,7 @@
             // 
             // City
             // 
-            this.City.FillWeight = 69.33961F;
+            this.City.FillWeight = 57.89191F;
             this.City.HeaderText = "City";
             this.City.MinimumWidth = 11;
             this.City.Name = "City";
@@ -147,7 +176,7 @@
             // 
             // AnnualRevenue
             // 
-            this.AnnualRevenue.FillWeight = 69.33961F;
+            this.AnnualRevenue.FillWeight = 57.89191F;
             this.AnnualRevenue.HeaderText = "Annual Income";
             this.AnnualRevenue.MinimumWidth = 11;
             this.AnnualRevenue.Name = "AnnualRevenue";
@@ -157,7 +186,7 @@
             // 
             // delBtn
             // 
-            this.delBtn.FillWeight = 17.71948F;
+            this.delBtn.FillWeight = 15F;
             this.delBtn.HeaderText = "";
             this.delBtn.Image = global::CustomerInfoApplication.Properties.Resources.del;
             this.delBtn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
@@ -167,7 +196,7 @@
             // 
             // updateBtn
             // 
-            this.updateBtn.FillWeight = 17F;
+            this.updateBtn.FillWeight = 14.19337F;
             this.updateBtn.HeaderText = "";
             this.updateBtn.Image = global::CustomerInfoApplication.Properties.Resources.account_edit;
             this.updateBtn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
@@ -175,46 +204,21 @@
             this.updateBtn.Name = "updateBtn";
             this.updateBtn.ReadOnly = true;
             // 
-            // entityCommand1
-            // 
-            this.entityCommand1.CommandTimeout = 0;
-            this.entityCommand1.CommandTree = null;
-            this.entityCommand1.Connection = null;
-            this.entityCommand1.EnablePlanCaching = true;
-            this.entityCommand1.Transaction = null;
-            // 
-            // searchBox
-            // 
-            this.searchBox.Location = new System.Drawing.Point(129, 59);
-            this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(611, 43);
-            this.searchBox.TabIndex = 17;
-            this.searchBox.TextChanged += new System.EventHandler(this.searchBox_TextChanged);
-            // 
-            // addBtn
-            // 
-            this.addBtn.Image = global::CustomerInfoApplication.Properties.Resources.add;
-            this.addBtn.Location = new System.Drawing.Point(62, 117);
-            this.addBtn.Name = "addBtn";
-            this.addBtn.Size = new System.Drawing.Size(61, 54);
-            this.addBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.addBtn.TabIndex = 18;
-            this.addBtn.TabStop = false;
-            this.addBtn.Click += new System.EventHandler(this.addBtn_Click);
-            // 
             // CustomerInformationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2004, 933);
+            this.ClientSize = new System.Drawing.Size(2454, 1032);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.addBtn);
-            this.Controls.Add(this.customerGrid);
             this.Controls.Add(this.searchBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "CustomerInformationForm";
             this.Text = "Customer Information Form";
             this.Load += new System.EventHandler(this.CustomerInformationForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.customerGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.addBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.customerGrid)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -224,11 +228,11 @@
         public System.Windows.Forms.TextBox textBox4;
         public System.Windows.Forms.TextBox phoneName;
         public System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.DataGridView customerGrid;
-        private System.Data.Entity.Core.EntityClient.EntityCommand entityCommand1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox searchBox;
         private System.Windows.Forms.PictureBox addBtn;
+        private System.Windows.Forms.DataGridView customerGrid;
+        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
         private System.Windows.Forms.DataGridViewTextBoxColumn VAT;

@@ -6,10 +6,11 @@ namespace BusinessLogic.Interfaces
     {
             public List<T> GetAll();
             public List<T> GetOneByName(string name);
+            public T GetOne(int OrderID);
             public bool InsertOne(T obj);
             public bool UpdateOne(T obj);
             public bool DeleteOne(int Id);
-            public List<T> SortByColumnAscending();
-            public List<T> SortByColumnDescending();
+            public List<T> SortByColumnAscending(string colName);
+            public List<T> SortByColumnDescending(string colName);
     }
 }

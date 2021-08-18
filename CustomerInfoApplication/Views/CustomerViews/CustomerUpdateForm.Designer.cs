@@ -1,7 +1,7 @@
 ﻿
-namespace CustomerInfoApplication.Forms
+namespace CustomerInfoApplication.Views.CustomerViews
 {
-    public partial class UpdateForm
+    public partial class CustomerUpdateForm
     {
         /// <summary> 
         /// Required designer variable.
@@ -35,7 +35,6 @@ namespace CustomerInfoApplication.Forms
             this.txtCity = new System.Windows.Forms.TextBox();
             this.txtPhone = new System.Windows.Forms.TextBox();
             this.txtIncome = new System.Windows.Forms.TextBox();
-            this.btnSave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -44,7 +43,8 @@ namespace CustomerInfoApplication.Forms
             this.label6 = new System.Windows.Forms.Label();
             this.txtID = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.btnInsert = new System.Windows.Forms.Button();
+            this.Cancel = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // inputName
@@ -95,17 +95,6 @@ namespace CustomerInfoApplication.Forms
             this.txtIncome.Size = new System.Drawing.Size(261, 43);
             this.txtIncome.TabIndex = 2;
             this.txtIncome.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtIncome_KeyPress);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(501, 388);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(169, 52);
-            this.btnSave.TabIndex = 6;
-            this.btnSave.Text = "Save Record";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Visible = false;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // label1
             // 
@@ -178,23 +167,33 @@ namespace CustomerInfoApplication.Forms
             this.label7.TabIndex = 14;
             this.label7.Text = "ID";
             // 
-            // btnInsert
+            // Cancel
             // 
-            this.btnInsert.Location = new System.Drawing.Point(480, 388);
-            this.btnInsert.Name = "btnInsert";
-            this.btnInsert.Size = new System.Drawing.Size(202, 52);
-            this.btnInsert.TabIndex = 6;
-            this.btnInsert.Text = "Insert Record";
-            this.btnInsert.UseVisualStyleBackColor = true;
-            this.btnInsert.Visible = false;
-            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
+            this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.Cancel.Location = new System.Drawing.Point(354, 429);
+            this.Cancel.Name = "Cancel";
+            this.Cancel.Size = new System.Drawing.Size(169, 52);
+            this.Cancel.TabIndex = 15;
+            this.Cancel.Text = "Cancel";
+            this.Cancel.UseVisualStyleBackColor = true;
             // 
-            // UpdateForm
+            // btnOK
+            // 
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Location = new System.Drawing.Point(667, 429);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(169, 52);
+            this.btnOK.TabIndex = 16;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
+            // 
+            // CustomerUpdateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1221, 472);
-            this.Controls.Add(this.btnInsert);
+            this.ClientSize = new System.Drawing.Size(1220, 514);
+            this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.Cancel);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtID);
             this.Controls.Add(this.label6);
@@ -203,7 +202,6 @@ namespace CustomerInfoApplication.Forms
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtIncome);
             this.Controls.Add(this.txtPhone);
             this.Controls.Add(this.txtCity);
@@ -211,15 +209,15 @@ namespace CustomerInfoApplication.Forms
             this.Controls.Add(this.txtVAT);
             this.Controls.Add(this.inputName);
             this.Location = new System.Drawing.Point(129, 117);
-            this.Name = "UpdateForm";
+            this.Name = "CustomerUpdateForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        public System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -234,6 +232,7 @@ namespace CustomerInfoApplication.Forms
         public System.Windows.Forms.TextBox txtIncome;
         public System.Windows.Forms.TextBox txtID;
         public System.Windows.Forms.Label label7;
-        public System.Windows.Forms.Button btnInsert;
+        private System.Windows.Forms.Button Cancel;
+        private System.Windows.Forms.Button btnOK;
     }
 }

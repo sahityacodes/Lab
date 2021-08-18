@@ -1,4 +1,6 @@
-﻿namespace BusinessEntityLayer.Model
+﻿using System.Collections.Generic;
+
+namespace BusinessEntityLayer.Model
 {
     public class Customer
     {
@@ -16,5 +18,10 @@
         { get; set; }
         public decimal AnnualRevenue
         { get; set; }
+        public decimal TotalAmount
+        { get; set; }
+        public int OrderCount
+        { get; set; }
+
     }
 }
