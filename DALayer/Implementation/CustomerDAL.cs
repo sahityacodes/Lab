@@ -13,25 +13,7 @@ namespace DALayer.Implementation
         public List<Customer> GetAll()
         {
             SqlDB_DAL driver = new();
-            DataTable customerDataTable = driver.GetRecords(Constants.QUERY_GETALL);
-
-            List<Customer> customerList = new();
-            if (customerDataTable.Rows.Count > 0)
-            {
-                customerList = customerDataTable.AsEnumerable()
-                                .Select(dataRow => new Customer
-                                {
-                                    Id = dataRow.Field<int>("Id"),
-                                    Name = dataRow.Field<string>("Name"),
-                                    VAT = dataRow.Field<string>("VAT"),
-                                    Phone = dataRow.Field<string>("Phone"),
-                                    Address = dataRow.Field<string>("Address"),
-                                    City = dataRow.Field<string>("City"),
-                                    AnnualRevenue = dataRow.Field<decimal>("AnnualRevenue")
-                                }).ToList();
-                customerDataTable.Dispose();
-            }
-            return customerList;
+            return ConvertDataTableToCustomer(driver.GetRecords(Constants.QUERY_GETALL));
         }
 
         public List<Customer> GetAllByKeyWord(string searchKeyWord)
@@ -41,18 +23,7 @@ namespace DALayer.Implementation
             {
               new SqlParameter("@Word", SqlDbType.VarChar) { Value = "%"+searchKeyWord+"%"},
             };
-            DataTable customerDataTable = driver.GetRecords(Constants.QUERY_GETBYNAME, parameters);
-            List<Customer> customerList = customerDataTable.AsEnumerable().Select(dataRow => new Customer
-            {
-                Id = dataRow.Field<int>("Id"),
-                Name = dataRow.Field<string>("Name"),
-                VAT = dataRow.Field<string>("VAT"),
-                Phone = dataRow.Field<string>("Phone"),
-                Address = dataRow.Field<string>("Address"),
-                City = dataRow.Field<string>("City"),
-                AnnualRevenue = dataRow.Field<decimal>("AnnualRevenue")
-            }).ToList();
-            return customerList;
+            return ConvertDataTableToCustomer(driver.GetRecords(Constants.QUERY_GETBYNAME, parameters));
         }
 
         public bool UpdateOne(Customer customer)
@@ -115,19 +86,7 @@ namespace DALayer.Implementation
             {
               new SqlParameter("@orderby", SqlDbType.VarChar) { Value = colName},
             };
-            DataTable customerDataTable = driver.GetRecords(Constants.QUERY_SORTBYCOLUMNASC, parameters);
-            List<Customer> customerList = customerDataTable.AsEnumerable()
-                            .Select(dataRow => new Customer
-                            {
-                                Id = dataRow.Field<int>("Id"),
-                                Name = dataRow.Field<string>("Name"),
-                                VAT = dataRow.Field<string>("VAT"),
-                                Phone = dataRow.Field<string>("Phone"),
-                                Address = dataRow.Field<string>("Address"),
-                                City = dataRow.Field<string>("City"),
-                                AnnualRevenue = dataRow.Field<decimal>("AnnualRevenue")
-                            }).ToList();
-            return customerList;
+            return ConvertDataTableToCustomer(driver.GetRecords(Constants.QUERY_SORTBYCOLUMNASC, parameters));
         }
 
 
@@ -138,19 +97,7 @@ namespace DALayer.Implementation
             {
               new SqlParameter("@orderby", SqlDbType.VarChar) { Value = colName},
             };
-            DataTable customerDataTable = driver.GetRecords(Constants.QUERY_SORTBYCOLUMNDESC, parameters);
-            List<Customer> customerList = customerDataTable.AsEnumerable()
-                            .Select(dataRow => new Customer
-                            {
-                                Id = dataRow.Field<int>("Id"),
-                                Name = dataRow.Field<string>("Name"),
-                                VAT = dataRow.Field<string>("VAT"),
-                                Phone = dataRow.Field<string>("Phone"),
-                                Address = dataRow.Field<string>("Address"),
-                                City = dataRow.Field<string>("City"),
-                                AnnualRevenue = dataRow.Field<decimal>("AnnualRevenue")
-                            }).ToList();
-            return customerList;
+            return ConvertDataTableToCustomer(driver.GetRecords(Constants.QUERY_SORTBYCOLUMNDESC, parameters));
         }
 
         public bool DeleteMany(int Id)
@@ -180,6 +127,21 @@ namespace DALayer.Implementation
                 customerDataTable.Dispose();
             }
             return customerList;
+        }
+
+        private List<Customer> ConvertDataTableToCustomer(DataTable customerDataTable)
+        {
+           return  customerDataTable.AsEnumerable()
+                                            .Select(dataRow => new Customer
+                                            {
+                                                Id = dataRow.Field<int>("Id"),
+                                                Name = dataRow.Field<string>("Name"),
+                                                VAT = dataRow.Field<string>("VAT"),
+                                                Phone = dataRow.Field<string>("Phone"),
+                                                Address = dataRow.Field<string>("Address"),
+                                                City = dataRow.Field<string>("City"),
+                                                AnnualRevenue = dataRow.Field<decimal>("AnnualRevenue")
+                                            }).ToList();
         }
     }
 }
