@@ -44,12 +44,15 @@ namespace CustomerInfoApplication.Views.ChartViews
             // 
             this.barChart.CrosshairOptions.ArgumentLineColor = System.Drawing.Color.White;
             this.barChart.Legend.Visibility = DevExpress.Utils.DefaultBoolean.True;
-            this.barChart.Location = new System.Drawing.Point(396, 87);
+            this.barChart.Location = new System.Drawing.Point(166, 87);
             this.barChart.Name = "barChart";
+            this.barChart.PaletteName = "Accent";
+            this.barChart.PaletteRepository.Add("Accent", new DevExpress.XtraCharts.Palette("Accent", DevExpress.XtraCharts.PaletteScaleMode.Repeat, new DevExpress.XtraCharts.PaletteEntry[] {
+                new DevExpress.XtraCharts.PaletteEntry(System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(108)))), ((int)(((byte)(108))))), System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(108)))), ((int)(((byte)(108))))))}));
             this.barChart.SeriesSerializable = new DevExpress.XtraCharts.Series[0];
             this.barChart.SeriesTemplate.ArgumentScaleType = DevExpress.XtraCharts.ScaleType.Qualitative;
             this.barChart.SeriesTemplate.NumericSummaryOptions.UseAxisMeasureUnit = false;
-            this.barChart.Size = new System.Drawing.Size(1202, 700);
+            this.barChart.Size = new System.Drawing.Size(1643, 891);
             this.barChart.TabIndex = 0;
             this.barChart.ToolTipEnabled = DevExpress.Utils.DefaultBoolean.True;
             this.barChart.ToolTipOptions.ShowForSeries = true;
@@ -63,7 +66,6 @@ namespace CustomerInfoApplication.Views.ChartViews
             this.barManager1.Form = this;
             this.barManager1.MaxItemId = 106;
             this.barManager1.ShowScreenTipsInMenus = true;
-
             // 
             // barDockControlTop
             // 
@@ -77,7 +79,7 @@ namespace CustomerInfoApplication.Views.ChartViews
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 908);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 1063);
             this.barDockControlBottom.Manager = this.barManager1;
             this.barDockControlBottom.Size = new System.Drawing.Size(1993, 0);
             // 
@@ -87,7 +89,7 @@ namespace CustomerInfoApplication.Views.ChartViews
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
             this.barDockControlLeft.Manager = this.barManager1;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 908);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 1063);
             // 
             // barDockControlRight
             // 
@@ -95,21 +97,21 @@ namespace CustomerInfoApplication.Views.ChartViews
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
             this.barDockControlRight.Location = new System.Drawing.Point(1993, 0);
             this.barDockControlRight.Manager = this.barManager1;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 908);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 1063);
             // 
             // ChartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1993, 908);
+            this.ClientSize = new System.Drawing.Size(1993, 1063);
             this.Controls.Add(this.barChart);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
-            this.Name = "ChartForm";
-            this.Text = "Customers' Orders and Costs";
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "ChartForm";
+            this.Text = "Customers\' Orders and Costs";
             this.Load += new System.EventHandler(this.ChartForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.barChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();

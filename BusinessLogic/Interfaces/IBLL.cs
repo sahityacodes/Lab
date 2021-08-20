@@ -9,8 +9,9 @@ namespace BusinessLogic.Interfaces
             public T GetOne(int OrderID);
             public bool InsertOne(T obj);
             public bool UpdateOne(T obj);
-            public bool DeleteOne(int Id);
-            public List<T> SortByColumnAscending(string colName);
+            public bool DeleteOne(int Id, int rowID);
+             public bool DeleteAll(int Id);
+             public List<T> SortByColumnAscending(string colName);
             public List<T> SortByColumnDescending(string colName);
     }
 }

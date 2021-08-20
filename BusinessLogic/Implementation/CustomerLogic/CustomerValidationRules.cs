@@ -1,10 +1,13 @@
 ﻿using BusinessEntityLayer.Model;
 using BusinessLogic.Exceptions;
+using DALayer.DTO;
+using DALayer.Interfaces;
 
 namespace BusinessLogic.Implementation.CustomerLogic
 {
     class CustomerValidationRules
     {
+        readonly ICustomerDAL<Customer> CustomerDal = new CustomerDAL();
         internal void ValidateCustomerForm(Customer customer)
         {
             if (customer.Name.Length == 0)

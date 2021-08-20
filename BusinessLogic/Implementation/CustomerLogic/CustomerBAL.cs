@@ -1,9 +1,8 @@
 ﻿using BusinessEntityLayer.Model;
 using System.Collections.Generic;
 using DALayer.Interfaces;
-using DALayer.Implementation;
 using BusinessLogic.Interfaces;
-using BusinessLogic.Exceptions;
+using DALayer.DTO;
 
 namespace BusinessLogic.Implementation.CustomerLogic
 {
@@ -33,9 +32,9 @@ namespace BusinessLogic.Implementation.CustomerLogic
             return CustomerDal.UpdateOne(customer);
         }
 
-        public bool DeleteOne(int Id)
+        public bool DeleteAll(int Id)
         {
-            return CustomerDal.DeleteOne(Id);
+            return CustomerDal.DeleteAll(Id);
         }
 
         public List<Customer> SortByColumnAscending(string colName)
@@ -48,8 +47,6 @@ namespace BusinessLogic.Implementation.CustomerLogic
             return CustomerDal.SortByColumnDescending(colName);
         }
 
-
-
         public Customer GetOne(int OrderID)
         {
             throw new System.NotImplementedException();
@@ -58,6 +55,15 @@ namespace BusinessLogic.Implementation.CustomerLogic
         public List<Customer> GetCustomerOrdersCost()
         {
             return CustomerDal.GetCustomerOrdersCost();
+        }
+        public bool CheckIfCustomerExists(int ID)
+        {
+            return CustomerDal.CheckIfCustomerExists(ID);
+        }
+
+        public bool DeleteOne(int Id, int rowID)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

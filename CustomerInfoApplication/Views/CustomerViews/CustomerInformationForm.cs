@@ -5,34 +5,32 @@ using System.Diagnostics;
 using BusinessLogic.Exceptions;
 using System.Data.SqlClient;
 using CustomerInfoApplication.Controllers;
+using System.Collections.Generic;
 
 namespace CustomerInfoApplication.Views.CustomerViews
 {
     public partial class CustomerInformationForm : Form
     {
-        CustomerController custController = new();
-        bool SortCounter = true;    
+        readonly CustomerController custController = new();
+        bool SortCounter = true;
 
         public CustomerInformationForm()
         {
             InitializeComponent();
         }
 
+        private void LoadGrid(List<Customer> custlist)
+        {
+            customerGrid.Rows.Clear();
+            foreach (Customer customer in custlist)
+            {
+                customerGrid.Rows.Add(new object[]{customer.Id,
+                          customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
+            }
+        }
         private void CustomerInformationForm_Load(object sender, EventArgs e)
         {
-            try
-            {
-                foreach (Customer customer in custController.GetAll())
-                {
-                    customerGrid.Rows.Add(new object[]{customer.Id,
-                          customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
-                }
-            }
-            catch (Exception io)
-            {
-                Debug.WriteLine(io.StackTrace);
-                MessageBox.Show("Error while fetching data");
-            }
+            FetchAllRecords();
         }
         private void searchBox_TextChanged(object sender, EventArgs e)
         {
@@ -40,12 +38,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
             {
                 if (searchBox.Text != null || searchBox.Text.Length != 0)
                 {
-                    customerGrid.Rows.Clear();
-                    foreach (Customer customer in custController.GetOneByName(searchBox.Text))
-                    {
-                        customerGrid.Rows.Add(new object[]{customer.Id,
-                          customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
-                    }
+                    LoadGrid(custController.GetOneByName(searchBox.Text));
                 }
             }
             catch (Exception io)
@@ -56,14 +49,16 @@ namespace CustomerInfoApplication.Views.CustomerViews
             }
         }
 
-        private void UpdateFormClosing()
+        private void FetchAllRecords()
         {
-            addBtn.Enabled = true;
-            customerGrid.Rows.Clear();
-            foreach (Customer customer in custController.GetAll())
+            try
             {
-                customerGrid.Rows.Add(new object[]{customer.Id,
-                          customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
+                LoadGrid(custController.GetAll());
+            }
+            catch (Exception io)
+            {
+                Debug.WriteLine(io.StackTrace);
+                MessageBox.Show("Error while fetching data");
             }
         }
 
@@ -71,25 +66,23 @@ namespace CustomerInfoApplication.Views.CustomerViews
         {
             if (e.ColumnIndex == 0 || e.ColumnIndex == 6)
             {
-                if (SortCounter)
+                try
                 {
-                    SortCounter = false;
-                    customerGrid.Rows.Clear();
-                    foreach (Customer customer in custController.SortByColumnAscending(Convert.ToString(e.ColumnIndex)))
+                    if (SortCounter)
                     {
-                        customerGrid.Rows.Add(new object[]{customer.Id,
-                          customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
+                        SortCounter = false;
+                        LoadGrid(custController.SortByColumnAscending(Convert.ToString(e.ColumnIndex)));
+                    }
+                    else if (!SortCounter)
+                    {
+                        LoadGrid(custController.SortByColumnDescending(Convert.ToString(e.ColumnIndex)));
+                        SortCounter = true;
                     }
                 }
-                else if (!SortCounter)
+                catch (Exception io)
                 {
-                    customerGrid.Rows.Clear();
-                    foreach (Customer customer in custController.SortByColumnDescending(Convert.ToString(e.ColumnIndex)))
-                    {
-                        customerGrid.Rows.Add(new object[]{customer.Id,
-                          customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
-                    }
-                    SortCounter = true;
+                    Debug.WriteLine(io.StackTrace);
+                    MessageBox.Show("Error while fetching data");
                 }
             }
         }
@@ -142,41 +135,53 @@ namespace CustomerInfoApplication.Views.CustomerViews
             }
             if (e.RowIndex > -1 && e.ColumnIndex == 7)
             {
-                try
+                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                DialogResult dialog = MessageBox.Show("Are you sure you want to delete?", "Delete Record", buttons);
+                if (dialog == DialogResult.Yes)
                 {
-                    MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-                    DialogResult dialog = MessageBox.Show("Are you sure you want to delete?", "Delete Record", buttons);
-                    if (dialog == DialogResult.Yes)
-                    {
-                        if (custController.DeleteCustomer(Convert.ToInt32(customerGrid.Rows[e.RowIndex].Cells[0].Value.ToString())))
-                        {
-                            MessageBox.Show("Deleted Successfully");
-                            customerGrid.Rows.Clear();
-                            foreach (Customer customer in custController.SortByColumnAscending("Id"))
-                            {
-                                Debug.WriteLine(customer.Name, customer.VAT, customer.Phone, customer.Address, customer.City, customer.AnnualRevenue);
-                                customerGrid.Rows.Add(new object[]{customer.Id,
-                          customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
-                            }
-                        }
-                    }
+                    DeleteCustomer(Convert.ToInt32(customerGrid.Rows[e.RowIndex].Cells[0].Value.ToString()));
                 }
-                catch (Exception io)
-                {
-                    Debug.WriteLine("Error in btnDel_Click", io.Message);
-                    MessageBox.Show("Error in the system.");
-                }
+
             }
         }
 
-        public void InsertCustomer(Customer customer)
+        private void DeleteCustomer(int ID)
+        {
+            try
+            {
+                if (custController.DeleteCustomer(ID))
+                {
+                    MessageBox.Show("Deleted Successfully");
+                    FetchAllRecords();
+                }
+            }
+            catch (SqlException sqlExc)
+            {
+                Debug.WriteLine(sqlExc.Message);
+                if (sqlExc.Number == 547)
+                {
+                    MessageBox.Show("Customer has orders, please delete the orders first to proceed.");
+                }
+                else
+                {
+                    MessageBox.Show("Error in the System");
+                }
+            }
+            catch (Exception io)
+            {
+                Debug.WriteLine("Error in btnDel_Click", io.Message);
+                MessageBox.Show("Error in the system.");
+            }
+        }
+
+        private void InsertCustomer(Customer customer)
         {
             try
             {
                 if (custController.InsertCustomer(customer))
                 {
                     DialogResult dialog = MessageBox.Show("Inserted Successfully");
-                    UpdateFormClosing();
+                    FetchAllRecords();
                 }
             }
             catch (UserDefinedException ud)
@@ -197,19 +202,19 @@ namespace CustomerInfoApplication.Views.CustomerViews
             }
             catch (Exception exc)
             {
-                Debug.WriteLine(exc.StackTrace);
+                Debug.WriteLine(exc.Message);
                 MessageBox.Show("Error in the system.");
             }
         }
 
-        public void UpdateCustomer(Customer customer)
+        private void UpdateCustomer(Customer customer)
         {
             try
             {
                 if (custController.UpdateCustomer(customer))
                 {
                     DialogResult dialog = MessageBox.Show("Updated Successfully");
-                    UpdateFormClosing();
+                    FetchAllRecords();
                 }
             }
             catch (UserDefinedException ude)
@@ -226,7 +231,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
             }
             catch (Exception exc)
             {
-                Debug.WriteLine(exc.StackTrace);
+                Debug.WriteLine(exc.Message);
                 MessageBox.Show("Error in the system.");
             }
         }

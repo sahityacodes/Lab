@@ -8,13 +8,13 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
+using CustomerInfoApplication.Controllers;
 
 namespace CustomerInfoApplication.Views.OrderViews
 {
     public partial class SalesOrderDetailsForm : XtraForm
     {
-        ICustomerBLL<Customer> CustomerBal = new CustomerBAL();
-        IOrderBLL<SalesOrders> OrderBal = new OrderBAL();
+        OrderController orderController = new();
 
         public SalesOrderDetailsForm()
         {
@@ -23,7 +23,7 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         public void InitializeFormValues(SalesOrders orders)
         {
-            customerIdText.ValueMember = Convert.ToString(orders.CustomerID) ?? "";
+            customerIdText.Text = Convert.ToString(orders.CustomerID);
             datePicker.Value = orders.DateOrder;
             textPayment.Text = Convert.ToString(orders.Payment) ?? "";
             textAddress.Text = Convert.ToString(orders.OrderSummary.ShippingAddress) ?? "";
@@ -40,31 +40,10 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         public void InitializeFormElements(bool enable)
         {
-            if (!enable)
+            if (enable)
             {
-                customerIdText.Enabled = false;
-                datePicker.Enabled = false;
-                textPayment.Enabled = false;
-                textAddress.Enabled = false;
-                textShippingCost.Enabled = false;
-                deliveryDate.Enabled = false;
-                textDiscountAmount.Enabled = false;
-                textTotalAmount.Enabled = false;
-                orderRowsGrid.Enabled = false;
-            }
-        }
-
-        private void customerIdText_MouseClick(object sender, MouseEventArgs e)
-        {
-            try
-            {
-                customerIdText.Items.Clear();
-                customerIdText.Items.AddRange(CustomerBal.SortByColumnAscending("Id").Select(o => Convert.ToString(o.Id)).ToArray());
-            }
-            catch (Exception io)
-            {
-                Debug.WriteLine(io.StackTrace);
-                MessageBox.Show("Error while fetching Customer Data");
+                pictureBox1.Enabled = true;
+                pictureBox1.Visible = true;
             }
         }
 
@@ -111,20 +90,20 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         private void calCostBtn_Click(object sender, EventArgs e)
         {
+            decimal costs = 0;
             foreach (DataGridViewRow row in orderRowsGrid.Rows)
             {
                 string Qty = Convert.ToString(row.Cells[2].Value);
                 string UnitPrice = Convert.ToString(row.Cells[3].Value);
                 if (Qty.Length > 0 && UnitPrice.Length > 0)
-                    row.Cells[4].Value = OrderBal.CalculateTotalUnitCost(Convert.ToDecimal(Qty), Convert.ToDecimal(UnitPrice));
-                decimal costs = orderRowsGrid.Rows
+                    row.Cells[4].Value = orderController.CalculateTotalUnitCost(Convert.ToDecimal(Qty), Convert.ToDecimal(UnitPrice));
+                costs = orderRowsGrid.Rows
                         .OfType<DataGridViewRow>()
                         .Select(r => Convert.ToDecimal(r.Cells[4].Value))
                         .ToList().Sum();
-                textTotalAmount.Text = Convert.ToString(OrderBal.CalculateTotalCost(costs, textDiscountAmount.Text.Length > 0 ? Convert.ToDecimal(textDiscountAmount.Text) : 0,
-                                        textShippingCost.Text.Length > 0 ? Convert.ToDecimal(textShippingCost.Text) : 0));
             }
-
+            textTotalAmount.Text = Convert.ToString(orderController.CalculateTotalCost(costs, textDiscountAmount.Text.Length > 0 ? Convert.ToDecimal(textDiscountAmount.Text) : 0,
+                                        textShippingCost.Text.Length > 0 ? Convert.ToDecimal(textShippingCost.Text) : 0));
         }
     }
 }

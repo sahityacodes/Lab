@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessEntityLayer", "Busi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerInfoApplication", "CustomerInfoApplication\CustomerInfoApplication.csproj", "{40DACFD8-B41B-4929-BADF-ED08F1CDA020}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayer", "ServiceLayer\ServiceLayer.csproj", "{6AF22314-008D-429F-B437-DCFEDF994FCB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{40DACFD8-B41B-4929-BADF-ED08F1CDA020}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40DACFD8-B41B-4929-BADF-ED08F1CDA020}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40DACFD8-B41B-4929-BADF-ED08F1CDA020}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6AF22314-008D-429F-B437-DCFEDF994FCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6AF22314-008D-429F-B437-DCFEDF994FCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6AF22314-008D-429F-B437-DCFEDF994FCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6AF22314-008D-429F-B437-DCFEDF994FCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

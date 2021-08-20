@@ -5,8 +5,9 @@ using System.Data;
 using System.Linq;
 using System.Data.SqlClient;
 using DALayer.Utils;
+using DALayer.Implementation;
 
-namespace DALayer.Implementation
+namespace DALayer.DTO
 {
     public class CustomerDAL : ICustomerDAL<Customer>
     {
@@ -65,7 +66,7 @@ namespace DALayer.Implementation
             return driver.WriteToTable(queries);
         }
 
-        public bool DeleteOne(int Id)
+        public bool DeleteAll(int Id)
         {
             SqlDB_DAL driver = new();
             SqlParameter[] parameters =
@@ -98,11 +99,6 @@ namespace DALayer.Implementation
               new SqlParameter("@orderby", SqlDbType.VarChar) { Value = colName},
             };
             return ConvertDataTableToCustomer(driver.GetRecords(Constants.QUERY_SORTBYCOLUMNDESC, parameters));
-        }
-
-        public bool DeleteMany(int Id)
-        {
-            throw new System.NotImplementedException();
         }
 
         public Customer GetOne(int OrderID)
@@ -142,6 +138,21 @@ namespace DALayer.Implementation
                                                 City = dataRow.Field<string>("City"),
                                                 AnnualRevenue = dataRow.Field<decimal>("AnnualRevenue")
                                             }).ToList();
+        }
+
+        public bool CheckIfCustomerExists(int ID)
+        {
+            SqlDB_DAL driver = new();
+            SqlParameter[] parameters =
+            {
+              new SqlParameter("@Id", SqlDbType.Int) { Value = ID},
+            };
+            return (driver.GetRecords(Constants.QUERY_CHECKIFCUSTOMER_EXISTS, parameters).Rows.Count > 0 )? true :false ;
+        }
+
+        public bool DeleteOne(int Id, int rowID)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

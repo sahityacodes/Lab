@@ -4,13 +4,15 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
 using CustomerInfoApplication.Controllers;
+using BusinessLogic.Exceptions;
+using System.Collections.Generic;
 
 namespace CustomerInfoApplication.Views.OrderViews
 {
     public partial class SalesOrderForm : Form
     {
-       // IBLL<SalesOrders> OrderBAL = new OrderBAL();
         OrderController orderController = new OrderController();
+        bool SortCounter = true;
         public SalesOrderForm()
         {
             InitializeComponent();
@@ -20,7 +22,7 @@ namespace CustomerInfoApplication.Views.OrderViews
         {
             try
             {
-                ReloadGrid();
+                ReloadGrid(orderController.GetAll());
             }
             catch (Exception io)
             {
@@ -50,7 +52,6 @@ namespace CustomerInfoApplication.Views.OrderViews
             catch (Exception io)
             {
                 Debug.WriteLine(io.Message);
-                Debug.WriteLine("Error in searchBox_TextChanged", io.StackTrace);
                 MessageBox.Show("Error in the system.");
             }
         }
@@ -71,29 +72,13 @@ namespace CustomerInfoApplication.Views.OrderViews
             }
         }
 
-        private void InsertOrder(SalesOrders orders)
-        {
-            try
-            {
-                if (orderController.InsertOne(orders))
-                {
-                    DialogResult dialog = MessageBox.Show("Inserted Successfully");
-                    ReloadGrid();
-                }
-            }
-            catch (Exception exc)
-            {
-                Debug.WriteLine(exc.Message);
-                Debug.WriteLine(exc.StackTrace);
-                MessageBox.Show("Error in the system.");
-            }
-        }
+       
 
-        private void ReloadGrid()
+        private void ReloadGrid(List<SalesOrders> orderList)
         {
             addBtn.Enabled = true;
             orderGrid.Rows.Clear();
-            foreach (SalesOrders order in orderController.GetAll())
+            foreach (SalesOrders order in orderList)
             {
                 foreach (SalesOrdersRows row in order.OrderRows)
                 {
@@ -112,8 +97,12 @@ namespace CustomerInfoApplication.Views.OrderViews
                 if (orderController.UpdateOne(orders))
                 {
                     DialogResult dialog = MessageBox.Show("Updated Successfully");
-                    ReloadGrid();
+                    ReloadGrid(orderController.GetAll());
                 }
+            }
+            catch (UserDefinedException ud)
+            {
+                MessageBox.Show(ud.Message);
             }
             catch (Exception exc)
             {
@@ -130,23 +119,15 @@ namespace CustomerInfoApplication.Views.OrderViews
                 int OrderID = Convert.ToInt32(orderGrid.CurrentRow.Cells[0].Value);
                 SalesOrders originalOrder = orderController.GetOne(OrderID);
                 detailsForm.InitializeFormValues(originalOrder);
+                detailsForm.InitializeFormElements(false);
                 DialogResult dialog = detailsForm.ShowDialog();
                 if (dialog == DialogResult.OK)
                 {
                     SalesOrders updatedOrder = detailsForm.getSaleOrderInfo();
                     updatedOrder.OrderID = OrderID;
-                    int rowID = 1;
-                    foreach (SalesOrdersRows updatedRow in updatedOrder.OrderRows)
+                    for(int i=0;i<originalOrder.OrderRows.Count; i++)
                     {
-                        if (originalOrder.OrderRows.Count > updatedOrder.OrderRows.Count)
-                        {
-                            updatedRow.RowID = originalOrder.OrderRows[rowID].RowID;
-                        }
-                        else
-                        {
-                            updatedRow.RowID = updatedOrder.OrderRows.Select(o => o.RowID).ToArray().Max() + 1;
-                        }
-                        rowID++;
+                        updatedOrder.OrderRows[i].RowID = originalOrder.OrderRows[i].RowID;
                     }
                     UpdateOrder(updatedOrder);
                 }
@@ -159,21 +140,43 @@ namespace CustomerInfoApplication.Views.OrderViews
             {
                 try
                 {
-                    MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-                    DialogResult dialog = MessageBox.Show("Are you sure you want to delete?", "Delete Record", buttons);
-                    if (dialog == DialogResult.Yes)
+                    DialogResult dialog = MessageBox.Show("Delete Order?", "Delete Record", MessageBoxButtons.OKCancel);
+                    if (dialog == DialogResult.OK)
                     {
-                        if (orderController.DeleteOne(Convert.ToInt32(orderGrid.Rows[e.RowIndex].Cells[0].Value)))
+                       if (orderController.DeleteAll(Convert.ToInt32(orderGrid.Rows[e.RowIndex].Cells[0].Value)))
+                        {
+                            MessageBox.Show("Deleted Successfully");
+                            ReloadGrid(orderController.GetAll());
+                        } 
+                       /* if (orderController.DeleteOne(Convert.ToInt32(orderGrid.Rows[e.RowIndex].Cells[0].Value), Convert.ToInt32(orderGrid.Rows[e.RowIndex].Cells[4].Value)))
                         {
                             MessageBox.Show("Deleted Successfully");
                             ReloadGrid();
-                        }
+                        } */
                     }
                 }
                 catch (Exception io)
                 {
                     Debug.WriteLine("Error in btnDel_Click", io.Message);
                     MessageBox.Show("Error in the system.");
+                }
+            }
+
+        }
+
+        private void orderGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == 0 || e.ColumnIndex == 1 || e.ColumnIndex == 2 ||e.ColumnIndex == 11 || e.ColumnIndex == 12)
+            {
+                if (SortCounter)
+                {
+                    SortCounter = false;
+                    ReloadGrid(orderController.SortByColumnAscending(Convert.ToString(e.ColumnIndex)));
+                }
+                else
+                {
+                    SortCounter = true;
+                    ReloadGrid(orderController.SortByColumnDescending(Convert.ToString(e.ColumnIndex)));
                 }
             }
         }

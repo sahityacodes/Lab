@@ -6,11 +6,11 @@ using System.Linq;
 using System.Data.SqlClient;
 using DALayer.Utils;
 using System;
-using System.Diagnostics;
+using DALayer.Implementation;
 
-namespace DALayer.Implementation
+namespace DALayer.DTO
 {
-    public class OrderDAL : IDAL<SalesOrders>
+    public class OrderDAL : IOrderDAL<SalesOrders>
     {
         public List<SalesOrders> GetAll()
         {
@@ -131,7 +131,7 @@ namespace DALayer.Implementation
             return driver.WriteToTable(param);
         }
 
-        public bool DeleteOne(int OrderId)
+        public bool DeleteAll(int OrderId)
         {
             SqlDB_DAL driver = new();
             SqlParameter[] parameters =
@@ -145,41 +145,25 @@ namespace DALayer.Implementation
             return driver.WriteToTable(param);
         }
 
-        public List<SalesOrders> SortByColumnAscending(String colName)
+        public List<SalesOrders> SortByColumnAscending(string colName)
         {
             SqlDB_DAL driver = new();
-            List<SalesOrders> OrderList = new();
-            DataTable orderDataTable = driver.GetRecords(Constants.QUERY_SELECTALLORDERS);
-            List<SalesOrders> orderList = orderDataTable.AsEnumerable()
-                            .Select(dataRow => new SalesOrders
-                            {
-                                OrderID = dataRow.Field<int>("Id"),
-                                CustomerID = dataRow.Field<int>("Name"),
-                                DateOrder = dataRow.Field<DateTime>("VAT"),
-                                Payment = dataRow.Field<string>("Phone"),
-                                OrderRows = dataRow.Field<List<SalesOrdersRows>>("Address"),
-                                OrderSummary = dataRow.Field<SalesOrdersTail>("City"),
-                            }).ToList();
-            return orderList;
+            SqlParameter[] parameters =
+            {
+              new SqlParameter("@orderby", SqlDbType.VarChar) { Value = colName},
+            };
+            return ConvertToObject(driver.GetRecords(Constants.QUERY_SORTBYCOLUMNASC_ORDERS, parameters));
         }
 
 
-        public List<SalesOrders> SortByColumnDescending(String colName)
+        public List<SalesOrders> SortByColumnDescending(string colName)
         {
             SqlDB_DAL driver = new();
-            List<SalesOrders> OrderList = new();
-            DataTable orderDataTable = driver.GetRecords(Constants.QUERY_SELECTALLORDERS);
-            List<SalesOrders> orderList = orderDataTable.AsEnumerable()
-                            .Select(dataRow => new SalesOrders
-                            {
-                                OrderID = dataRow.Field<int>("Id"),
-                                CustomerID = dataRow.Field<int>("Name"),
-                                DateOrder = dataRow.Field<DateTime>("VAT"),
-                                Payment = dataRow.Field<string>("Phone"),
-                                OrderRows = dataRow.Field<List<SalesOrdersRows>>("Address"),
-                                OrderSummary = dataRow.Field<SalesOrdersTail>("City"),
-                            }).ToList();
-            return orderList;
+            SqlParameter[] parameters =
+            {
+              new SqlParameter("@orderby", SqlDbType.VarChar) { Value = colName},
+            };
+            return ConvertToObject(driver.GetRecords(Constants.QUERY_SORTBYCOLUMNDESC_ORDERS, parameters));
         }
 
         private int GetCurrentOrderID()
@@ -198,11 +182,6 @@ namespace DALayer.Implementation
             SqlDB_DAL driver = new();
             return ConvertToObject(driver.GetRecords(Constants.QUERY_SELECTALLORDERS_ONE, parameters))[0];
 
-        }
-
-        public bool DeleteMany(int Id)
-        {
-            throw new NotImplementedException();
         }
 
         private List<SalesOrders> ConvertToObject(DataTable orderDataTable)
@@ -259,9 +238,20 @@ namespace DALayer.Implementation
             return orderList;
         }
 
-        public List<SalesOrders> GetCustomerOrdersCost()
+        public bool DeleteOne(int OrderId, int RowId)
         {
-            throw new NotImplementedException();
+            SqlDB_DAL driver = new();
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@OrderID", SqlDbType.Int) { Value = OrderId },
+                new SqlParameter("@RowId", SqlDbType.Int) { Value = RowId }
+              };
+            List<SqlParameter[]> rowParams = new();
+            rowParams.Add(parameters);
+            Dictionary<string, List<SqlParameter[]>> param = new();
+            param.Add(Constants.QUERY_DELETEONE_ROW, rowParams);
+            return driver.WriteToTable(param);
         }
+
     }
 }

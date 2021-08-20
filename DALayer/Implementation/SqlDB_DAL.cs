@@ -3,7 +3,6 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Diagnostics;
 using System.Collections.Generic;
-using System;
 
 namespace DALayer.Implementation
 {
@@ -58,7 +57,7 @@ namespace DALayer.Implementation
                             {
                                 com.Parameters.Add(par);
                             } 
-                            Debug.WriteLine(com.ExecuteNonQuery());
+                            com.ExecuteNonQuery();
                             com.Parameters.Clear();
                         }
                     }

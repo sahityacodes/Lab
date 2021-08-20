@@ -21,8 +21,12 @@ namespace CustomerInfoApplication.Views.ChartViews
 
         private void ChartForm_Load(object sender, EventArgs e)
         {
-            List<Customer> customerInfo = CustomerBal.GetCustomerOrdersCost();
-            Series series = new("Total Orders", ViewType.Bar);
+            buildBarChart(CustomerBal.GetCustomerOrdersCost(), "Total Orders", "Customer IDs", "Total Orders", "TotalCost: {Test}");
+        }
+
+        private void buildBarChart(List<Customer> customerInfo, string seriesName, string xAxisTitle, string yAxisTitle, string tooltipPattern)
+        {
+            Series series = new(seriesName, ViewType.Bar);
             foreach (Customer cust in customerInfo)
             {
                 series.Points.Add(new SeriesPoint(Convert.ToString(cust.Id), cust.OrderCount)
@@ -44,7 +48,7 @@ namespace CustomerInfoApplication.Views.ChartViews
 
             relativePosition.OffsetX = 2;
             relativePosition.OffsetY = 2;
-            series.ToolTipPointPattern = "CustomerID : {V} TotalCost : {Test}";
+            series.ToolTipPointPattern = tooltipPattern;
 
             XYDiagram diagram = (XYDiagram)barChart.Diagram;
             diagram.AxisY.WholeRange.SideMarginsValue = 0;
@@ -54,13 +58,12 @@ namespace CustomerInfoApplication.Views.ChartViews
             diagram.AxisY.NumericScaleOptions.GridSpacing = 1;
             diagram.AxisX.Title.Alignment = StringAlignment.Center;
             diagram.AxisX.Title.Visibility = DefaultBoolean.True;
-            diagram.AxisX.Title.Text = "Customer IDs";
-            diagram.AxisX.Title.TextColor = Color.Red;
+            diagram.AxisX.Title.Text = xAxisTitle;
+            diagram.AxisX.Title.TextColor = Color.Green;
             diagram.AxisY.Title.Alignment = StringAlignment.Center;
-            diagram.AxisY.Title.Text = "Total Orders";
-            diagram.AxisY.Title.TextColor = Color.Red;
+            diagram.AxisY.Title.Text = yAxisTitle;
+            diagram.AxisY.Title.TextColor = Color.Green;
             diagram.AxisY.Title.Visibility = DefaultBoolean.True;
-
         }
     }
 }

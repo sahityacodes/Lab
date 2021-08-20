@@ -1,13 +1,14 @@
 ﻿using BusinessEntityLayer.Model;
 using BusinessLogic.Implementation.OrderLogic;
 using BusinessLogic.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace CustomerInfoApplication.Controllers
 {
     internal class OrderController
     {
-        readonly IBLL<SalesOrders> OrderBAL = new OrderBAL();
+        readonly IOrderBLL<SalesOrders> OrderBAL = new OrderBAL();
 
         public List<SalesOrders> GetAll()
         {
@@ -26,7 +27,7 @@ namespace CustomerInfoApplication.Controllers
 
         public List<SalesOrders> SortByColumnDescending(string columnName)
         {
-            return OrderBAL.SortByColumnAscending(columnName);
+            return OrderBAL.SortByColumnDescending(columnName);
         }
 
         public bool InsertCustomer(SalesOrders orders)
@@ -39,9 +40,14 @@ namespace CustomerInfoApplication.Controllers
             return OrderBAL.UpdateOne(orders);
         }
 
-        public bool DeleteOne(int ID)
+        public bool DeleteAll(int ID)
         {
-            return OrderBAL.DeleteOne(ID);
+            return OrderBAL.DeleteAll(ID);
+        }
+
+        public bool DeleteOne(int ID,int rowID)
+        {
+            return OrderBAL.DeleteOne(ID, rowID);
         }
 
         internal SalesOrders GetOne(int orderID)
@@ -58,5 +64,16 @@ namespace CustomerInfoApplication.Controllers
         {
             return OrderBAL.UpdateOne(order);
         }
+
+        internal decimal CalculateTotalUnitCost(decimal v1, decimal v2)
+        {
+            return OrderBAL.CalculateTotalUnitCost(v1,v2);
+        }
+
+        internal decimal CalculateTotalCost(decimal costs, decimal v1, decimal v2)
+        {
+            return OrderBAL.CalculateTotalCost(costs, v1, v2);
+        }
+
     }
 }

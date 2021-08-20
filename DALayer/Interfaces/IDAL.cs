@@ -9,8 +9,8 @@ namespace DALayer.Interfaces
         List<T> GetAllByKeyWord(string name);
         bool UpdateOne(T obj);
         bool InsertOne(T obj);
-        bool DeleteOne(int Id);
-        bool DeleteMany(int Id);
+        bool DeleteAll(int Id);
+        bool DeleteOne(int Id, int rowID);
         List<T> SortByColumnAscending(string ColName);
         List<T> SortByColumnDescending(string ColName);
         

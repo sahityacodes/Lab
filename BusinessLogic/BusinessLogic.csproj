@@ -9,8 +9,4 @@
     <ProjectReference Include="..\DALayer\DALayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
 </Project>

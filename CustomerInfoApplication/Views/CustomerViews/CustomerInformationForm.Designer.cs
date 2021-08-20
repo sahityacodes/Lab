@@ -97,7 +97,7 @@
             this.customerGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.customerGrid.RowTemplate.Height = 45;
             this.customerGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.customerGrid.Size = new System.Drawing.Size(2240, 819);
+            this.customerGrid.Size = new System.Drawing.Size(2762, 819);
             this.customerGrid.TabIndex = 11;
             this.customerGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerGrid_CellClick);
             this.customerGrid.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.customerGrid_ColumnHeaderMouseClick);
@@ -109,7 +109,7 @@
             this.panel1.Controls.Add(this.customerGrid);
             this.panel1.Location = new System.Drawing.Point(102, 150);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(2240, 819);
+            this.panel1.Size = new System.Drawing.Size(2762, 819);
             this.panel1.TabIndex = 19;
             // 
             // Id
@@ -122,7 +122,6 @@
             this.Id.ReadOnly = true;
             this.Id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.Id.ToolTipText = "Customer Identity Number";
-            this.Id.Width = 50;
             // 
             // CustomerName
             // 
@@ -208,7 +207,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2454, 1032);
+            this.ClientSize = new System.Drawing.Size(2976, 1111);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.addBtn);
             this.Controls.Add(this.searchBox);

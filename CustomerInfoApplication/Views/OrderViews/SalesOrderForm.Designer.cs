@@ -35,7 +35,6 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.searchBox = new System.Windows.Forms.TextBox();
             this.addBtn = new System.Windows.Forms.PictureBox();
             this.orderGrid = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.OrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,6 +51,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.ShippingAdd = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.delBtn = new System.Windows.Forms.DataGridViewImageColumn();
             this.updateBtn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.addBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderGrid)).BeginInit();
             this.panel1.SuspendLayout();
@@ -119,6 +119,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.orderGrid.DefaultCellStyle = dataGridViewCellStyle2;
+            this.orderGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.orderGrid.GridColor = System.Drawing.SystemColors.ButtonShadow;
             this.orderGrid.Location = new System.Drawing.Point(0, 0);
             this.orderGrid.Name = "orderGrid";
@@ -137,18 +138,10 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.orderGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.orderGrid.RowTemplate.Height = 30;
             this.orderGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orderGrid.Size = new System.Drawing.Size(3211, 819);
+            this.orderGrid.Size = new System.Drawing.Size(3626, 1251);
             this.orderGrid.TabIndex = 12;
             this.orderGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderGrid_CellClick);
-            // 
-            // panel1
-            // 
-            this.panel1.AutoSize = true;
-            this.panel1.Controls.Add(this.orderGrid);
-            this.panel1.Location = new System.Drawing.Point(111, 119);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(3214, 822);
-            this.panel1.TabIndex = 20;
+            this.orderGrid.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.orderGrid_ColumnHeaderMouseClick);
             // 
             // OrderID
             // 
@@ -158,7 +151,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.OrderID.MinimumWidth = 15;
             this.OrderID.Name = "OrderID";
             this.OrderID.ReadOnly = true;
-            this.OrderID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.OrderID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.OrderID.ToolTipText = "Customer Identity Number";
             this.OrderID.Width = 130;
             // 
@@ -199,6 +192,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.RowID.Name = "RowID";
             this.RowID.ReadOnly = true;
             this.RowID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.RowID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ProductCode
             // 
@@ -206,6 +200,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.ProductCode.MinimumWidth = 11;
             this.ProductCode.Name = "ProductCode";
             this.ProductCode.ReadOnly = true;
+            this.ProductCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Qty
             // 
@@ -213,6 +208,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.Qty.MinimumWidth = 11;
             this.Qty.Name = "Qty";
             this.Qty.ReadOnly = true;
+            this.Qty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // UnitPrice
             // 
@@ -220,6 +216,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.UnitPrice.MinimumWidth = 11;
             this.UnitPrice.Name = "UnitPrice";
             this.UnitPrice.ReadOnly = true;
+            this.UnitPrice.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // TotalRowPrice
             // 
@@ -227,6 +224,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.TotalRowPrice.MinimumWidth = 11;
             this.TotalRowPrice.Name = "TotalRowPrice";
             this.TotalRowPrice.ReadOnly = true;
+            this.TotalRowPrice.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ShippingCost
             // 
@@ -234,6 +232,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.ShippingCost.MinimumWidth = 11;
             this.ShippingCost.Name = "ShippingCost";
             this.ShippingCost.ReadOnly = true;
+            this.ShippingCost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // DiscountAmount
             // 
@@ -241,6 +240,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.DiscountAmount.MinimumWidth = 11;
             this.DiscountAmount.Name = "DiscountAmount";
             this.DiscountAmount.ReadOnly = true;
+            this.DiscountAmount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // TotalCost
             // 
@@ -248,6 +248,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.TotalCost.MinimumWidth = 11;
             this.TotalCost.Name = "TotalCost";
             this.TotalCost.ReadOnly = true;
+            this.TotalCost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // DeliveryDate
             // 
@@ -255,6 +256,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.DeliveryDate.MinimumWidth = 11;
             this.DeliveryDate.Name = "DeliveryDate";
             this.DeliveryDate.ReadOnly = true;
+            this.DeliveryDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ShippingAdd
             // 
@@ -262,6 +264,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.ShippingAdd.MinimumWidth = 11;
             this.ShippingAdd.Name = "ShippingAdd";
             this.ShippingAdd.ReadOnly = true;
+            this.ShippingAdd.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // delBtn
             // 
@@ -285,11 +288,20 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.updateBtn.Name = "updateBtn";
             this.updateBtn.ReadOnly = true;
             // 
+            // panel1
+            // 
+            this.panel1.AutoSize = true;
+            this.panel1.Controls.Add(this.orderGrid);
+            this.panel1.Location = new System.Drawing.Point(111, 106);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(3626, 1251);
+            this.panel1.TabIndex = 20;
+            // 
             // SalesOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(3401, 1097);
+            this.ClientSize = new System.Drawing.Size(3864, 1383);
             this.Controls.Add(this.addBtn);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.searchBox);

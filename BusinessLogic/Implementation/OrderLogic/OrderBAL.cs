@@ -1,16 +1,15 @@
 ﻿using BusinessEntityLayer.Model;
 using System.Collections.Generic;
 using DALayer.Interfaces;
-using DALayer.Implementation;
 using BusinessLogic.Interfaces;
-using BusinessLogic.Exceptions;
-using System;
+using DALayer.DTO;
 
 namespace BusinessLogic.Implementation.OrderLogic
 {
     public class OrderBAL : IOrderBLL<SalesOrders>
     {
         readonly IDAL<SalesOrders> OrderDal = new OrderDAL();
+        OrderValidationRules orderValid = new();
         public List<SalesOrders> GetAll()
         {
             return OrderDal.GetAll();
@@ -23,21 +22,21 @@ namespace BusinessLogic.Implementation.OrderLogic
 
         public bool InsertOne(SalesOrders order)
         {
+            orderValid.ValidateCustomerForm(order);
             CalculateCosts(order);
-            ValidateCustomerForm(order);
             return OrderDal.InsertOne(order);
         }
 
         public bool UpdateOne(SalesOrders order)
         {
             CalculateCosts(order);
-            ValidateCustomerForm(order);
+            orderValid.ValidateCustomerForm(order);
             return OrderDal.UpdateOne(order);
         }
 
-        public bool DeleteOne(int Id)
+        public bool DeleteAll(int Id)
         {
-            return OrderDal.DeleteOne(Id);
+            return OrderDal.DeleteAll(Id);
         }
 
         public List<SalesOrders> SortByColumnAscending(string ColName)
@@ -50,13 +49,6 @@ namespace BusinessLogic.Implementation.OrderLogic
             return OrderDal.SortByColumnDescending(ColName);
         }
 
-        private void ValidateCustomerForm(SalesOrders order)
-        {
-            if (order.DateOrder > order.OrderSummary.DeliveryDate )
-            {
-                throw new UserDefinedException("The Delivery Date is sooner than the Date of Order. Please change it");
-            }
-        }
 
         public decimal CalculateTotalCost(decimal totalRowscost, decimal discountCost, decimal shippingCost)
         {
@@ -85,6 +77,11 @@ namespace BusinessLogic.Implementation.OrderLogic
             }
             order.OrderSummary.TotalOrder = CalculateTotalCost(TotalRowCost, order.OrderSummary.DiscountAmount, order.OrderSummary.ShippingCost);
             return order;
+        }
+
+        public bool DeleteOne(int Id, int rowID)
+        {
+            return OrderDal.DeleteOne(Id, rowID);
         }
     }
 }

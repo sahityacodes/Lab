@@ -48,7 +48,7 @@ namespace CustomerInfoApplication.Controllers
 
         internal bool DeleteCustomer(int customer)
         {
-            return CustomerBal.DeleteOne(customer);
+            return CustomerBal.DeleteAll(customer);
         }
     }
 }

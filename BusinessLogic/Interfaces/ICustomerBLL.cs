@@ -7,7 +7,6 @@ namespace BusinessLogic.Interfaces
     public interface ICustomerBLL<T> : IBLL<T>
     {
         public List<Customer> GetCustomerOrdersCost();
-
-
+        public bool CheckIfCustomerExists(int Id);
     }
 }

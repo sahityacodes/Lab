@@ -31,15 +31,6 @@ namespace CustomerInfoApplication
             orderInfoForm.Show();
         }
 
-        private void accordionControlElement1_Click(object sender, EventArgs e)
-        {
-            fluentDesignFormContainer1.Controls.Clear();
-            SalesOrderDetailsForm orderDetailsForm = new();
-            orderDetailsForm.TopLevel = false;
-            fluentDesignFormContainer1.Controls.Add(orderDetailsForm);
-            orderDetailsForm.Show();
-        }
-
         private void analyticsControl_Click(object sender, EventArgs e)
         {
             fluentDesignFormContainer1.Controls.Clear();

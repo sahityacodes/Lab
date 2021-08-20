@@ -30,12 +30,12 @@ namespace CustomerInfoApplication.Views.OrderViews
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.customerIdText = new System.Windows.Forms.TextBox();
             this.deliveryDate = new System.Windows.Forms.DateTimePicker();
             this.datePicker = new System.Windows.Forms.DateTimePicker();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.textPayment = new System.Windows.Forms.ComboBox();
-            this.customerIdText = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -79,12 +79,12 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.customerIdText);
             this.splitContainer1.Panel1.Controls.Add(this.deliveryDate);
             this.splitContainer1.Panel1.Controls.Add(this.datePicker);
             this.splitContainer1.Panel1.Controls.Add(this.label10);
             this.splitContainer1.Panel1.Controls.Add(this.label9);
             this.splitContainer1.Panel1.Controls.Add(this.textPayment);
-            this.splitContainer1.Panel1.Controls.Add(this.customerIdText);
             this.splitContainer1.Panel1.Controls.Add(this.label7);
             this.splitContainer1.Panel1.Controls.Add(this.label5);
             this.splitContainer1.Panel1.Controls.Add(this.label4);
@@ -109,6 +109,13 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.splitContainer1.Size = new System.Drawing.Size(2409, 1058);
             this.splitContainer1.SplitterDistance = 836;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // customerIdText
+            // 
+            this.customerIdText.Location = new System.Drawing.Point(302, 125);
+            this.customerIdText.Name = "customerIdText";
+            this.customerIdText.Size = new System.Drawing.Size(464, 36);
+            this.customerIdText.TabIndex = 21;
             // 
             // deliveryDate
             // 
@@ -155,16 +162,6 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.textPayment.Name = "textPayment";
             this.textPayment.Size = new System.Drawing.Size(464, 37);
             this.textPayment.TabIndex = 7;
-            // 
-            // customerIdText
-            // 
-            this.customerIdText.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.customerIdText.FormattingEnabled = true;
-            this.customerIdText.Location = new System.Drawing.Point(302, 118);
-            this.customerIdText.Name = "customerIdText";
-            this.customerIdText.Size = new System.Drawing.Size(464, 37);
-            this.customerIdText.TabIndex = 1;
-            this.customerIdText.MouseClick += new System.Windows.Forms.MouseEventHandler(this.customerIdText_MouseClick);
             // 
             // label7
             // 
@@ -250,6 +247,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Enabled = false;
             this.pictureBox1.Image = global::CustomerInfoApplication.Properties.Resources.add;
             this.pictureBox1.InitialImage = global::CustomerInfoApplication.Properties.Resources.add;
             this.pictureBox1.Location = new System.Drawing.Point(35, 118);
@@ -258,6 +256,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // textTotalAmount
@@ -308,6 +307,8 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             // orderRowsGrid
             // 
+            this.orderRowsGrid.AllowUserToAddRows = false;
+            this.orderRowsGrid.AllowUserToDeleteRows = false;
             this.orderRowsGrid.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.orderRowsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.orderRowsGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -427,7 +428,6 @@ namespace CustomerInfoApplication.Views.OrderViews
         private System.Windows.Forms.Label productDts;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox textPayment;
-        private System.Windows.Forms.ComboBox customerIdText;
         private System.Windows.Forms.DataGridView orderRowsGrid;
         private System.Windows.Forms.TextBox textTotalAmount;
         private System.Windows.Forms.Label label8;
@@ -446,5 +446,6 @@ namespace CustomerInfoApplication.Views.OrderViews
         private System.Windows.Forms.DateTimePicker datePicker;
         private System.Windows.Forms.Button calCostBtn;
         private System.Windows.Forms.DateTimePicker deliveryDate;
+        private System.Windows.Forms.TextBox customerIdText;
     }
 }
