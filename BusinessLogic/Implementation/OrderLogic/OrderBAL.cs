@@ -1,14 +1,15 @@
 ﻿using BusinessEntityLayer.Model;
 using System.Collections.Generic;
-using DALayer.Interfaces;
 using BusinessLogic.Interfaces;
-using DALayer.DTO;
+using EntityManagementLayer.Interfaces;
+using EntityManagementLayer.Implementation;
 
 namespace BusinessLogic.Implementation.OrderLogic
 {
     public class OrderBAL : IOrderBLL<SalesOrders>
     {
-        readonly IDAL<SalesOrders> OrderDal = new OrderDAL();
+        readonly IEntityManager<SalesOrders> OrderDal = new OrderMapper();
+       
         OrderValidationRules orderValid = new();
         public List<SalesOrders> GetAll()
         {

@@ -19,7 +19,6 @@
     <ProjectReference Include="..\BusinessEntityLayer\BusinessEntityLayer.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.Xpo" Version="21.1.5" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
   </ItemGroup>
   <ItemGroup Condition="$(VisualStudioVersion) == '16.0'">

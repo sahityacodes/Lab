@@ -13,7 +13,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DevExpress.Win.Design" Version="21.1.*-*" />
-    <PackageReference Include="EcoWpf" Version="7.0.0.13375" />
     <PackageReference Include="Syncfusion.Chart.Windows" Version="19.2.0.55" />
   </ItemGroup>
 

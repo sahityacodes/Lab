@@ -12,11 +12,11 @@ namespace BusinessLogic.Implementation.OrderLogic
         {
             if (!CustomerBal.CheckIfCustomerExists(order.CustomerID))
             {
-                throw new UserDefinedException("The entered CustomerID doesnt exist.");
+                throw new BusinessLogicException("The entered CustomerID doesnt exist.");
             }
             if (order.DateOrder > order.OrderSummary.DeliveryDate)
             {
-                throw new UserDefinedException("The Delivery Date is sooner than the Date of Order. Please change it");
+                throw new BusinessLogicException("The Delivery Date is sooner than the Date of Order. Please change it");
             }
         }
     }

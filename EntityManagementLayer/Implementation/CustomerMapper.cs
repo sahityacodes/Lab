@@ -1,15 +1,15 @@
 ﻿using BusinessEntityLayer.Model;
-using DALayer.Interfaces;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Data.SqlClient;
-using DALayer.Utils;
+using EntityManagementLayer.Utils;
+using EntityManagementLayer.Interfaces;
 using DALayer.Implementation;
+using System.Data.SqlClient;
 
-namespace DALayer.DTO
+namespace EntityManagementLayer.Implementation
 {
-    public class CustomerDAL : ICustomerDAL<Customer>
+    public class CustomerMapper : ICustomerEntityManager<Customer>
     {
         public List<Customer> GetAll()
         {

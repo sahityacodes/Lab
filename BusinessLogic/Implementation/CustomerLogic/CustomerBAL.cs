@@ -1,14 +1,14 @@
 ﻿using BusinessEntityLayer.Model;
 using System.Collections.Generic;
-using DALayer.Interfaces;
 using BusinessLogic.Interfaces;
-using DALayer.DTO;
+using EntityManagementLayer.Interfaces;
+using EntityManagementLayer.Implementation;
 
 namespace BusinessLogic.Implementation.CustomerLogic
 {
     public class CustomerBAL : ICustomerBLL<Customer>
     {
-        readonly ICustomerDAL<Customer> CustomerDal = new CustomerDAL();
+        readonly IEntityManager<Customer> CustomerDal = new CustomerMapper();
         CustomerValidationRules validateCust = new();
         public List<Customer> GetAll()
         {

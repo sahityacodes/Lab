@@ -1,16 +1,16 @@
-﻿using BusinessEntityLayer.Model;
-using DALayer.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Data.SqlClient;
-using DALayer.Utils;
 using System;
+using BusinessEntityLayer.Model;
+using EntityManagementLayer.Utils;
+using System.Data.SqlClient;
 using DALayer.Implementation;
+using EntityManagementLayer.Interfaces;
 
-namespace DALayer.DTO
+namespace EntityManagementLayer.Implementation
 {
-    public class OrderDAL : IOrderDAL<SalesOrders>
+    public class OrderMapper : IOrderEntityManager<SalesOrders>
     {
         public List<SalesOrders> GetAll()
         {

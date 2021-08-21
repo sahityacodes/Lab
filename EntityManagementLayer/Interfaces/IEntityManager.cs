@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace DALayer.Interfaces
+namespace EntityManagementLayer.Interfaces
 {
-    public interface IDAL<T>
+    public interface IEntityManager<T>
     {
         List<T> GetAll();
         T GetOne(int OrderID);

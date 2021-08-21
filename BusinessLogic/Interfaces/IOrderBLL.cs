@@ -1,6 +1,4 @@
-﻿using BusinessEntityLayer.Model;
-
-namespace BusinessLogic.Interfaces
+﻿namespace BusinessLogic.Interfaces
 {
     public interface IOrderBLL<T> : IBLL<T>
     {

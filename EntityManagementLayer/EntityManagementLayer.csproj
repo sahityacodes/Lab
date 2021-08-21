@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BusinessEntityLayer\BusinessEntityLayer.csproj" />
-    <ProjectReference Include="..\EntityManagementLayer\EntityManagementLayer.csproj" />
+    <ProjectReference Include="..\DALayer\DALayer.csproj" />
   </ItemGroup>
 
 </Project>

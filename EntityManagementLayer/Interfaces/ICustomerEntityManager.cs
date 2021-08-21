@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-
-namespace DALayer.Interfaces
+namespace EntityManagementLayer.Interfaces
 {
-    public interface ICustomerDAL<T> : IDAL<T>
+    public interface ICustomerEntityManager<T> : IEntityManager<T>
     {
         List<T> GetCustomerOrdersCost();
         bool CheckIfCustomerExists(int iD);

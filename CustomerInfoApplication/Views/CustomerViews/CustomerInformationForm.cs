@@ -184,7 +184,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
                     FetchAllRecords();
                 }
             }
-            catch (UserDefinedException ud)
+            catch (BusinessLogicException ud)
             {
                 MessageBox.Show(ud.Message);
             }
@@ -217,7 +217,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
                     FetchAllRecords();
                 }
             }
-            catch (UserDefinedException ude)
+            catch (BusinessLogicException ude)
             {
                 MessageBox.Show(ude.Message);
             }

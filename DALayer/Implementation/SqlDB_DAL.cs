@@ -1,12 +1,11 @@
 ﻿using DALayer.Utils;
 using System.Data.SqlClient;
 using System.Data;
-using System.Diagnostics;
 using System.Collections.Generic;
 
 namespace DALayer.Implementation
 {
-    class SqlDB_DAL
+    public class SqlDB_DAL
     {
         private SqlConnection OpenDB()
         {
@@ -20,7 +19,7 @@ namespace DALayer.Implementation
             objSqlConnection.Close();
         }
 
-        internal DataTable GetRecords(string queryStr, params IDataParameter[] sqlParams)
+        public DataTable GetRecords(string queryStr, params IDataParameter[] sqlParams)
         {
             DataTable dt = new();
             SqlConnection objSqlConnection = new SqlConnection(Constants.ConnectionString);
@@ -39,7 +38,7 @@ namespace DALayer.Implementation
             return dt;
         }
 
-        internal bool WriteToTable(Dictionary<string, List<SqlParameter[]>> queries)
+        public bool WriteToTable(Dictionary<string, List<SqlParameter[]>> queries)
         {
             bool rows = false;
             SqlConnection objSqlConnection = OpenDB();

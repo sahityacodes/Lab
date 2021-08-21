@@ -100,7 +100,7 @@ namespace CustomerInfoApplication.Views.OrderViews
                     ReloadGrid(orderController.GetAll());
                 }
             }
-            catch (UserDefinedException ud)
+            catch (BusinessLogicException ud)
             {
                 MessageBox.Show(ud.Message);
             }
