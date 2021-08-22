@@ -2,8 +2,6 @@
 using System;
 using System.Windows.Forms;
 using System.Diagnostics;
-using BusinessLogic.Exceptions;
-using System.Data.SqlClient;
 using CustomerInfoApplication.Controllers;
 using System.Collections.Generic;
 

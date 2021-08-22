@@ -10,12 +10,14 @@ using System.Linq;
 using System.Collections.Generic;
 using CustomerInfoApplication.Controllers;
 using BusinessLogic.Exceptions;
+using CustomerInfoApplication.Validators;
 
 namespace CustomerInfoApplication.Views.OrderViews
 {
     public partial class SalesOrderDetailsForm : XtraForm
     {
         OrderController orderController = new();
+
 
         public SalesOrderDetailsForm()
         {
@@ -94,10 +96,9 @@ namespace CustomerInfoApplication.Views.OrderViews
             decimal costs = 0;
             foreach (DataGridViewRow row in orderRowsGrid.Rows)
             {
-                string Qty = Convert.ToString(row.Cells[2].Value);
-                string UnitPrice = Convert.ToString(row.Cells[3].Value);
-                if (Qty.Length > 0 && UnitPrice.Length > 0)
-                    row.Cells[4].Value = orderController.CalculateTotalUnitCost(Convert.ToDecimal(Qty), Convert.ToDecimal(UnitPrice));
+                decimal Qty = Convert.ToDecimal(row.Cells[2].Value);
+                decimal UnitPrice = Convert.ToDecimal(row.Cells[3].Value);
+                row.Cells[4].Value = orderController.CalculateTotalUnitCost(Qty, UnitPrice);
                 costs = orderRowsGrid.Rows
                         .OfType<DataGridViewRow>()
                         .Select(r => Convert.ToDecimal(r.Cells[4].Value))
@@ -109,9 +110,11 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         private void Save_Click(object sender, EventArgs e)
         {
+            OrderValidator orderValidator = new();
+            SalesOrders order = getSaleOrderInfo();
             try
             {
-                if (orderController.ValidateOrder(getSaleOrderInfo()))
+                if (orderValidator.ValidateOrder(order) && orderController.ValidateOrder(order))
                 {
                     Save.DialogResult = DialogResult.OK;
                 }

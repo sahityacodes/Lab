@@ -90,10 +90,6 @@ namespace BusinessLogic.Implementation.OrderLogic
             {
                 throw new BusinessLogicException("The entered CustomerID doesnt exist.");
             }
-            if (order.DateOrder > order.OrderSummary.DeliveryDate)
-            {
-                throw new BusinessLogicException("The Delivery Date is sooner than the Date of Order. Please change it");
-            }
             return true;
         }
     }

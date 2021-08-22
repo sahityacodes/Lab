@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows;
 
 namespace CustomerInfoApplication.Views.ChartViews
 {
@@ -21,7 +22,14 @@ namespace CustomerInfoApplication.Views.ChartViews
 
         private void ChartForm_Load(object sender, EventArgs e)
         {
-            buildBarChart(CustomerBal.GetCustomerOrdersCost(), "Total Orders", "Customer IDs", "Total Orders", "TotalCost: {Test}");
+            try
+            {
+                buildBarChart(CustomerBal.GetCustomerOrdersCost(), "Total Orders", "Customer IDs", "Total Orders", "TotalCost: {Test}");
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Error in the system.");
+            }
         }
 
         private void buildBarChart(List<Customer> customerInfo, string seriesName, string xAxisTitle, string yAxisTitle, string tooltipPattern)

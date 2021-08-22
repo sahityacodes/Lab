@@ -22,7 +22,7 @@ namespace DALayer.Implementation
         public DataTable GetRecords(string queryStr, params IDataParameter[] sqlParams)
         {
             DataTable dt = new();
-            SqlConnection objSqlConnection = new SqlConnection(Constants.ConnectionString);
+            SqlConnection objSqlConnection = new(Constants.ConnectionString);
             SqlCommand com = new(queryStr, objSqlConnection);
             if (sqlParams != null)
             {
