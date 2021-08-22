@@ -1,10 +1,11 @@
 ﻿using BusinessEntityLayer.Model;
 using BusinessLogic.Exceptions;
-namespace BusinessLogic.Implementation.CustomerLogic
+
+namespace CustomerInfoApplication.Validators
 {
-    class CustomerValidationRules
+    internal class CustomerValidators 
     {
-        public void ValidateCustomerForm(Customer customer)
+        internal bool ValidateCustomer(Customer customer)
         {
             if (customer.Name.Length == 0)
             {
@@ -14,6 +15,8 @@ namespace BusinessLogic.Implementation.CustomerLogic
             {
                 throw new BusinessLogicException("VAT is Mandatory");
             }
+            return true;
         }
     }
+
 }

@@ -72,8 +72,6 @@ namespace CustomerInfoApplication.Views.OrderViews
             }
         }
 
-       
-
         private void ReloadGrid(List<SalesOrders> orderList)
         {
             addBtn.Enabled = true;
@@ -100,9 +98,21 @@ namespace CustomerInfoApplication.Views.OrderViews
                     ReloadGrid(orderController.GetAll());
                 }
             }
-            catch (BusinessLogicException ud)
+            catch (Exception exc)
             {
-                MessageBox.Show(ud.Message);
+                Debug.WriteLine(exc.Message);
+                MessageBox.Show("Error in the system.");
+            }
+        }
+        public void InsertOrder(SalesOrders orders)
+        {
+            try
+            {
+                if (orderController.InsertOne(orders))
+                {
+                    DialogResult dialog = MessageBox.Show("Inserted Successfully");
+                    ReloadGrid(orderController.GetAll());
+                }
             }
             catch (Exception exc)
             {

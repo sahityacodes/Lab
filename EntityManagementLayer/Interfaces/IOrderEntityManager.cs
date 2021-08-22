@@ -1,6 +1,6 @@
 ﻿namespace EntityManagementLayer.Interfaces
 {
-    interface IOrderEntityManager<T> : IEntityManager<T>
+    public interface IOrderEntityManager<T> : IEntityManager<T>
     {
     }
 }

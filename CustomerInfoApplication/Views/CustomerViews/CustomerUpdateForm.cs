@@ -1,6 +1,11 @@
 ﻿using System.Windows.Forms;
 using BusinessEntityLayer.Model;
 using System;
+using CustomerInfoApplication.Controllers;
+using BusinessLogic.Exceptions;
+using CustomerInfoApplication.Validators;
+using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace CustomerInfoApplication.Views.CustomerViews
 {
@@ -42,6 +47,23 @@ namespace CustomerInfoApplication.Views.CustomerViews
                   (e.KeyChar != '.'))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CustomerValidators validate = new();
+                Customer cust = getCustomerData();
+                if (validate.ValidateCustomer(cust))
+                {
+                    btnOK.DialogResult = DialogResult.OK;
+                }
+            }
+            catch (BusinessLogicException ud)
+            {
+                MessageBox.Show(ud.Message);
             }
         }
     }

@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using BusinessLogic.Interfaces;
 using EntityManagementLayer.Interfaces;
 using EntityManagementLayer.Implementation;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogic.Implementation.OrderLogic
 {
     public class OrderBAL : IOrderBLL<SalesOrders>
     {
-        readonly IEntityManager<SalesOrders> OrderDal = new OrderMapper();
-       
-        OrderValidationRules orderValid = new();
+        readonly IOrderEntityManager<SalesOrders> OrderDal = new OrderMapper();
+        readonly ICustomerEntityManager<Customer> CustomerDal = new CustomerMapper();
+
         public List<SalesOrders> GetAll()
         {
             return OrderDal.GetAll();
@@ -23,7 +24,6 @@ namespace BusinessLogic.Implementation.OrderLogic
 
         public bool InsertOne(SalesOrders order)
         {
-            orderValid.ValidateCustomerForm(order);
             CalculateCosts(order);
             return OrderDal.InsertOne(order);
         }
@@ -31,7 +31,6 @@ namespace BusinessLogic.Implementation.OrderLogic
         public bool UpdateOne(SalesOrders order)
         {
             CalculateCosts(order);
-            orderValid.ValidateCustomerForm(order);
             return OrderDal.UpdateOne(order);
         }
 
@@ -54,8 +53,8 @@ namespace BusinessLogic.Implementation.OrderLogic
         public decimal CalculateTotalCost(decimal totalRowscost, decimal discountCost, decimal shippingCost)
         {
             decimal totalCost = totalRowscost - discountCost + shippingCost;
-         
-            return totalCost < 0? 0: totalCost;
+
+            return totalCost < 0 ? 0 : totalCost;
         }
 
         public decimal CalculateTotalUnitCost(decimal Qty, decimal unitPrice)
@@ -83,6 +82,19 @@ namespace BusinessLogic.Implementation.OrderLogic
         public bool DeleteOne(int Id, int rowID)
         {
             return OrderDal.DeleteOne(Id, rowID);
+        }
+
+        public bool ValidateOrder(SalesOrders order)
+        {
+            if (!CustomerDal.CheckIfCustomerExists(order.CustomerID))
+            {
+                throw new BusinessLogicException("The entered CustomerID doesnt exist.");
+            }
+            if (order.DateOrder > order.OrderSummary.DeliveryDate)
+            {
+                throw new BusinessLogicException("The Delivery Date is sooner than the Date of Order. Please change it");
+            }
+            return true;
         }
     }
 }

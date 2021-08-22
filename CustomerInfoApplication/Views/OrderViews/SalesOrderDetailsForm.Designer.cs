@@ -237,13 +237,13 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             // Save
             // 
-            this.Save.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Save.Location = new System.Drawing.Point(1333, 965);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(169, 52);
             this.Save.TabIndex = 10;
             this.Save.Text = "Save";
             this.Save.UseVisualStyleBackColor = true;
+            this.Save.Click += new System.EventHandler(this.Save_Click);
             // 
             // pictureBox1
             // 

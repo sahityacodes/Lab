@@ -155,18 +155,6 @@ namespace CustomerInfoApplication.Views.CustomerViews
                     FetchAllRecords();
                 }
             }
-            catch (SqlException sqlExc)
-            {
-                Debug.WriteLine(sqlExc.Message);
-                if (sqlExc.Number == 547)
-                {
-                    MessageBox.Show("Customer has orders, please delete the orders first to proceed.");
-                }
-                else
-                {
-                    MessageBox.Show("Error in the System");
-                }
-            }
             catch (Exception io)
             {
                 Debug.WriteLine("Error in btnDel_Click", io.Message);
@@ -182,22 +170,6 @@ namespace CustomerInfoApplication.Views.CustomerViews
                 {
                     DialogResult dialog = MessageBox.Show("Inserted Successfully");
                     FetchAllRecords();
-                }
-            }
-            catch (BusinessLogicException ud)
-            {
-                MessageBox.Show(ud.Message);
-            }
-            catch (SqlException sqlExc)
-            {
-                Debug.WriteLine(sqlExc.Message);
-                if (sqlExc.Number == 2627)
-                {
-                    MessageBox.Show("VAT already present in the system.");
-                }
-                else
-                {
-                    MessageBox.Show("Error in the System");
                 }
             }
             catch (Exception exc)
@@ -216,18 +188,6 @@ namespace CustomerInfoApplication.Views.CustomerViews
                     DialogResult dialog = MessageBox.Show("Updated Successfully");
                     FetchAllRecords();
                 }
-            }
-            catch (BusinessLogicException ude)
-            {
-                MessageBox.Show(ude.Message);
-            }
-            catch (SqlException sqlExc)
-            {
-                if (sqlExc.Number == 2627)
-                {
-                    MessageBox.Show("VAT already present in the system.");
-                }
-                else throw;
             }
             catch (Exception exc)
             {

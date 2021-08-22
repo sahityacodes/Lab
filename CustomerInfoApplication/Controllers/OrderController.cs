@@ -75,5 +75,10 @@ namespace CustomerInfoApplication.Controllers
             return OrderBAL.CalculateTotalCost(costs, v1, v2);
         }
 
+        public bool ValidateOrder(SalesOrders order)
+        {
+            return OrderBAL.ValidateOrder(order);
+        }
+
     }
 }

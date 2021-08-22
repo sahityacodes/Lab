@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using BusinessLogic.Interfaces;
 using EntityManagementLayer.Interfaces;
 using EntityManagementLayer.Implementation;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogic.Implementation.CustomerLogic
 {
     public class CustomerBAL : ICustomerBLL<Customer>
     {
-        readonly IEntityManager<Customer> CustomerDal = new CustomerMapper();
-        CustomerValidationRules validateCust = new();
+        readonly ICustomerEntityManager<Customer> CustomerDal = new CustomerMapper();
         public List<Customer> GetAll()
         {
             return CustomerDal.GetAll();
@@ -22,13 +22,11 @@ namespace BusinessLogic.Implementation.CustomerLogic
 
         public bool InsertOne(Customer customer)
         {
-            validateCust.ValidateCustomerForm(customer);
             return CustomerDal.InsertOne(customer);
         }
 
         public bool UpdateOne(Customer customer)
         {
-            validateCust.ValidateCustomerForm(customer);
             return CustomerDal.UpdateOne(customer);
         }
 
@@ -62,6 +60,11 @@ namespace BusinessLogic.Implementation.CustomerLogic
         }
 
         public bool DeleteOne(int Id, int rowID)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool ValidateCustomer(Customer obj)
         {
             throw new System.NotImplementedException();
         }

@@ -19,7 +19,8 @@
         public static string QUERY_UPDATE_ORDERS = "Update SalesOrders set CustomerID=@CustomerID, DateOrder=@DateOrder, Payment=@Payment where OrderID=@OrderID";
         public static string QUERY_UPDATE_ORDERS_ROWS = "Update SalesOrdersRows set ProductCode=@ProductCode, Description=@Description, Qty=@Qty, UnitPrice = @UnitPrice,TotalRowPrice = @TotalRowPrice where RowID=@RowID AND OrderID=@OrderID";
         public static string QUERY_UPDATE_ORDERS_TAILS = "Update SalesOrdersTails set ShippingAddress=@ShippingAddress, DiscountAmount=@DiscountAmount, ShippingCost=@ShippingCost,TotalCost=@TotalCost,DeliveryDate=@DeliveryDate where OrderID=@OrderID";
-        public static string QUERY_INSERT_ORDERS = "Insert into SalesOrders(CustomerID,DateOrder,Payment) Values (@CustomerID, @DateOrder, @Payment);";
+        public static string QUERY_INSERT_ORDERS = "Insert into SalesOrders(CustomerID,DateOrder,Payment) Values (@CustomerID, @DateOrder, @Payment) SELECT SCOPE_IDENTITY();";
+       // public static string QUERY_INSERT_ORDERS = "CREATE PROCEDURE Insert_Orders (@CustomerID INT, @DateOrder DATETIME, @Payment VARCHAR(255)) AS INSERT INTO SalesOrders(CustomerID,DateOrder,Payment) VALUES(@CustomerID,@DateOrder,@Payment)";
         public static string GET_SCOPE_ID = "select SCOPE_IDENTITY() as OrderID;";
         public static string IDEN_QUERY_ORDERS = "SELECT IDENT_CURRENT('SalesOrders')";
         public static string QUERY_INSERT_ORDERROWS = "Insert into SalesOrdersRows(OrderID, RowID, ProductCode,Description,Qty,UnitPrice,TotalRowPrice) Values (@OrderID, @RowID, @ProductCode, @Description, @Qty, @UnitPrice, @TotalRowPrice);";

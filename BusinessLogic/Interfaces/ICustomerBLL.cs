@@ -8,5 +8,6 @@ namespace BusinessLogic.Interfaces
     {
         public List<Customer> GetCustomerOrdersCost();
         public bool CheckIfCustomerExists(int Id);
+        public bool ValidateCustomer(T obj);
     }
 }

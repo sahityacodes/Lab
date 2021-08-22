@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
 using CustomerInfoApplication.Controllers;
+using BusinessLogic.Exceptions;
 
 namespace CustomerInfoApplication.Views.OrderViews
 {
@@ -104,6 +105,21 @@ namespace CustomerInfoApplication.Views.OrderViews
             }
             textTotalAmount.Text = Convert.ToString(orderController.CalculateTotalCost(costs, textDiscountAmount.Text.Length > 0 ? Convert.ToDecimal(textDiscountAmount.Text) : 0,
                                         textShippingCost.Text.Length > 0 ? Convert.ToDecimal(textShippingCost.Text) : 0));
+        }
+
+        private void Save_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (orderController.ValidateOrder(getSaleOrderInfo()))
+                {
+                    Save.DialogResult = DialogResult.OK;
+                }
+            }
+            catch (BusinessLogicException ud)
+            {
+                MessageBox.Show(ud.Message);
+            }
         }
     }
 }
