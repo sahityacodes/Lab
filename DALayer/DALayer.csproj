@@ -1,16 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <SSDTUnitTestPath Condition="'$(SSDTUnitTestPath)' == ''">$(VsInstallRoot)\Common7\IDE\Extensions\Microsoft\SQLDB</SSDTUnitTestPath>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SSDTPath Condition="'$(SSDTPath)' == ''">$(VsInstallRoot)\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\130</SSDTPath>
-  </PropertyGroup>
-  <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <ApplicationIcon />
     <OutputType>Library</OutputType>
-    <StartupObject />
-    <Win32Resource />
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessEntityLayer\BusinessEntityLayer.csproj" />
