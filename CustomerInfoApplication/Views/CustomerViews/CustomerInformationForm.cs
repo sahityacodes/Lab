@@ -2,14 +2,17 @@
 using System;
 using System.Windows.Forms;
 using System.Diagnostics;
-using CustomerInfoApplication.Controllers;
 using System.Collections.Generic;
+using DevExpress.XtraBars.Ribbon;
+using BusinessLogic.Interfaces;
+using BusinessLogic.Implementation.CustomerLogic;
+using System.Data.SqlClient;
 
 namespace CustomerInfoApplication.Views.CustomerViews
 {
-    public partial class CustomerInformationForm : Form
+    public partial class CustomerInformationForm : RibbonForm
     {
-        readonly CustomerController custController = new();
+        readonly ICustomerBLL<Customer> CustomerBal = new CustomerBAL();
         bool SortCounter = true;
 
         public CustomerInformationForm()
@@ -36,7 +39,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
             {
                 if (searchBox.Text != null || searchBox.Text.Length != 0)
                 {
-                    LoadGrid(custController.GetOneByName(searchBox.Text));
+                    LoadGrid(CustomerBal.GetOneByName(searchBox.Text));
                 }
             }
             catch (Exception io)
@@ -51,7 +54,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
         {
             try
             {
-                LoadGrid(custController.GetAll());
+                LoadGrid(CustomerBal.GetAll());
             }
             catch (Exception io)
             {
@@ -69,11 +72,11 @@ namespace CustomerInfoApplication.Views.CustomerViews
                     if (SortCounter)
                     {
                         SortCounter = false;
-                        LoadGrid(custController.SortByColumnAscending(Convert.ToString(e.ColumnIndex)));
+                        LoadGrid(CustomerBal.SortByColumnAscending(Convert.ToString(e.ColumnIndex)));
                     }
                     else if (!SortCounter)
                     {
-                        LoadGrid(custController.SortByColumnDescending(Convert.ToString(e.ColumnIndex)));
+                        LoadGrid(CustomerBal.SortByColumnDescending(Convert.ToString(e.ColumnIndex)));
                         SortCounter = true;
                     }
                 }
@@ -84,24 +87,6 @@ namespace CustomerInfoApplication.Views.CustomerViews
                 }
             }
         }
-
-        private void addBtn_Click(object sender, EventArgs e)
-        {
-            addBtn.Enabled = false;
-            CustomerUpdateForm updateForm = new();
-            updateForm.initializeForm(false, false, new Customer());
-            DialogResult dialog = updateForm.ShowDialog();
-            if (dialog == DialogResult.OK)
-            {
-                InsertCustomer(updateForm.getCustomerData());
-            }
-            else
-            {
-                updateForm.Close();
-            }
-
-        }
-
         private Customer RowToObject(DataGridViewRow customerGridRow)
         {
             Customer cust = new();
@@ -115,7 +100,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
             return cust;
         }
 
-        private void customerGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+     /*   private void customerGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex > -1 && e.ColumnIndex == 8)
             {
@@ -141,16 +126,28 @@ namespace CustomerInfoApplication.Views.CustomerViews
                 }
 
             }
-        }
+        } */
 
         private void DeleteCustomer(int ID)
         {
             try
             {
-                if (custController.DeleteCustomer(ID))
+                if (CustomerBal.DeleteAll(ID))
                 {
                     MessageBox.Show("Deleted Successfully");
                     FetchAllRecords();
+                }
+            }
+            catch (SqlException sqlExc)
+            {
+                Debug.WriteLine(sqlExc.Message);
+                if (sqlExc.Number == 547)
+                {
+                    MessageBox.Show("Customer has orders, please delete the orders first to proceed.");
+                }
+                else
+                {
+                    MessageBox.Show("Error in the System");
                 }
             }
             catch (Exception io)
@@ -164,11 +161,20 @@ namespace CustomerInfoApplication.Views.CustomerViews
         {
             try
             {
-                if (custController.InsertCustomer(customer))
+                if (CustomerBal.InsertOne(customer))
                 {
                     DialogResult dialog = MessageBox.Show("Inserted Successfully");
+                    add.Enabled = true;
                     FetchAllRecords();
                 }
+            }
+            catch (SqlException sqlExc)
+            {
+                if (sqlExc.Number == 2627)
+                {
+                    MessageBox.Show("VAT already present in the system.");
+                }
+                else throw;
             }
             catch (Exception exc)
             {
@@ -181,16 +187,64 @@ namespace CustomerInfoApplication.Views.CustomerViews
         {
             try
             {
-                if (custController.UpdateCustomer(customer))
+                if (CustomerBal.InsertOne(customer))
                 {
                     DialogResult dialog = MessageBox.Show("Updated Successfully");
                     FetchAllRecords();
                 }
             }
+            catch (SqlException sqlExc)
+            {
+                if (sqlExc.Number == 2627)
+                {
+                    MessageBox.Show("VAT already present in the system.");
+                }
+                else throw;
+            }
             catch (Exception exc)
             {
                 Debug.WriteLine(exc.Message);
                 MessageBox.Show("Error in the system.");
+            }
+        }
+
+        private void add_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            CustomerUpdateForm updateForm = new();
+            updateForm.initializeForm(false, false, new Customer());
+            DialogResult dialog = updateForm.ShowDialog();
+            if (dialog == DialogResult.OK)
+            {
+                InsertCustomer(updateForm.getCustomerData());
+            }
+            else
+            {
+                updateForm.Close();
+            }
+        }
+
+        private void edit_Clicked(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            CustomerUpdateForm updateForm = new();
+            updateForm.initializeForm(true, true, RowToObject(customerGrid.CurrentRow));
+            DialogResult dialog = updateForm.ShowDialog();
+            if (dialog == DialogResult.OK)
+            {
+                UpdateCustomer(updateForm.getCustomerData());
+            }
+            else
+            {
+                updateForm.Close();
+            }
+        }
+
+        private void delClicked(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            DialogResult dialog = MessageBox.Show("Are you sure you want to delete?", "Delete Record", buttons);
+            if (dialog == DialogResult.Yes)
+            {
+                DeleteCustomer(Convert.ToInt32(customerGrid.CurrentRow.Cells[0].Value.ToString()));
             }
         }
     }

@@ -1,23 +1,18 @@
-﻿using DevExpress.XtraEditors;
-using System;
-using BusinessLogic.Implementation.CustomerLogic;
+﻿using System;
 using BusinessLogic.Implementation.OrderLogic;
 using BusinessEntityLayer.Model;
 using BusinessLogic.Interfaces;
 using System.Windows.Forms;
-using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
-using CustomerInfoApplication.Controllers;
 using BusinessLogic.Exceptions;
 using CustomerInfoApplication.Validators;
 
 namespace CustomerInfoApplication.Views.OrderViews
 {
-    public partial class SalesOrderDetailsForm : XtraForm
+    public partial class SalesOrderDetailsForm : Form
     {
-        OrderController orderController = new();
-
+        readonly IOrderBLL<SalesOrders> OrderBal = new OrderBAL();
 
         public SalesOrderDetailsForm()
         {
@@ -98,13 +93,13 @@ namespace CustomerInfoApplication.Views.OrderViews
             {
                 decimal Qty = Convert.ToDecimal(row.Cells[2].Value);
                 decimal UnitPrice = Convert.ToDecimal(row.Cells[3].Value);
-                row.Cells[4].Value = orderController.CalculateTotalUnitCost(Qty, UnitPrice);
+                row.Cells[4].Value = OrderBal.CalculateTotalUnitCost(Qty, UnitPrice);
                 costs = orderRowsGrid.Rows
                         .OfType<DataGridViewRow>()
                         .Select(r => Convert.ToDecimal(r.Cells[4].Value))
                         .ToList().Sum();
             }
-            textTotalAmount.Text = Convert.ToString(orderController.CalculateTotalCost(costs, textDiscountAmount.Text.Length > 0 ? Convert.ToDecimal(textDiscountAmount.Text) : 0,
+            textTotalAmount.Text = Convert.ToString(OrderBal.CalculateTotalCost(costs, textDiscountAmount.Text.Length > 0 ? Convert.ToDecimal(textDiscountAmount.Text) : 0,
                                         textShippingCost.Text.Length > 0 ? Convert.ToDecimal(textShippingCost.Text) : 0));
         }
 
@@ -114,7 +109,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             SalesOrders order = getSaleOrderInfo();
             try
             {
-                if (orderValidator.ValidateOrder(order) && orderController.ValidateOrder(order))
+                if (orderValidator.ValidateOrder(order) && OrderBal.ValidateOrder(order))
                 {
                     Save.DialogResult = DialogResult.OK;
                 }

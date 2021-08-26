@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomerInformationForm));
             this.searchBox = new System.Windows.Forms.TextBox();
-            this.addBtn = new System.Windows.Forms.PictureBox();
             this.customerGrid = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,31 +38,30 @@
             this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.City = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AnnualRevenue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.delBtn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.updateBtn = new System.Windows.Forms.DataGridViewImageColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.addBtn)).BeginInit();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            this.add = new DevExpress.XtraBars.BarButtonItem();
+            this.edit = new DevExpress.XtraBars.BarButtonItem();
+            this.delete = new DevExpress.XtraBars.BarButtonItem();
+            this.customerPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.custPage = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ((System.ComponentModel.ISupportInitialize)(this.customerGrid)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             this.SuspendLayout();
             // 
             // searchBox
             // 
-            this.searchBox.Location = new System.Drawing.Point(102, 56);
+            this.searchBox.Location = new System.Drawing.Point(97, 426);
+            this.searchBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(611, 43);
+            this.searchBox.Size = new System.Drawing.Size(530, 36);
             this.searchBox.TabIndex = 17;
             this.searchBox.TextChanged += new System.EventHandler(this.searchBox_TextChanged);
-            // 
-            // addBtn
-            // 
-            this.addBtn.Image = global::CustomerInfoApplication.Properties.Resources.add;
-            this.addBtn.Location = new System.Drawing.Point(48, 150);
-            this.addBtn.Name = "addBtn";
-            this.addBtn.Size = new System.Drawing.Size(61, 54);
-            this.addBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.addBtn.TabIndex = 18;
-            this.addBtn.TabStop = false;
-            this.addBtn.Click += new System.EventHandler(this.addBtn_Click);
             // 
             // customerGrid
             // 
@@ -74,6 +72,7 @@
             this.customerGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.customerGrid.BackgroundColor = System.Drawing.SystemColors.Control;
             this.customerGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.customerGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.customerGrid.ColumnHeadersHeight = 52;
             this.customerGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.customerGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -83,12 +82,11 @@
             this.Phone,
             this.Address,
             this.City,
-            this.AnnualRevenue,
-            this.delBtn,
-            this.updateBtn});
+            this.AnnualRevenue});
             this.customerGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.customerGrid.GridColor = System.Drawing.SystemColors.ButtonShadow;
             this.customerGrid.Location = new System.Drawing.Point(0, 0);
+            this.customerGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.customerGrid.Name = "customerGrid";
             this.customerGrid.ReadOnly = true;
             this.customerGrid.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -97,20 +95,9 @@
             this.customerGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.customerGrid.RowTemplate.Height = 45;
             this.customerGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.customerGrid.Size = new System.Drawing.Size(2762, 819);
+            this.customerGrid.Size = new System.Drawing.Size(2584, 900);
             this.customerGrid.TabIndex = 11;
-            this.customerGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerGrid_CellClick);
             this.customerGrid.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.customerGrid_ColumnHeaderMouseClick);
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.customerGrid);
-            this.panel1.Location = new System.Drawing.Point(102, 150);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(2762, 819);
-            this.panel1.TabIndex = 19;
             // 
             // Id
             // 
@@ -122,6 +109,7 @@
             this.Id.ReadOnly = true;
             this.Id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.Id.ToolTipText = "Customer Identity Number";
+            this.Id.Width = 225;
             // 
             // CustomerName
             // 
@@ -183,41 +171,123 @@
             this.AnnualRevenue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.AnnualRevenue.ToolTipText = "Income";
             // 
-            // delBtn
+            // panel1
             // 
-            this.delBtn.FillWeight = 15F;
-            this.delBtn.HeaderText = "";
-            this.delBtn.Image = global::CustomerInfoApplication.Properties.Resources.del;
-            this.delBtn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.delBtn.MinimumWidth = 11;
-            this.delBtn.Name = "delBtn";
-            this.delBtn.ReadOnly = true;
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.customerGrid);
+            this.panel1.Location = new System.Drawing.Point(88, 518);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(2584, 900);
+            this.panel1.TabIndex = 19;
             // 
-            // updateBtn
+            // ribbonControl1
             // 
-            this.updateBtn.FillWeight = 14.19337F;
-            this.updateBtn.HeaderText = "";
-            this.updateBtn.Image = global::CustomerInfoApplication.Properties.Resources.account_edit;
-            this.updateBtn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.updateBtn.MinimumWidth = 11;
-            this.updateBtn.Name = "updateBtn";
-            this.updateBtn.ReadOnly = true;
+            this.ribbonControl1.ExpandCollapseItem.Id = 0;
+            this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbonControl1.ExpandCollapseItem,
+            this.ribbonControl1.SearchEditItem,
+            this.add,
+            this.edit,
+            this.delete});
+            this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
+            this.ribbonControl1.MaxItemId = 22;
+            this.ribbonControl1.Name = "ribbonControl1";
+            this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.customerPage});
+            this.ribbonControl1.Size = new System.Drawing.Size(2751, 344);
+            // 
+            // add
+            // 
+            this.add.Id = 13;
+            this.add.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("add.ImageOptions.Image")));
+            this.add.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("add.ImageOptions.LargeImage")));
+            this.add.Name = "add";
+            this.add.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.add_ItemClick);
+            // 
+            // edit
+            // 
+            this.edit.Id = 18;
+            this.edit.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("edit.ImageOptions.Image")));
+            this.edit.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("edit.ImageOptions.LargeImage")));
+            this.edit.Name = "edit";
+            this.edit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.edit_Clicked);
+            // 
+            // delete
+            // 
+            this.delete.Id = 21;
+            this.delete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("delete.ImageOptions.Image")));
+            this.delete.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("delete.ImageOptions.LargeImage")));
+            this.delete.Name = "delete";
+            this.delete.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.delete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.delClicked);
+            // 
+            // customerPage
+            // 
+            this.customerPage.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.custPage});
+            this.customerPage.Name = "customerPage";
+            this.customerPage.Text = "Customer";
+            // 
+            // custPage
+            // 
+            this.custPage.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            this.custPage.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("custPage.ImageOptions.Image")));
+            this.custPage.ImageOptions.ImageIndex = 1;
+            this.custPage.ImageOptions.ImageUri.Uri = "AddItem";
+            this.custPage.ItemLinks.Add(this.add);
+            this.custPage.ItemLinks.Add(this.edit);
+            this.custPage.ItemLinks.Add(this.delete);
+            this.custPage.Name = "custPage";
+            // 
+            // ribbonPageGroup3
+            // 
+            this.ribbonPageGroup3.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ribbonPageGroup3.ImageOptions.SvgImage")));
+            this.ribbonPageGroup3.Name = "ribbonPageGroup3";
+            this.ribbonPageGroup3.Text = "ribbonPageGroup3";
+            // 
+            // ribbonPageGroup2
+            // 
+            this.ribbonPageGroup2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ribbonPageGroup2.ImageOptions.SvgImage")));
+            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
+            this.ribbonPageGroup2.Text = "ribbonPageGroup2";
+            // 
+            // ribbonPageGroup1
+            // 
+            this.ribbonPageGroup1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("ribbonPageGroup1.ImageOptions.Image")));
+            this.ribbonPageGroup1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ribbonPageGroup1.ImageOptions.SvgImage")));
+            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+            this.ribbonPageGroup1.Text = "ribbonPageGroup1";
+            // 
+            // ribbonPage1
+            // 
+            this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup1,
+            this.ribbonPageGroup2,
+            this.ribbonPageGroup3});
+            this.ribbonPage1.Name = "ribbonPage1";
+            this.ribbonPage1.Text = "ribbonPage1";
             // 
             // CustomerInformationForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2976, 1111);
+            this.ClientSize = new System.Drawing.Size(2751, 1510);
+            this.ControlBox = false;
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.addBtn);
             this.Controls.Add(this.searchBox);
+            this.Controls.Add(this.ribbonControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "CustomerInformationForm";
-            this.Text = "Customer Information Form";
+            this.Ribbon = this.ribbonControl1;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.CustomerInformationForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.addBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.customerGrid)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -227,9 +297,7 @@
         public System.Windows.Forms.TextBox textBox4;
         public System.Windows.Forms.TextBox phoneName;
         public System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox searchBox;
-        private System.Windows.Forms.PictureBox addBtn;
         private System.Windows.Forms.DataGridView customerGrid;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
@@ -239,8 +307,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Address;
         private System.Windows.Forms.DataGridViewTextBoxColumn City;
         private System.Windows.Forms.DataGridViewTextBoxColumn AnnualRevenue;
-        private System.Windows.Forms.DataGridViewImageColumn delBtn;
-        private System.Windows.Forms.DataGridViewImageColumn updateBtn;
+        private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+        private DevExpress.XtraBars.Ribbon.RibbonPage customerPage;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup custPage;
+        private DevExpress.XtraBars.BarButtonItem add;
+        private DevExpress.XtraBars.BarButtonItem edit;
+        private DevExpress.XtraBars.BarButtonItem delete;
     }
 }
 

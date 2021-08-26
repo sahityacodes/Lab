@@ -15,7 +15,7 @@ namespace EntityManagementLayer.Implementation
         public List<SalesOrders> GetAll()
         {
             SqlDB_DAL driver = new();
-            return ConvertToObject(driver.GetRecords(Constants.QUERY_SELECTALLORDERS));
+            return ConvertToSalesOrdersObject(driver.GetRecords(Constants.QUERY_SELECTALLORDERS));
         }
 
         public List<SalesOrders> GetAllByKeyWord(string searchKeyWord)
@@ -25,7 +25,7 @@ namespace EntityManagementLayer.Implementation
             {
               new SqlParameter("@Word", SqlDbType.VarChar) { Value = "%"+searchKeyWord+"%"},
             };
-            return ConvertToObject(driver.GetRecords(Constants.QUERY_FINDORDER, parameters));
+            return ConvertToSalesOrdersObject(driver.GetRecords(Constants.QUERY_FINDORDER, parameters));
         }
 
         public bool UpdateOne(SalesOrders salesOrder)
@@ -152,7 +152,7 @@ namespace EntityManagementLayer.Implementation
             {
               new SqlParameter("@orderby", SqlDbType.VarChar) { Value = colName},
             };
-            return ConvertToObject(driver.GetRecords(Constants.QUERY_SORTBYCOLUMNASC_ORDERS, parameters));
+            return ConvertToSalesOrdersObject(driver.GetRecords(Constants.QUERY_SORTBYCOLUMNASC_ORDERS, parameters));
         }
 
 
@@ -163,7 +163,7 @@ namespace EntityManagementLayer.Implementation
             {
               new SqlParameter("@orderby", SqlDbType.VarChar) { Value = colName},
             };
-            return ConvertToObject(driver.GetRecords(Constants.QUERY_SORTBYCOLUMNDESC_ORDERS, parameters));
+            return ConvertToSalesOrdersObject(driver.GetRecords(Constants.QUERY_SORTBYCOLUMNDESC_ORDERS, parameters));
         }
 
         private int GetCurrentOrderID()
@@ -233,6 +233,33 @@ namespace EntityManagementLayer.Implementation
                             }
                         });
                     }
+                }
+            }
+            return orderList;
+        }
+
+        private List<SalesOrders> ConvertToSalesOrdersObject(DataTable orderDataTable)
+        {
+            List<SalesOrders> orderList = new();
+            if (orderDataTable.Rows.Count > 0)
+            {
+                foreach (DataRow dataRow in orderDataTable.Rows)
+                {
+                    orderList.Add(new SalesOrders
+                    {
+                        OrderID = dataRow.Field<int>("OrderID"),
+                        CustomerID = dataRow.Field<int>("CustomerID"),
+                        DateOrder = dataRow.Field<DateTime>("DateOrder"),
+                        Payment = dataRow.Field<string>("Payment"),
+                        OrderSummary = new SalesOrdersTail
+                        {
+                            DiscountAmount = dataRow.Field<decimal>("DiscountAmount"),
+                            ShippingCost = dataRow.Field<decimal>("ShippingCost"),
+                            TotalOrder = dataRow.Field<decimal>("TotalCost"),
+                            DeliveryDate = dataRow.Field<DateTime>("DeliveryDate"),
+                            ShippingAddress = dataRow.Field<string>("ShippingAddress")
+                        }
+                    });
                 }
             }
             return orderList;

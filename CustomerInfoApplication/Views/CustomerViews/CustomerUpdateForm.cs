@@ -1,11 +1,8 @@
 ﻿using System.Windows.Forms;
 using BusinessEntityLayer.Model;
 using System;
-using CustomerInfoApplication.Controllers;
 using BusinessLogic.Exceptions;
 using CustomerInfoApplication.Validators;
-using System.Data.SqlClient;
-using System.Diagnostics;
 
 namespace CustomerInfoApplication.Views.CustomerViews
 {

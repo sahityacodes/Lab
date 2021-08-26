@@ -358,7 +358,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             this.TotalRowPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.TotalRowPrice.HeaderText = "Total Product Price";
-            this.TotalRowPrice.MinimumWidth = 11;
+            this.TotalRowPrice.MinimumWidth = 11; 
             this.TotalRowPrice.Name = "TotalRowPrice";
             this.TotalRowPrice.ReadOnly = true;
             // 
@@ -389,17 +389,14 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             // SalesOrderDetailsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(2409, 1058);
             this.Controls.Add(this.splitContainer1);
-            this.FormBorderEffect = DevExpress.XtraEditors.FormBorderEffect.Glow;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             this.Name = "SalesOrderDetailsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "SalesOrderDetailsForm";
+            this.Text = "SalesOrder Details Form";
             this.TopMost = true;
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();

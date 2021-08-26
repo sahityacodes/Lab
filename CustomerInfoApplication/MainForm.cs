@@ -18,6 +18,7 @@ namespace CustomerInfoApplication
             fluentDesignFormContainer1.Controls.Clear();
             CustomerInformationForm customerInfoForm = new();
             customerInfoForm.TopLevel = false;
+            customerInfoForm.Dock = System.Windows.Forms.DockStyle.Fill;
             fluentDesignFormContainer1.Controls.Add(customerInfoForm);
             customerInfoForm.Show();
         }
@@ -27,6 +28,7 @@ namespace CustomerInfoApplication
             fluentDesignFormContainer1.Controls.Clear();
             SalesOrderForm orderInfoForm = new();
             orderInfoForm.TopLevel = false;
+            orderInfoForm.Dock = System.Windows.Forms.DockStyle.Fill;
             fluentDesignFormContainer1.Controls.Add(orderInfoForm);
             orderInfoForm.Show();
         }
@@ -36,6 +38,7 @@ namespace CustomerInfoApplication
             fluentDesignFormContainer1.Controls.Clear();
             ChartForm costOrderChart = new();
             costOrderChart.TopLevel = false;
+            costOrderChart.Dock = System.Windows.Forms.DockStyle.Fill;
             fluentDesignFormContainer1.Controls.Add(costOrderChart);
             costOrderChart.Show();
         }

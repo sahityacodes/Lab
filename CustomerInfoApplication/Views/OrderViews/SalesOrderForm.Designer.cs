@@ -29,52 +29,98 @@ namespace CustomerInfoApplication.Views.OrderViews
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesOrderForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.searchBox = new System.Windows.Forms.TextBox();
-            this.addBtn = new System.Windows.Forms.PictureBox();
+            this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            this.add = new DevExpress.XtraBars.BarButtonItem();
+            this.edit = new DevExpress.XtraBars.BarButtonItem();
+            this.delete = new DevExpress.XtraBars.BarButtonItem();
+            this.Orders = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.orderPage = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.orderGrid = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.OrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.payment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RowID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProductCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UnitPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TotalRowPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ShippingCost = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DiscountAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TotalCost = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DeliveryDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ShippingAdd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.delBtn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.updateBtn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.panel1 = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.addBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderGrid)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // searchBox
             // 
-            this.searchBox.Location = new System.Drawing.Point(111, 33);
+            this.searchBox.Location = new System.Drawing.Point(96, 383);
+            this.searchBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(611, 43);
+            this.searchBox.Size = new System.Drawing.Size(530, 36);
             this.searchBox.TabIndex = 18;
             this.searchBox.TextChanged += new System.EventHandler(this.searchBox_TextChanged);
             // 
-            // addBtn
+            // ribbonControl1
             // 
-            this.addBtn.Image = global::CustomerInfoApplication.Properties.Resources.add;
-            this.addBtn.Location = new System.Drawing.Point(40, 106);
-            this.addBtn.Name = "addBtn";
-            this.addBtn.Size = new System.Drawing.Size(65, 54);
-            this.addBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.addBtn.TabIndex = 21;
-            this.addBtn.TabStop = false;
-            this.addBtn.Click += new System.EventHandler(this.addBtn_Click);
+            this.ribbonControl1.ExpandCollapseItem.Id = 0;
+            this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbonControl1.ExpandCollapseItem,
+            this.ribbonControl1.SearchEditItem,
+            this.add,
+            this.edit,
+            this.delete});
+            this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
+            this.ribbonControl1.MaxItemId = 22;
+            this.ribbonControl1.Name = "ribbonControl1";
+            this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.Orders});
+            this.ribbonControl1.Size = new System.Drawing.Size(3324, 344);
+            // 
+            // add
+            // 
+            this.add.Id = 13;
+            this.add.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("add.ImageOptions.Image")));
+            this.add.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("add.ImageOptions.LargeImage")));
+            this.add.Name = "add";
+            this.add.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.add_ItemClick);
+            // 
+            // edit
+            // 
+            this.edit.Id = 18;
+            this.edit.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("edit.ImageOptions.Image")));
+            this.edit.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("edit.ImageOptions.LargeImage")));
+            this.edit.Name = "edit";
+            this.edit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.edit_ItemClick);
+            // 
+            // delete
+            // 
+            this.delete.Id = 21;
+            this.delete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("delete.ImageOptions.Image")));
+            this.delete.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("delete.ImageOptions.LargeImage")));
+            this.delete.Name = "delete";
+            this.delete.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.delete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.delete_ItemClick);
+            // 
+            // Orders
+            // 
+            this.Orders.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.orderPage});
+            this.Orders.Name = "Orders";
+            this.Orders.Text = "Orders";
+            // 
+            // orderPage
+            // 
+            this.orderPage.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            this.orderPage.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("orderPage.ImageOptions.Image")));
+            this.orderPage.ImageOptions.ImageIndex = 1;
+            this.orderPage.ImageOptions.ImageUri.Uri = "AddItem";
+            this.orderPage.ItemLinks.Add(this.add);
+            this.orderPage.ItemLinks.Add(this.edit);
+            this.orderPage.ItemLinks.Add(this.delete);
+            this.orderPage.Name = "orderPage";
             // 
             // orderGrid
             // 
@@ -97,24 +143,15 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.orderGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.OrderID,
             this.CustomerID,
+            this.CustomerName,
             this.date,
-            this.payment,
-            this.RowID,
-            this.ProductCode,
-            this.Qty,
-            this.UnitPrice,
-            this.TotalRowPrice,
-            this.ShippingCost,
-            this.DiscountAmount,
             this.TotalCost,
             this.DeliveryDate,
-            this.ShippingAdd,
-            this.delBtn,
-            this.updateBtn});
+            this.ShippingAdd});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
@@ -122,6 +159,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.orderGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.orderGrid.GridColor = System.Drawing.SystemColors.ButtonShadow;
             this.orderGrid.Location = new System.Drawing.Point(0, 0);
+            this.orderGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.orderGrid.Name = "orderGrid";
             this.orderGrid.ReadOnly = true;
             this.orderGrid.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -138,10 +176,22 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.orderGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.orderGrid.RowTemplate.Height = 30;
             this.orderGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orderGrid.Size = new System.Drawing.Size(3626, 1251);
+            this.orderGrid.Size = new System.Drawing.Size(3119, 900);
             this.orderGrid.TabIndex = 12;
-            this.orderGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderGrid_CellClick);
             this.orderGrid.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.orderGrid_ColumnHeaderMouseClick);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.AutoSize = true;
+            this.panel1.Controls.Add(this.orderGrid);
+            this.panel1.Location = new System.Drawing.Point(96, 455);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(3119, 900);
+            this.panel1.TabIndex = 20;
             // 
             // OrderID
             // 
@@ -165,6 +215,14 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.CustomerID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.CustomerID.ToolTipText = "Customer Name";
             // 
+            // CustomerName
+            // 
+            this.CustomerName.HeaderText = "Customer Name";
+            this.CustomerName.MinimumWidth = 11;
+            this.CustomerName.Name = "CustomerName";
+            this.CustomerName.ReadOnly = true;
+            this.CustomerName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // date
             // 
             this.date.FillWeight = 69.33961F;
@@ -174,73 +232,6 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.date.ReadOnly = true;
             this.date.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.date.ToolTipText = "Tax Code";
-            // 
-            // payment
-            // 
-            this.payment.FillWeight = 69.33961F;
-            this.payment.HeaderText = "Payment";
-            this.payment.MinimumWidth = 11;
-            this.payment.Name = "payment";
-            this.payment.ReadOnly = true;
-            this.payment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.payment.ToolTipText = "Payment";
-            // 
-            // RowID
-            // 
-            this.RowID.HeaderText = "RowID";
-            this.RowID.MinimumWidth = 60;
-            this.RowID.Name = "RowID";
-            this.RowID.ReadOnly = true;
-            this.RowID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.RowID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // ProductCode
-            // 
-            this.ProductCode.HeaderText = "Product Code";
-            this.ProductCode.MinimumWidth = 11;
-            this.ProductCode.Name = "ProductCode";
-            this.ProductCode.ReadOnly = true;
-            this.ProductCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Qty
-            // 
-            this.Qty.HeaderText = "Quantity";
-            this.Qty.MinimumWidth = 11;
-            this.Qty.Name = "Qty";
-            this.Qty.ReadOnly = true;
-            this.Qty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // UnitPrice
-            // 
-            this.UnitPrice.HeaderText = "UnitPrice";
-            this.UnitPrice.MinimumWidth = 11;
-            this.UnitPrice.Name = "UnitPrice";
-            this.UnitPrice.ReadOnly = true;
-            this.UnitPrice.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // TotalRowPrice
-            // 
-            this.TotalRowPrice.HeaderText = "TotalRowPrice";
-            this.TotalRowPrice.MinimumWidth = 11;
-            this.TotalRowPrice.Name = "TotalRowPrice";
-            this.TotalRowPrice.ReadOnly = true;
-            this.TotalRowPrice.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // ShippingCost
-            // 
-            this.ShippingCost.HeaderText = "Shipping Cost";
-            this.ShippingCost.MinimumWidth = 11;
-            this.ShippingCost.Name = "ShippingCost";
-            this.ShippingCost.ReadOnly = true;
-            this.ShippingCost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // DiscountAmount
-            // 
-            this.DiscountAmount.HeaderText = "Discount Amount";
-            this.DiscountAmount.MinimumWidth = 11;
-            this.DiscountAmount.Name = "DiscountAmount";
-            this.DiscountAmount.ReadOnly = true;
-            this.DiscountAmount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // TotalCost
             // 
@@ -266,51 +257,22 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.ShippingAdd.ReadOnly = true;
             this.ShippingAdd.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // delBtn
-            // 
-            this.delBtn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.delBtn.FillWeight = 15F;
-            this.delBtn.HeaderText = "";
-            this.delBtn.Image = global::CustomerInfoApplication.Properties.Resources.del;
-            this.delBtn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.delBtn.MinimumWidth = 70;
-            this.delBtn.Name = "delBtn";
-            this.delBtn.ReadOnly = true;
-            this.delBtn.Width = 70;
-            // 
-            // updateBtn
-            // 
-            this.updateBtn.FillWeight = 15F;
-            this.updateBtn.HeaderText = "";
-            this.updateBtn.Image = global::CustomerInfoApplication.Properties.Resources.account_edit;
-            this.updateBtn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.updateBtn.MinimumWidth = 70;
-            this.updateBtn.Name = "updateBtn";
-            this.updateBtn.ReadOnly = true;
-            // 
-            // panel1
-            // 
-            this.panel1.AutoSize = true;
-            this.panel1.Controls.Add(this.orderGrid);
-            this.panel1.Location = new System.Drawing.Point(111, 106);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(3626, 1251);
-            this.panel1.TabIndex = 20;
-            // 
             // SalesOrderForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(3864, 1383);
-            this.Controls.Add(this.addBtn);
+            this.ClientSize = new System.Drawing.Size(3324, 1539);
+            this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.searchBox);
+            this.Controls.Add(this.ribbonControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "SalesOrderForm";
+            this.Ribbon = this.ribbonControl1;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SalesOrderForm";
             this.Load += new System.EventHandler(this.SalesOrderForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.addBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderGrid)).EndInit();
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -319,27 +281,21 @@ namespace CustomerInfoApplication.Views.OrderViews
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView orderGrid;
         private System.Windows.Forms.TextBox searchBox;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox addOrder;
-        private System.Windows.Forms.PictureBox addBtn;
+        private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
+        private DevExpress.XtraBars.BarButtonItem add;
+        private DevExpress.XtraBars.BarButtonItem edit;
+        private DevExpress.XtraBars.BarButtonItem delete;
+        private DevExpress.XtraBars.Ribbon.RibbonPage Orders;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup orderPage;
+        private System.Windows.Forms.DataGridView orderGrid;
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderID;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerID;
         private System.Windows.Forms.DataGridViewTextBoxColumn date;
-        private System.Windows.Forms.DataGridViewTextBoxColumn payment;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RowID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProductCode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Qty;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UnitPrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TotalRowPrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ShippingCost;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DiscountAmount;
         private System.Windows.Forms.DataGridViewTextBoxColumn TotalCost;
         private System.Windows.Forms.DataGridViewTextBoxColumn DeliveryDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn ShippingAdd;
-        private System.Windows.Forms.DataGridViewImageColumn delBtn;
-        private System.Windows.Forms.DataGridViewImageColumn updateBtn;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
     }
 }
