@@ -20,7 +20,23 @@
         public decimal UnitPrice
         { get; set; }
 
+        private decimal _TotalRowPrice;
+
         public decimal TotalRowPrice
-        { get; set; }
+        {
+            get { return Qty * UnitPrice; }
+            set { _TotalRowPrice = value; }
+        }
+        public SalesOrdersRows()
+        {
+
+        }
+        public SalesOrdersRows(string productCode, string description, decimal qty, decimal unitPrice)
+        {
+            ProductCode = productCode;
+            Description = description;
+            Qty = qty;
+            UnitPrice = unitPrice;
+        }
     }
 }

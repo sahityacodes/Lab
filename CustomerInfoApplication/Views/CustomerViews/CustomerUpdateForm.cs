@@ -2,7 +2,8 @@
 using BusinessEntityLayer.Model;
 using System;
 using BusinessLogic.Exceptions;
-using CustomerInfoApplication.Validators;
+using BusinessLogic.Interfaces;
+using BusinessLogic.Implementation.CustomerLogic;
 
 namespace CustomerInfoApplication.Views.CustomerViews
 {
@@ -51,9 +52,9 @@ namespace CustomerInfoApplication.Views.CustomerViews
         {
             try
             {
-                CustomerValidators validate = new();
+                ICustomerBLL<Customer> CustomerBal = new CustomerBAL();
                 Customer cust = getCustomerData();
-                if (validate.ValidateCustomer(cust))
+                if (CustomerBal.ValidateCustomer(cust))
                 {
                     btnOK.DialogResult = DialogResult.OK;
                 }

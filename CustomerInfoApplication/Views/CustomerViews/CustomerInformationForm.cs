@@ -247,5 +247,10 @@ namespace CustomerInfoApplication.Views.CustomerViews
                 DeleteCustomer(Convert.ToInt32(customerGrid.CurrentRow.Cells[0].Value.ToString()));
             }
         }
+
+        private void ribbonControl1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

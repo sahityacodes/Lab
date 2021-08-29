@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using DevExpress.XtraBars.Ribbon;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Implementation.OrderLogic;
+using System.Linq;
 
 namespace CustomerInfoApplication.Views.OrderViews
 {
@@ -18,6 +19,17 @@ namespace CustomerInfoApplication.Views.OrderViews
             InitializeComponent();
         }
 
+        private void ReloadGrid(List<SalesOrders> orderList)
+        {
+            orderGrid.Rows.Clear();
+            foreach (SalesOrders order in orderList)
+            {
+
+                orderGrid.Rows.Add(new object[]{order.OrderID,
+                          order.CustomerID, "", order.DateOrder, order.OrderSummary.TotalOrder,  order.OrderSummary.DeliveryDate,order.OrderSummary.ShippingAddress
+                });
+            }
+        }
         private void SalesOrderForm_Load(object sender, EventArgs e)
         {
             try
@@ -38,50 +50,11 @@ namespace CustomerInfoApplication.Views.OrderViews
                 if (searchBox.Text != null || searchBox.Text.Length != 0)
                 {
                     ReloadGrid(OrderBal.GetOneByName(searchBox.Text));
-                    /* orderGrid.Rows.Clear();
-                     foreach (SalesOrders order in OrderBal.GetOneByName(searchBox.Text))
-                     {
-                         foreach (SalesOrdersRows row in order.OrderRows)
-                         {
-                             orderGrid.Rows.Add(new object[]{order.OrderID,
-                           order.CustomerID, order.DateOrder, order.Payment ?? "",  row.RowID, row.ProductCode,
-                             row.Qty, row.UnitPrice, row.TotalRowPrice, order.OrderSummary.ShippingCost,order.OrderSummary.DiscountAmount,order.OrderSummary.TotalOrder, order.OrderSummary.DeliveryDate,order.OrderSummary.ShippingAddress });
-                         }
-                     } */
                 }
             }
             catch (Exception io)
             {
                 Debug.WriteLine(io.Message);
-                MessageBox.Show("Error in the system.");
-            }
-        }
-
-        private void ReloadGrid(List<SalesOrders> orderList)
-        {
-            orderGrid.Rows.Clear();
-            foreach (SalesOrders order in orderList)
-            {
-               
-                    orderGrid.Rows.Add(new object[]{order.OrderID,
-                          order.CustomerID, "", order.DateOrder, order.OrderSummary.TotalOrder,  order.OrderSummary.DeliveryDate,order.OrderSummary.ShippingAddress
-                });
-            }
-        }
-
-        public void UpdateOrder(SalesOrders orders)
-        {
-            try
-            {
-                if (OrderBal.UpdateOne(orders))
-                {
-                    DialogResult dialog = MessageBox.Show("Updated Successfully");
-                    ReloadGrid(OrderBal.GetAll());
-                }
-            }
-            catch (Exception exc)
-            {
-                Debug.WriteLine(exc.Message);
                 MessageBox.Show("Error in the system.");
             }
         }
@@ -101,9 +74,26 @@ namespace CustomerInfoApplication.Views.OrderViews
                 MessageBox.Show("Error in the system.");
             }
         }
+        public void UpdateOrder(SalesOrders orders)
+        {
+            try
+            {
+                if (OrderBal.UpdateOne(orders))
+                {
+                    DialogResult dialog = MessageBox.Show("Updated Successfully");
+                    ReloadGrid(OrderBal.GetAll());
+                }
+            }
+            catch (Exception exc)
+            {
+                Debug.WriteLine(exc.Message);
+                MessageBox.Show("Error in the system.");
+            }
+        }
+
         private void orderGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.ColumnIndex == 0 || e.ColumnIndex == 1 || e.ColumnIndex == 3 ||e.ColumnIndex == 4 || e.ColumnIndex == 5)
+            if (e.ColumnIndex == 0 || e.ColumnIndex == 1 || e.ColumnIndex == 3 || e.ColumnIndex == 4 || e.ColumnIndex == 5)
             {
                 if (SortCounter)
                 {
@@ -120,8 +110,7 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         private void add_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            SalesOrderDetailsForm detailsForm = new();
-            detailsForm.InitializeFormValues(new SalesOrders());
+            SalesOrderDetailForm detailsForm = new();
             detailsForm.InitializeFormElements(true);
             DialogResult dialog = detailsForm.ShowDialog();
             if (dialog == DialogResult.OK)
@@ -136,7 +125,7 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         private void edit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            SalesOrderDetailsForm detailsForm = new();
+            SalesOrderDetailForm detailsForm = new();
             int OrderID = Convert.ToInt32(orderGrid.CurrentRow.Cells[0].Value);
             SalesOrders originalOrder = OrderBal.GetOne(OrderID);
             detailsForm.InitializeFormValues(originalOrder);
@@ -173,6 +162,51 @@ namespace CustomerInfoApplication.Views.OrderViews
                      MessageBox.Show("Deleted Successfully");
                      ReloadGrid();
                  } */
+            }
+        }
+
+        private void importDropdown_ListItemClick(object sender, DevExpress.XtraBars.ListItemClickEventArgs e)
+        {
+            IImportFeature<List<SalesOrdersRows>> fileToObj = new FileToObjectExcel();
+            SalesOrderDetailForm detailsForm = new();
+            SalesOrders originalOrder = new();
+            OpenFileDialog openFileDialog = new();
+            if (importDropdown.ItemIndex == 0)
+            {
+                openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    originalOrder.OrderRows = fileToObj.ConvertExcelToObject(openFileDialog.FileName);
+                    originalOrder.OrderSummary.TotalOrder = OrderBal.CalculateTotalCost(originalOrder.OrderRows.Select(o => o.TotalRowPrice).ToList(), originalOrder.OrderSummary.DiscountAmount, originalOrder.OrderSummary.ShippingCost);
+                    detailsForm.InitializeFormValues(originalOrder);
+                    detailsForm.InitializeFormElements(false);
+                    DialogResult dialog = detailsForm.ShowDialog();
+                }
+
+            }
+            else if (importDropdown.ItemIndex == 1)
+            {
+                openFileDialog.Filter = "Text|*.txt";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    originalOrder.OrderRows = fileToObj.ConvertTextFileToObject(openFileDialog.FileName);
+                    originalOrder.OrderSummary.TotalOrder = OrderBal.CalculateTotalCost(originalOrder.OrderRows.Select(o => o.TotalRowPrice).ToList(), originalOrder.OrderSummary.DiscountAmount, originalOrder.OrderSummary.ShippingCost);
+                    detailsForm.InitializeFormValues(originalOrder);
+                    detailsForm.InitializeFormElements(false);
+                    DialogResult dialog = detailsForm.ShowDialog();
+                }
+            }
+            else if (importDropdown.ItemIndex == 2)
+            {
+                ClipboardForm clipboardForm = new();
+                if (clipboardForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    originalOrder.OrderRows = fileToObj.ConvertClipboardDataToObject(clipboardForm.getPastedData());
+                    originalOrder.OrderSummary.TotalOrder = OrderBal.CalculateTotalCost(originalOrder.OrderRows.Select(o => o.TotalRowPrice).ToList(), originalOrder.OrderSummary.DiscountAmount, originalOrder.OrderSummary.ShippingCost);
+                    detailsForm.InitializeFormValues(originalOrder);
+                    detailsForm.InitializeFormElements(false);
+                    DialogResult dialog = detailsForm.ShowDialog();
+                }
             }
         }
     }

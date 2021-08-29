@@ -4,6 +4,7 @@ using BusinessLogic.Interfaces;
 using EntityManagementLayer.Interfaces;
 using EntityManagementLayer.Implementation;
 using BusinessLogic.Exceptions;
+using System.Linq;
 
 namespace BusinessLogic.Implementation.OrderLogic
 {
@@ -50,10 +51,9 @@ namespace BusinessLogic.Implementation.OrderLogic
         }
 
 
-        public decimal CalculateTotalCost(decimal totalRowscost, decimal discountCost, decimal shippingCost)
+        public decimal CalculateTotalCost(List<decimal> rowCostList, decimal discountCost, decimal shippingCost)
         {
-            decimal totalCost = totalRowscost - discountCost + shippingCost;
-
+            decimal totalCost = rowCostList.ToArray().Sum() - discountCost + shippingCost;
             return totalCost < 0 ? 0 : totalCost;
         }
 
@@ -69,13 +69,7 @@ namespace BusinessLogic.Implementation.OrderLogic
 
         private SalesOrders CalculateCosts(SalesOrders order)
         {
-            decimal TotalRowCost = 0;
-            foreach (SalesOrdersRows row in order.OrderRows)
-            {
-                row.TotalRowPrice = CalculateTotalUnitCost(row.Qty, row.UnitPrice);
-                TotalRowCost += +row.TotalRowPrice;
-            }
-            order.OrderSummary.TotalOrder = CalculateTotalCost(TotalRowCost, order.OrderSummary.DiscountAmount, order.OrderSummary.ShippingCost);
+            order.OrderSummary.TotalOrder = CalculateTotalCost(order.OrderRows.Select(o => o.TotalRowPrice).ToList(), order.OrderSummary.DiscountAmount, order.OrderSummary.ShippingCost);
             return order;
         }
 
@@ -89,6 +83,14 @@ namespace BusinessLogic.Implementation.OrderLogic
             if (!CustomerDal.CheckIfCustomerExists(order.CustomerID))
             {
                 throw new BusinessLogicException("The entered CustomerID doesnt exist.");
+            }
+            if (order.DateOrder > order.OrderSummary.DeliveryDate)
+            {
+                throw new BusinessLogicException("The Delivery Date is sooner than the Date of Order. Please change it");
+            }
+            if (order.OrderSummary.ShippingAddress.Length <= 0)
+            {
+                throw new BusinessLogicException("Please enter a valid shipping address");
             }
             return true;
         }

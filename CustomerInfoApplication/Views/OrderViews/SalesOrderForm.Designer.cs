@@ -30,18 +30,17 @@ namespace CustomerInfoApplication.Views.OrderViews
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesOrderForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.searchBox = new System.Windows.Forms.TextBox();
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.add = new DevExpress.XtraBars.BarButtonItem();
             this.edit = new DevExpress.XtraBars.BarButtonItem();
             this.delete = new DevExpress.XtraBars.BarButtonItem();
+            this.importDropdown = new DevExpress.XtraBars.BarListItem();
+            this.barButtonGroup1 = new DevExpress.XtraBars.BarButtonGroup();
             this.Orders = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.orderPage = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.orderGrid = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.OrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,14 +48,22 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.TotalCost = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DeliveryDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ShippingAdd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+            this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderGrid)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
             this.SuspendLayout();
             // 
             // searchBox
             // 
-            this.searchBox.Location = new System.Drawing.Point(96, 383);
+            this.searchBox.Location = new System.Drawing.Point(49, 406);
             this.searchBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.searchBox.Name = "searchBox";
             this.searchBox.Size = new System.Drawing.Size(530, 36);
@@ -65,22 +72,37 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             // ribbonControl1
             // 
+            this.ribbonControl1.AllowMinimizeRibbon = false;
+            this.ribbonControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ribbonControl1.Dock = System.Windows.Forms.DockStyle.None;
             this.ribbonControl1.ExpandCollapseItem.Id = 0;
             this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
             this.ribbonControl1.SearchEditItem,
             this.add,
             this.edit,
-            this.delete});
+            this.delete,
+            this.importDropdown,
+            this.barButtonGroup1});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 22;
+            this.ribbonControl1.MaxItemId = 31;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.Orders});
+            this.ribbonControl1.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
+            this.ribbonControl1.ShowDisplayOptionsMenuButton = DevExpress.Utils.DefaultBoolean.False;
+            this.ribbonControl1.ShowExpandCollapseButton = DevExpress.Utils.DefaultBoolean.False;
+            this.ribbonControl1.ShowMoreCommandsButton = DevExpress.Utils.DefaultBoolean.False;
+            this.ribbonControl1.ShowPageHeadersInFormCaption = DevExpress.Utils.DefaultBoolean.True;
+            this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Show;
+            this.ribbonControl1.ShowToolbarCustomizeItem = false;
             this.ribbonControl1.Size = new System.Drawing.Size(3324, 344);
+            this.ribbonControl1.Toolbar.ShowCustomizeItem = false;
             // 
             // add
             // 
+            this.add.Caption = "Add";
             this.add.Id = 13;
             this.add.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("add.ImageOptions.Image")));
             this.add.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("add.ImageOptions.LargeImage")));
@@ -89,6 +111,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             // edit
             // 
+            this.edit.Caption = "Edit";
             this.edit.Id = 18;
             this.edit.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("edit.ImageOptions.Image")));
             this.edit.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("edit.ImageOptions.LargeImage")));
@@ -97,6 +120,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             // delete
             // 
+            this.delete.Caption = "Delete";
             this.delete.Id = 21;
             this.delete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("delete.ImageOptions.Image")));
             this.delete.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("delete.ImageOptions.LargeImage")));
@@ -104,10 +128,30 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.delete.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.delete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.delete_ItemClick);
             // 
+            // importDropdown
+            // 
+            this.importDropdown.Caption = "Import Rows";
+            this.importDropdown.Id = 24;
+            this.importDropdown.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("importDropdown.ImageOptions.Image")));
+            this.importDropdown.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("importDropdown.ImageOptions.LargeImage")));
+            this.importDropdown.Name = "importDropdown";
+            this.importDropdown.Strings.AddRange(new object[] {
+            "Excel",
+            "File",
+            "Clipboard"});
+            this.importDropdown.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.importDropdown_ListItemClick);
+            // 
+            // barButtonGroup1
+            // 
+            this.barButtonGroup1.Caption = "barButtonGroup1";
+            this.barButtonGroup1.Id = 30;
+            this.barButtonGroup1.Name = "barButtonGroup1";
+            // 
             // Orders
             // 
             this.Orders.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.orderPage});
+            this.orderPage,
+            this.ribbonPageGroup1});
             this.Orders.Name = "Orders";
             this.Orders.Text = "Orders";
             // 
@@ -122,6 +166,12 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.orderPage.ItemLinks.Add(this.delete);
             this.orderPage.Name = "orderPage";
             // 
+            // ribbonPageGroup1
+            // 
+            this.ribbonPageGroup1.ItemLinks.Add(this.importDropdown);
+            this.ribbonPageGroup1.ItemLinks.Add(this.barButtonGroup1);
+            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+            // 
             // orderGrid
             // 
             this.orderGrid.AllowDrop = true;
@@ -131,14 +181,6 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.orderGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.orderGrid.BackgroundColor = System.Drawing.SystemColors.Control;
             this.orderGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.orderGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.orderGrid.ColumnHeadersHeight = 52;
             this.orderGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.OrderID,
@@ -148,14 +190,6 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.TotalCost,
             this.DeliveryDate,
             this.ShippingAdd});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.orderGrid.DefaultCellStyle = dataGridViewCellStyle2;
             this.orderGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.orderGrid.GridColor = System.Drawing.SystemColors.ButtonShadow;
             this.orderGrid.Location = new System.Drawing.Point(0, 0);
@@ -163,35 +197,14 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.orderGrid.Name = "orderGrid";
             this.orderGrid.ReadOnly = true;
             this.orderGrid.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.orderGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.orderGrid.RowHeadersVisible = false;
             this.orderGrid.RowHeadersWidth = 92;
             this.orderGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.orderGrid.RowTemplate.Height = 30;
             this.orderGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orderGrid.Size = new System.Drawing.Size(3119, 900);
+            this.orderGrid.Size = new System.Drawing.Size(3200, 1008);
             this.orderGrid.TabIndex = 12;
             this.orderGrid.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.orderGrid_ColumnHeaderMouseClick);
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.AutoSize = true;
-            this.panel1.Controls.Add(this.orderGrid);
-            this.panel1.Location = new System.Drawing.Point(96, 455);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(3119, 900);
-            this.panel1.TabIndex = 20;
             // 
             // OrderID
             // 
@@ -257,14 +270,62 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.ShippingAdd.ReadOnly = true;
             this.ShippingAdd.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.AutoSize = true;
+            this.panel1.Controls.Add(this.orderGrid);
+            this.panel1.Location = new System.Drawing.Point(49, 475);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(3200, 1008);
+            this.panel1.TabIndex = 20;
+            // 
+            // barButtonItem1
+            // 
+            this.barButtonItem1.Caption = "barButtonItem1";
+            this.barButtonItem1.Id = 23;
+            this.barButtonItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
+            this.barButtonItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.LargeImage")));
+            this.barButtonItem1.Name = "barButtonItem1";
+            // 
+            // dataLayoutControl1
+            // 
+            this.dataLayoutControl1.Location = new System.Drawing.Point(780, 1450);
+            this.dataLayoutControl1.Name = "dataLayoutControl1";
+            this.dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1765, 838, 1462, 900);
+            this.dataLayoutControl1.Root = this.Root;
+            this.dataLayoutControl1.Size = new System.Drawing.Size(877, 43);
+            this.dataLayoutControl1.TabIndex = 22;
+            this.dataLayoutControl1.Text = "dataLayoutControl1";
+            // 
+            // Root
+            // 
+            this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            this.Root.GroupBordersVisible = false;
+            this.Root.Name = "Root";
+            this.Root.Size = new System.Drawing.Size(877, 43);
+            this.Root.TextVisible = false;
+            // 
+            // emptySpaceItem1
+            // 
+            this.emptySpaceItem1.AllowHotTrack = false;
+            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 0);
+            this.emptySpaceItem1.Name = "emptySpaceItem1";
+            this.emptySpaceItem1.Size = new System.Drawing.Size(3304, 368);
+            this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+            // 
             // SalesOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(3324, 1539);
             this.ControlBox = false;
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.searchBox);
+            this.Controls.Add(this.dataLayoutControl1);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.ribbonControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -275,6 +336,9 @@ namespace CustomerInfoApplication.Views.OrderViews
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderGrid)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -297,5 +361,12 @@ namespace CustomerInfoApplication.Views.OrderViews
         private System.Windows.Forms.DataGridViewTextBoxColumn ShippingAdd;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
+        private DevExpress.XtraBars.BarListItem importDropdown;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraDataLayout.DataLayoutControl dataLayoutControl1;
+        private DevExpress.XtraLayout.LayoutControlGroup Root;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
+        private DevExpress.XtraBars.BarButtonGroup barButtonGroup1;
     }
 }

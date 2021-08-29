@@ -1,7 +1,7 @@
 ﻿
-namespace CustomerInfoApplication
+namespace DXApplication1
 {
-    partial class MainForm
+    partial class MainView
     {
         /// <summary>
         /// Required designer variable.
@@ -32,10 +32,8 @@ namespace CustomerInfoApplication
             this.components = new System.ComponentModel.Container();
             this.fluentDesignFormContainer1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormContainer();
             this.accordionControl1 = new DevExpress.XtraBars.Navigation.AccordionControl();
-            this.customerControl = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            this.orderControl = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            this.analyticsControl = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.fluentDesignFormControl1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl();
+            this.accordionControlElement1 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.fluentFormDefaultManager1 = new DevExpress.XtraBars.FluentDesignSystem.FluentFormDefaultManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.accordionControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fluentDesignFormControl1)).BeginInit();
@@ -45,75 +43,51 @@ namespace CustomerInfoApplication
             // fluentDesignFormContainer1
             // 
             this.fluentDesignFormContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fluentDesignFormContainer1.Location = new System.Drawing.Point(468, 70);
+            this.fluentDesignFormContainer1.Location = new System.Drawing.Point(260, 31);
             this.fluentDesignFormContainer1.Name = "fluentDesignFormContainer1";
-            this.fluentDesignFormContainer1.Size = new System.Drawing.Size(2228, 1366);
+            this.fluentDesignFormContainer1.Size = new System.Drawing.Size(431, 427);
             this.fluentDesignFormContainer1.TabIndex = 0;
             // 
             // accordionControl1
             // 
             this.accordionControl1.Dock = System.Windows.Forms.DockStyle.Left;
             this.accordionControl1.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
-            this.customerControl,
-            this.orderControl,
-            this.analyticsControl});
-            this.accordionControl1.Location = new System.Drawing.Point(0, 70);
+            this.accordionControlElement1});
+            this.accordionControl1.Location = new System.Drawing.Point(0, 31);
             this.accordionControl1.Name = "accordionControl1";
             this.accordionControl1.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Touch;
-            this.accordionControl1.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always;
-            this.accordionControl1.Size = new System.Drawing.Size(468, 1366);
+            this.accordionControl1.Size = new System.Drawing.Size(260, 427);
             this.accordionControl1.TabIndex = 1;
             this.accordionControl1.ViewType = DevExpress.XtraBars.Navigation.AccordionControlViewType.HamburgerMenu;
             // 
-            // customerControl
-            // 
-            this.customerControl.Expanded = true;
-            this.customerControl.Name = "customerControl";
-            this.customerControl.Text = "Customers";
-            this.customerControl.Click += new System.EventHandler(this.customerControl_Click);
-            // 
-            // orderControl
-            // 
-            this.orderControl.Expanded = true;
-            this.orderControl.Name = "orderControl";
-            this.orderControl.Text = "Orders";
-            this.orderControl.Click += new System.EventHandler(this.orderControl_Click);
-            // 
-            // analyticsControl
-            // 
-            this.analyticsControl.Name = "analyticsControl";
-            this.analyticsControl.Text = "Analytics";
-            this.analyticsControl.Click += new System.EventHandler(this.analyticsControl_Click);
-            // 
             // fluentDesignFormControl1
             // 
+            this.fluentDesignFormControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.fluentDesignFormControl1.FluentDesignForm = this;
             this.fluentDesignFormControl1.Location = new System.Drawing.Point(0, 0);
-            this.fluentDesignFormControl1.Manager = this.fluentFormDefaultManager1;
             this.fluentDesignFormControl1.Name = "fluentDesignFormControl1";
-            this.fluentDesignFormControl1.Size = new System.Drawing.Size(2696, 70);
+            this.fluentDesignFormControl1.Manager = this.fluentFormDefaultManager1;
+            this.fluentDesignFormControl1.Size = new System.Drawing.Size(691, 31);
             this.fluentDesignFormControl1.TabIndex = 2;
             this.fluentDesignFormControl1.TabStop = false;
             // 
-            // fluentFormDefaultManager1
+            // accordionControlElement1
             // 
-            this.fluentFormDefaultManager1.Form = this;
+            this.accordionControlElement1.Name = "accordionControlElement1";
+            this.accordionControlElement1.Text = "Element1";
             // 
-            // MainForm
+            // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2696, 1436);
+            this.ClientSize = new System.Drawing.Size(691, 473);
             this.ControlContainer = this.fluentDesignFormContainer1;
             this.Controls.Add(this.fluentDesignFormContainer1);
             this.Controls.Add(this.accordionControl1);
             this.Controls.Add(this.fluentDesignFormControl1);
             this.FluentDesignFormControl = this.fluentDesignFormControl1;
-            this.Name = "MainForm";
+            this.Name = "MainView";
             this.NavigationControl = this.accordionControl1;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Customer Order Management";
-            this.TopMost = true;
+            this.Text = "MainView";
             ((System.ComponentModel.ISupportInitialize)(this.accordionControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fluentDesignFormControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fluentFormDefaultManager1)).EndInit();
@@ -125,9 +99,8 @@ namespace CustomerInfoApplication
         private DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormContainer fluentDesignFormContainer1;
         private DevExpress.XtraBars.Navigation.AccordionControl accordionControl1;
         private DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl fluentDesignFormControl1;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement customerControl;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
         private DevExpress.XtraBars.FluentDesignSystem.FluentFormDefaultManager fluentFormDefaultManager1;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement orderControl;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement analyticsControl;
     }
 }
+

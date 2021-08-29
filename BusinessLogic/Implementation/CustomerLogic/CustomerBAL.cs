@@ -64,9 +64,17 @@ namespace BusinessLogic.Implementation.CustomerLogic
             throw new System.NotImplementedException();
         }
 
-        public bool ValidateCustomer(Customer obj)
+        public bool ValidateCustomer(Customer customer)
         {
-            throw new System.NotImplementedException();
+            if (customer.Name.Length == 0)
+            {
+                throw new BusinessLogicException("Please enter a valid name");
+            }
+            else if (customer.VAT.Length == 0)
+            {
+                throw new BusinessLogicException("VAT is Mandatory");
+            }
+            return true;
         }
     }
 }
