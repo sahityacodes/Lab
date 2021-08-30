@@ -73,9 +73,9 @@ namespace BusinessLogic.Implementation.OrderLogic
             return order;
         }
 
-        public bool DeleteOne(int Id, int rowID)
+        public bool DeleteOne(int Id)
         {
-            return OrderDal.DeleteOne(Id, rowID);
+            return OrderDal.DeleteOne(Id);
         }
 
         public bool ValidateOrder(SalesOrders order)
@@ -91,6 +91,10 @@ namespace BusinessLogic.Implementation.OrderLogic
             if (order.OrderSummary.ShippingAddress.Length <= 0)
             {
                 throw new BusinessLogicException("Please enter a valid shipping address");
+            }
+            if (order.OrderRows.Count == 0)
+            {
+                throw new BusinessLogicException("Order has no Sales Rows. Please add rows or delete the order instead.");
             }
             return true;
         }

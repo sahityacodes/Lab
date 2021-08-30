@@ -30,6 +30,7 @@ namespace CustomerInfoApplication.Views.OrderViews
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesOrderForm));
+            this.splashScreenManager1 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::CustomerInfoApplication.Views.Misc.WaitForm1), true, true, true);
             this.searchBox = new System.Windows.Forms.TextBox();
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.add = new DevExpress.XtraBars.BarButtonItem();
@@ -73,9 +74,6 @@ namespace CustomerInfoApplication.Views.OrderViews
             // ribbonControl1
             // 
             this.ribbonControl1.AllowMinimizeRibbon = false;
-            this.ribbonControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ribbonControl1.Dock = System.Windows.Forms.DockStyle.None;
             this.ribbonControl1.ExpandCollapseItem.Id = 0;
             this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
@@ -97,7 +95,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.ribbonControl1.ShowPageHeadersInFormCaption = DevExpress.Utils.DefaultBoolean.True;
             this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Show;
             this.ribbonControl1.ShowToolbarCustomizeItem = false;
-            this.ribbonControl1.Size = new System.Drawing.Size(3324, 344);
+            this.ribbonControl1.Size = new System.Drawing.Size(3101, 344);
             this.ribbonControl1.Toolbar.ShowCustomizeItem = false;
             // 
             // add
@@ -181,7 +179,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.orderGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.orderGrid.BackgroundColor = System.Drawing.SystemColors.Control;
             this.orderGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.orderGrid.ColumnHeadersHeight = 52;
+            this.orderGrid.ColumnHeadersHeight = 56;
             this.orderGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.OrderID,
             this.CustomerID,
@@ -202,7 +200,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.orderGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.orderGrid.RowTemplate.Height = 30;
             this.orderGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orderGrid.Size = new System.Drawing.Size(3200, 1008);
+            this.orderGrid.Size = new System.Drawing.Size(2977, 1008);
             this.orderGrid.TabIndex = 12;
             this.orderGrid.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.orderGrid_ColumnHeaderMouseClick);
             // 
@@ -280,7 +278,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.panel1.Location = new System.Drawing.Point(49, 475);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(3200, 1008);
+            this.panel1.Size = new System.Drawing.Size(2977, 1008);
             this.panel1.TabIndex = 20;
             // 
             // barButtonItem1
@@ -317,11 +315,15 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.emptySpaceItem1.Size = new System.Drawing.Size(3304, 368);
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
+            // splashScreenManager1
+            // 
+            splashScreenManager1.ClosingDelay = 500;
+            // 
             // SalesOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(3324, 1539);
+            this.ClientSize = new System.Drawing.Size(3101, 1539);
             this.ControlBox = false;
             this.Controls.Add(this.searchBox);
             this.Controls.Add(this.dataLayoutControl1);
@@ -346,6 +348,7 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         #endregion
         private System.Windows.Forms.TextBox searchBox;
+        private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.BarButtonItem add;
         private DevExpress.XtraBars.BarButtonItem edit;

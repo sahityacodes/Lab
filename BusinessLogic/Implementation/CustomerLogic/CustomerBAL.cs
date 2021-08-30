@@ -59,7 +59,7 @@ namespace BusinessLogic.Implementation.CustomerLogic
             return CustomerDal.CheckIfCustomerExists(ID);
         }
 
-        public bool DeleteOne(int Id, int rowID)
+        public bool DeleteOne(int Id)
         {
             throw new System.NotImplementedException();
         }

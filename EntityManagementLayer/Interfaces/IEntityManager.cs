@@ -10,7 +10,7 @@ namespace EntityManagementLayer.Interfaces
         bool UpdateOne(T obj);
         bool InsertOne(T obj);
         bool DeleteAll(int Id);
-        bool DeleteOne(int Id, int rowID);
+        bool DeleteOne(int Id);
         List<T> SortByColumnAscending(string ColName);
         List<T> SortByColumnDescending(string ColName);
         

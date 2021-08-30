@@ -8,15 +8,14 @@ using System.Collections.Generic;
 using BusinessLogic.Exceptions;
 using BusinessLogic.Implementation.CustomerLogic;
 using DevExpress.XtraBars;
-using System.Windows.Controls;
 
 namespace CustomerInfoApplication.Views.OrderViews
 {
     public partial class SalesOrderDetailForm : DevExpress.XtraEditors.XtraForm
     {
 
-        readonly IOrderBLL<SalesOrders> OrderBal = new OrderBAL();
-        readonly ICustomerBLL<Customer> CustomerBal = new CustomerBAL();
+        IOrderBLL<SalesOrders> OrderBal = new OrderBAL();
+        ICustomerBLL<Customer> CustomerBal = new CustomerBAL();
         public SalesOrderDetailForm()
         {
             InitializeComponent();
@@ -31,27 +30,35 @@ namespace CustomerInfoApplication.Views.OrderViews
             deliveryDate.Value = orders.OrderSummary.DeliveryDate;
             textDiscountAmount.Text = Convert.ToString(orders.OrderSummary.DiscountAmount) ?? "";
             textTotalAmount.Text = Convert.ToString(orders.OrderSummary.TotalOrder) ?? "";
-            foreach (SalesOrdersRows row in orders.OrderRows)
+            setRows(orders.OrderRows);
+        }
+        private void setRows(List<SalesOrdersRows> rows)
+        {
+            foreach (SalesOrdersRows row in rows)
             {
                 orderRowsGrid.Rows.Add(row.ProductCode, row.Description, row.Qty, row.UnitPrice, row.TotalRowPrice);
             }
-
         }
-
-        public void InitializeFormElements(bool enable)
+        private List<SalesOrdersRows> GetSalesOrdersRows()
         {
-            if (enable)
+            List<SalesOrdersRows> rows = new();
+            foreach (DataGridViewRow row in orderRowsGrid.Rows)
             {
-                pictureBox1.Enabled = true;
-                pictureBox1.Visible = true;
+                if (Convert.ToString(row.Cells[0].EditedFormattedValue) != "" && Convert.ToString(row.Cells[2].EditedFormattedValue) != "" &&
+                       Convert.ToString(row.Cells[3].EditedFormattedValue) != "")
+                {
+                    rows.Add(new SalesOrdersRows
+                    {
+                        ProductCode = Convert.ToString(row.Cells[0].EditedFormattedValue),
+                        Description = row.Cells[1].Value.ToString(),
+                        Qty = Convert.ToDecimal(row.Cells[2].EditedFormattedValue),
+                        UnitPrice = Convert.ToDecimal(row.Cells[3].EditedFormattedValue),
+                        TotalRowPrice = row.Cells[4].EditedFormattedValue != "" ? Convert.ToDecimal(row.Cells[4].EditedFormattedValue) : 0
+                    });
+                }
             }
+            return rows;
         }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            orderRowsGrid.Rows.Add();
-        }
-
         public SalesOrders getSaleOrderInfo()
         {
             List<SalesOrdersRows> rows = new();
@@ -72,7 +79,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             }
             SalesOrders salesOrder = new SalesOrders
             {
-                CustomerID = Convert.ToInt32(customerID.Text),
+                CustomerID = customerID.Text.Length > 0 ? Convert.ToInt32(customerID.Text) : 0,
                 DateOrder = Convert.ToDateTime(datePicker.Value),
                 Payment = textPayment.Text,
                 OrderRows = rows,
@@ -148,28 +155,32 @@ namespace CustomerInfoApplication.Views.OrderViews
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
         {
             IImportFeature<List<SalesOrdersRows>> fileToObj = new FileToObjectExcel();
-            SalesOrders originalOrder = new();
+            SalesOrders importedRows = new();
             OpenFileDialog openFileDialog = new();
             openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                originalOrder.OrderRows = fileToObj.ConvertExcelToObject(openFileDialog.FileName);
-                originalOrder.OrderSummary.TotalOrder = OrderBal.CalculateTotalCost(originalOrder.OrderRows.Select(o => o.TotalRowPrice).ToList(), originalOrder.OrderSummary.DiscountAmount, originalOrder.OrderSummary.ShippingCost);
-                InitializeFormValues(originalOrder);
+                importedRows.OrderRows = fileToObj.ConvertExcelToObject(openFileDialog.FileName);
+                importedRows.OrderRows.AddRange(GetSalesOrdersRows());
+                orderRowsGrid.Rows.Clear();
+                setRows(importedRows.OrderRows);
+                calculatecosts();
             }
         }
 
         private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
         {
             IImportFeature<List<SalesOrdersRows>> fileToObj = new FileToObjectExcel();
-            SalesOrders originalOrder = new();
+            SalesOrders importedRows = new();
             OpenFileDialog openFileDialog = new();
             openFileDialog.Filter = "Text|*.txt";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                originalOrder.OrderRows = fileToObj.ConvertTextFileToObject(openFileDialog.FileName);
-                originalOrder.OrderSummary.TotalOrder = OrderBal.CalculateTotalCost(originalOrder.OrderRows.Select(o => o.TotalRowPrice).ToList(), originalOrder.OrderSummary.DiscountAmount, originalOrder.OrderSummary.ShippingCost);
-                InitializeFormValues(originalOrder);
+                importedRows.OrderRows = fileToObj.ConvertTextFileToObject(openFileDialog.FileName);
+                importedRows.OrderRows.AddRange(GetSalesOrdersRows());
+                orderRowsGrid.Rows.Clear();
+                setRows(importedRows.OrderRows);
+                calculatecosts();
             }
         }
 
@@ -177,13 +188,33 @@ namespace CustomerInfoApplication.Views.OrderViews
         {
             ClipboardForm clipboardForm = new();
             IImportFeature<List<SalesOrdersRows>> fileToObj = new FileToObjectExcel();
-            SalesOrders originalOrder = new();
-            OpenFileDialog openFileDialog = new();
+            SalesOrders importedRows = new();
             if (clipboardForm.ShowDialog(this) == DialogResult.OK)
             {
-                originalOrder.OrderRows = fileToObj.ConvertClipboardDataToObject(clipboardForm.getPastedData());
-                originalOrder.OrderSummary.TotalOrder = OrderBal.CalculateTotalCost(originalOrder.OrderRows.Select(o => o.TotalRowPrice).ToList(), originalOrder.OrderSummary.DiscountAmount, originalOrder.OrderSummary.ShippingCost);
-                InitializeFormValues(originalOrder);
+                importedRows.OrderRows = fileToObj.ConvertClipboardDataToObject(clipboardForm.getPastedData());
+                importedRows.OrderRows.AddRange(GetSalesOrdersRows());
+                setRows(importedRows.OrderRows);
+                calculatecosts();
+            }
+        }
+
+        private void deleteBtn_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if(orderRowsGrid.SelectedRows.Count > 0)
+            {
+               foreach(DataGridViewRow row in orderRowsGrid.SelectedRows)
+                {
+                    try
+                    {
+                        if (row.Index != -1)
+                        {
+                            orderRowsGrid.Rows.RemoveAt(row.Index);
+                        }
+                    }
+                    catch (InvalidOperationException)
+                    {
+                    }
+                }
             }
         }
     }

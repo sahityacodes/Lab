@@ -178,7 +178,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.barButtonItem5,
             this.barButtonItem6});
             this.barManager1.MainMenu = bar2;
-            this.barManager1.MaxItemId = 37;
+            this.barManager1.MaxItemId = 44;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemComboBox1,
             this.repositoryItemImageEdit1});
@@ -226,6 +226,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.deleteBtn.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("deleteBtn.ImageOptions.Image")));
             this.deleteBtn.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("deleteBtn.ImageOptions.LargeImage")));
             this.deleteBtn.Name = "deleteBtn";
+            this.deleteBtn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.deleteBtn_ItemClick);
             // 
             // barButtonItem5
             // 
@@ -276,7 +277,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.textShippingCost.Location = new System.Drawing.Point(1215, 442);
             this.textShippingCost.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textShippingCost.Name = "textShippingCost";
-            this.textShippingCost.Size = new System.Drawing.Size(103, 36);
+            this.textShippingCost.Size = new System.Drawing.Size(99, 36);
             this.textShippingCost.TabIndex = 21;
             this.textShippingCost.Text = "0";
             this.textShippingCost.Leave += new System.EventHandler(this.textShippingCost_Leave);
@@ -285,7 +286,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1008, 387);
+            this.label1.Location = new System.Drawing.Point(1004, 387);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(192, 29);
             this.label1.TabIndex = 25;
@@ -294,7 +295,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // textDiscountAmount
             // 
             this.textDiscountAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textDiscountAmount.Location = new System.Drawing.Point(1219, 383);
+            this.textDiscountAmount.Location = new System.Drawing.Point(1215, 383);
             this.textDiscountAmount.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textDiscountAmount.Name = "textDiscountAmount";
             this.textDiscountAmount.Size = new System.Drawing.Size(99, 36);
@@ -310,12 +311,11 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.panel1.Location = new System.Drawing.Point(44, 43);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1274, 319);
+            this.panel1.Size = new System.Drawing.Size(1270, 319);
             this.panel1.TabIndex = 19;
             // 
             // orderRowsGrid
             // 
-            this.orderRowsGrid.AllowUserToOrderColumns = true;
             this.orderRowsGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.orderRowsGrid.BackgroundColor = System.Drawing.SystemColors.Window;
             this.orderRowsGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -342,7 +342,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.orderRowsGrid.RowHeadersWidth = 92;
             this.orderRowsGrid.RowTemplate.Height = 45;
             this.orderRowsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orderRowsGrid.Size = new System.Drawing.Size(1274, 319);
+            this.orderRowsGrid.Size = new System.Drawing.Size(1270, 319);
             this.orderRowsGrid.TabIndex = 2;
             this.orderRowsGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderRowsGrid_CellValueChanged);
             // 
@@ -386,7 +386,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(1049, 495);
+            this.label8.Location = new System.Drawing.Point(1045, 495);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(155, 29);
             this.label8.TabIndex = 26;
@@ -396,7 +396,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1043, 444);
+            this.label6.Location = new System.Drawing.Point(1039, 444);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(155, 29);
             this.label6.TabIndex = 22;
@@ -419,7 +419,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // Save
             // 
             this.Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Save.Location = new System.Drawing.Point(1172, 590);
+            this.Save.Location = new System.Drawing.Point(1168, 590);
             this.Save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(146, 41);
@@ -432,7 +432,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             this.Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.Cancel.Location = new System.Drawing.Point(944, 590);
+            this.Cancel.Location = new System.Drawing.Point(940, 590);
             this.Cancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(146, 41);
@@ -444,7 +444,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             this.textTotalAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textTotalAmount.AutoSize = true;
-            this.textTotalAmount.Location = new System.Drawing.Point(1215, 495);
+            this.textTotalAmount.Location = new System.Drawing.Point(1211, 495);
             this.textTotalAmount.Name = "textTotalAmount";
             this.textTotalAmount.Size = new System.Drawing.Size(26, 29);
             this.textTotalAmount.TabIndex = 28;
@@ -454,7 +454,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             this.pictureBox2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pictureBox2.Image = global::CustomerInfoApplication.Properties.Resources.Costa2;
-            this.pictureBox2.Location = new System.Drawing.Point(445, -30);
+            this.pictureBox2.Location = new System.Drawing.Point(443, -30);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(497, 293);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -464,7 +464,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // textAddress
             // 
             this.textAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textAddress.Location = new System.Drawing.Point(930, 364);
+            this.textAddress.Location = new System.Drawing.Point(926, 364);
             this.textAddress.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textAddress.Name = "textAddress";
             this.textAddress.Size = new System.Drawing.Size(388, 36);
@@ -483,7 +483,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(728, 234);
+            this.label3.Location = new System.Drawing.Point(724, 234);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(161, 29);
             this.label3.TabIndex = 25;
@@ -493,7 +493,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(728, 299);
+            this.label4.Location = new System.Drawing.Point(724, 299);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(105, 29);
             this.label4.TabIndex = 27;
@@ -503,7 +503,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(725, 366);
+            this.label5.Location = new System.Drawing.Point(721, 366);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(193, 29);
             this.label5.TabIndex = 28;
@@ -517,7 +517,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             "CreditCard/DebitCard",
             "PayPal",
             "Cash"});
-            this.textPayment.Location = new System.Drawing.Point(930, 297);
+            this.textPayment.Location = new System.Drawing.Point(926, 297);
             this.textPayment.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textPayment.Name = "textPayment";
             this.textPayment.Size = new System.Drawing.Size(388, 37);
@@ -527,7 +527,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             this.datePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.datePicker.CalendarTitleBackColor = System.Drawing.Color.CornflowerBlue;
-            this.datePicker.Location = new System.Drawing.Point(930, 227);
+            this.datePicker.Location = new System.Drawing.Point(926, 227);
             this.datePicker.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.datePicker.Name = "datePicker";
             this.datePicker.Size = new System.Drawing.Size(388, 36);
@@ -536,7 +536,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // deliveryDate
             // 
             this.deliveryDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.deliveryDate.Location = new System.Drawing.Point(930, 433);
+            this.deliveryDate.Location = new System.Drawing.Point(926, 433);
             this.deliveryDate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.deliveryDate.Name = "deliveryDate";
             this.deliveryDate.Size = new System.Drawing.Size(388, 36);
@@ -556,7 +556,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(725, 433);
+            this.label7.Location = new System.Drawing.Point(721, 433);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(156, 29);
             this.label7.TabIndex = 31;
@@ -564,6 +564,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             // splitContainer1
             // 
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer1.Cursor = System.Windows.Forms.Cursors.HSplit;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 58);
@@ -583,6 +584,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.textAddress);
             this.splitContainer1.Panel1.Controls.Add(this.pictureBox2);
+            this.splitContainer1.Panel1MinSize = 0;
             // 
             // splitContainer1.Panel2
             // 
@@ -596,8 +598,9 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.splitContainer1.Panel2.Controls.Add(this.textDiscountAmount);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.textShippingCost);
+            this.splitContainer1.Panel2MinSize = 700;
             this.splitContainer1.Size = new System.Drawing.Size(1369, 1273);
-            this.splitContainer1.SplitterDistance = 542;
+            this.splitContainer1.SplitterDistance = 498;
             this.splitContainer1.TabIndex = 4;
             // 
             // barSubItem1

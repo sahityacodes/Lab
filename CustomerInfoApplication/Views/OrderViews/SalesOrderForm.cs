@@ -7,6 +7,10 @@ using DevExpress.XtraBars.Ribbon;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Implementation.OrderLogic;
 using System.Linq;
+using DevExpress.XtraSplashScreen;
+using System.Threading;
+using CustomerInfoApplication.Views.Misc;
+using System.Drawing;
 
 namespace CustomerInfoApplication.Views.OrderViews
 {
@@ -111,7 +115,6 @@ namespace CustomerInfoApplication.Views.OrderViews
         private void add_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             SalesOrderDetailForm detailsForm = new();
-            detailsForm.InitializeFormElements(true);
             DialogResult dialog = detailsForm.ShowDialog();
             if (dialog == DialogResult.OK)
             {
@@ -129,7 +132,6 @@ namespace CustomerInfoApplication.Views.OrderViews
             int OrderID = Convert.ToInt32(orderGrid.CurrentRow.Cells[0].Value);
             SalesOrders originalOrder = OrderBal.GetOne(OrderID);
             detailsForm.InitializeFormValues(originalOrder);
-            detailsForm.InitializeFormElements(false);
             DialogResult dialog = detailsForm.ShowDialog();
             if (dialog == DialogResult.OK)
             {
@@ -157,11 +159,6 @@ namespace CustomerInfoApplication.Views.OrderViews
                     MessageBox.Show("Deleted Successfully");
                     ReloadGrid(OrderBal.GetAll());
                 }
-                /* if (orderController.DeleteOne(Convert.ToInt32(orderGrid.Rows[e.RowIndex].Cells[0].Value), Convert.ToInt32(orderGrid.Rows[e.RowIndex].Cells[4].Value)))
-                 {
-                     MessageBox.Show("Deleted Successfully");
-                     ReloadGrid();
-                 } */
             }
         }
 
@@ -179,10 +176,15 @@ namespace CustomerInfoApplication.Views.OrderViews
                     originalOrder.OrderRows = fileToObj.ConvertExcelToObject(openFileDialog.FileName);
                     originalOrder.OrderSummary.TotalOrder = OrderBal.CalculateTotalCost(originalOrder.OrderRows.Select(o => o.TotalRowPrice).ToList(), originalOrder.OrderSummary.DiscountAmount, originalOrder.OrderSummary.ShippingCost);
                     detailsForm.InitializeFormValues(originalOrder);
-                    detailsForm.InitializeFormElements(false);
+                    //SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true, false);
                     DialogResult dialog = detailsForm.ShowDialog();
+                 /*   for (int i = 1; i <= 100; i++)
+                    {
+                        SplashScreenManager.Default.SetWaitFormDescription(i.ToString() + "%");
+                        Thread.Sleep(25);
+                    }*/
+                    
                 }
-
             }
             else if (importDropdown.ItemIndex == 1)
             {
@@ -192,7 +194,6 @@ namespace CustomerInfoApplication.Views.OrderViews
                     originalOrder.OrderRows = fileToObj.ConvertTextFileToObject(openFileDialog.FileName);
                     originalOrder.OrderSummary.TotalOrder = OrderBal.CalculateTotalCost(originalOrder.OrderRows.Select(o => o.TotalRowPrice).ToList(), originalOrder.OrderSummary.DiscountAmount, originalOrder.OrderSummary.ShippingCost);
                     detailsForm.InitializeFormValues(originalOrder);
-                    detailsForm.InitializeFormElements(false);
                     DialogResult dialog = detailsForm.ShowDialog();
                 }
             }
@@ -204,7 +205,6 @@ namespace CustomerInfoApplication.Views.OrderViews
                     originalOrder.OrderRows = fileToObj.ConvertClipboardDataToObject(clipboardForm.getPastedData());
                     originalOrder.OrderSummary.TotalOrder = OrderBal.CalculateTotalCost(originalOrder.OrderRows.Select(o => o.TotalRowPrice).ToList(), originalOrder.OrderSummary.DiscountAmount, originalOrder.OrderSummary.ShippingCost);
                     detailsForm.InitializeFormValues(originalOrder);
-                    detailsForm.InitializeFormElements(false);
                     DialogResult dialog = detailsForm.ShowDialog();
                 }
             }

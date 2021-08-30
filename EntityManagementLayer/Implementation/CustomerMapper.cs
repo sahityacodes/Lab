@@ -150,7 +150,7 @@ namespace EntityManagementLayer.Implementation
             return (driver.GetRecords(Constants.QUERY_CHECKIFCUSTOMER_EXISTS, parameters).Rows.Count > 0 )? true :false ;
         }
 
-        public bool DeleteOne(int Id, int rowID)
+        public bool DeleteOne(int Id)
         {
             throw new System.NotImplementedException();
         }

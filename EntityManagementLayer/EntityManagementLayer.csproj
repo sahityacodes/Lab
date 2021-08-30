@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DevExpress.Xpo" Version="21.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BusinessEntityLayer\BusinessEntityLayer.csproj" />
     <ProjectReference Include="..\DALayer\DALayer.csproj" />
   </ItemGroup>
