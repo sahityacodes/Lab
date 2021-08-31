@@ -22,7 +22,7 @@ namespace CustomerInfoApplication.Views.OrderViews
         }
         public void InitializeFormValues(SalesOrders orders)
         {
-            customerID.Text = Convert.ToString(orders.CustomerID);
+            customerName.Text = Convert.ToString(orders.CustomerID);
             datePicker.Value = orders.DateOrder;
             textPayment.Text = Convert.ToString(orders.Payment) ?? "";
             textAddress.Text = Convert.ToString(orders.OrderSummary.ShippingAddress) ?? "";
@@ -61,37 +61,28 @@ namespace CustomerInfoApplication.Views.OrderViews
         }
         public SalesOrders getSaleOrderInfo()
         {
-            List<SalesOrdersRows> rows = new();
-            foreach (DataGridViewRow row in orderRowsGrid.Rows)
+            SalesOrders salesOrder = new();
+            try
             {
-                if (Convert.ToString(row.Cells[0].EditedFormattedValue) != "" && Convert.ToString(row.Cells[2].EditedFormattedValue) != "" &&
-                       Convert.ToString(row.Cells[3].EditedFormattedValue) != "")
+                salesOrder = new SalesOrders
                 {
-                    rows.Add(new SalesOrdersRows
+                    CustomerID = customerName.Text.Split(" - ")[0].Length > 0 ? Convert.ToInt32(customerName.Text.Split(" - ")[0]) : 0,
+                    DateOrder = Convert.ToDateTime(datePicker.Value),
+                    Payment = textPayment.Text,
+                    OrderRows = GetSalesOrdersRows(),
+                    OrderSummary = new SalesOrdersTail
                     {
-                        ProductCode = Convert.ToString(row.Cells[0].EditedFormattedValue),
-                        Description = row.Cells[1].Value.ToString(),
-                        Qty = Convert.ToDecimal(row.Cells[2].EditedFormattedValue),
-                        UnitPrice = Convert.ToDecimal(row.Cells[3].EditedFormattedValue),
-                        TotalRowPrice = row.Cells[4].EditedFormattedValue != "" ? Convert.ToDecimal(row.Cells[4].EditedFormattedValue) : 0
-                    });
-                }
+                        ShippingAddress = textAddress.Text,
+                        ShippingCost = textShippingCost.Text.Length > 0 ? Convert.ToDecimal(textShippingCost.Text) : 0,
+                        DeliveryDate = Convert.ToDateTime(deliveryDate.Value),
+                        DiscountAmount = textDiscountAmount.Text.Length > 0 ? Convert.ToDecimal(textDiscountAmount.Text) : 0,
+                        TotalOrder = textTotalAmount.Text.Length > 0 ? Convert.ToDecimal(textTotalAmount.Text) : 0,
+                    }
+                };
             }
-            SalesOrders salesOrder = new SalesOrders
+            catch (FormatException)
             {
-                CustomerID = customerID.Text.Length > 0 ? Convert.ToInt32(customerID.Text) : 0,
-                DateOrder = Convert.ToDateTime(datePicker.Value),
-                Payment = textPayment.Text,
-                OrderRows = rows,
-                OrderSummary = new SalesOrdersTail
-                {
-                    ShippingAddress = textAddress.Text,
-                    ShippingCost = textShippingCost.Text.Length > 0 ? Convert.ToDecimal(textShippingCost.Text) : 0,
-                    DeliveryDate = Convert.ToDateTime(deliveryDate.Value),
-                    DiscountAmount = textDiscountAmount.Text.Length > 0 ? Convert.ToDecimal(textDiscountAmount.Text) : 0,
-                    TotalOrder = textTotalAmount.Text.Length > 0 ? Convert.ToDecimal(textTotalAmount.Text) : 0,
-                }
-            };
+            }
             return salesOrder;
         }
 
@@ -103,19 +94,24 @@ namespace CustomerInfoApplication.Views.OrderViews
         private void calculatecosts()
         {
             List<decimal> costs = new();
-            if (orderRowsGrid.CurrentRow != null)
+            try
             {
-                decimal Qty = Convert.ToDecimal(orderRowsGrid.CurrentRow.Cells[2].Value);
-                decimal UnitPrice = Convert.ToDecimal(orderRowsGrid.CurrentRow.Cells[3].Value);
-                orderRowsGrid.CurrentRow.Cells[4].Value = OrderBal.CalculateTotalUnitCost(Qty, UnitPrice);
-                costs = orderRowsGrid.Rows
-                        .OfType<DataGridViewRow>()
-                        .Select(r => Convert.ToDecimal(r.Cells[4].Value))
-                        .ToList();
+                if (orderRowsGrid.CurrentRow != null)
+                {
+                    decimal Qty = Convert.ToDecimal(orderRowsGrid.CurrentRow.Cells[2].Value);
+                    decimal UnitPrice = Convert.ToDecimal(orderRowsGrid.CurrentRow.Cells[3].Value);
+                    orderRowsGrid.CurrentRow.Cells[4].Value = OrderBal.CalculateTotalUnitCost(Qty, UnitPrice);
+                    costs = orderRowsGrid.Rows
+                            .OfType<DataGridViewRow>()
+                            .Select(r => Convert.ToDecimal(r.Cells[4].Value))
+                            .ToList();
+                }
+                textTotalAmount.Text = Convert.ToString(OrderBal.CalculateTotalCost(costs, textDiscountAmount.Text.Length > 0 ? Convert.ToDecimal(textDiscountAmount.Text) : 0,
+                                            textShippingCost.Text.Length > 0 ? Convert.ToDecimal(textShippingCost.Text) : 0));
             }
-            textTotalAmount.Text = Convert.ToString(OrderBal.CalculateTotalCost(costs, textDiscountAmount.Text.Length > 0 ? Convert.ToDecimal(textDiscountAmount.Text) : 0,
-                                        textShippingCost.Text.Length > 0 ? Convert.ToDecimal(textShippingCost.Text) : 0));
-
+            catch (FormatException)
+            {
+            }
         }
         private void Save_Click(object sender, EventArgs e)
         {
@@ -132,14 +128,6 @@ namespace CustomerInfoApplication.Views.OrderViews
             {
                 MessageBox.Show(ud.Message);
             }
-        }
-
-        private void customerID_TextUpdate(object sender, EventArgs e)
-        {
-            customerID.DroppedDown = true;
-            customerID.Items.Clear();
-            customerID.Items.AddRange(CustomerBal.GetOneByName(customerID.Text).Select(o => o.Id + " - " + o.Name).
-                                          ToArray());
         }
 
         private void textShippingCost_Leave(object sender, EventArgs e)
@@ -200,9 +188,9 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         private void deleteBtn_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if(orderRowsGrid.SelectedRows.Count > 0)
+            if (orderRowsGrid.SelectedRows.Count > 0)
             {
-               foreach(DataGridViewRow row in orderRowsGrid.SelectedRows)
+                foreach (DataGridViewRow row in orderRowsGrid.SelectedRows)
                 {
                     try
                     {
@@ -215,6 +203,68 @@ namespace CustomerInfoApplication.Views.OrderViews
                     {
                     }
                 }
+            }
+        }
+
+        private void orderRowsGrid_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            e.Control.KeyPress -= new KeyPressEventHandler(Column_KeyPress);
+            if (orderRowsGrid.CurrentCell.ColumnIndex == 2 || orderRowsGrid.CurrentCell.ColumnIndex == 3)
+            {
+                System.Windows.Forms.TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    tb.KeyPress += new KeyPressEventHandler(Column_KeyPress);
+                }
+            }
+        }
+
+        private void Column_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textDiscountAmount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textShippingCost_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void searchControl1_TextChanged(object sender, EventArgs e)
+        {
+            searchList.Visible = true;
+            searchList.Items.Clear();
+            foreach (Customer cust in CustomerBal.GetOneByName(searchControl1.Text))
+            {
+                ListViewItem lvi = new ListViewItem();
+                lvi.Text = cust.Name;
+                lvi.SubItems.Add(Convert.ToString(cust.Id));
+                searchList.Items.Add(lvi);
+            }
+        }
+
+        private void searchList_Click(object sender, EventArgs e)
+        {
+            if (searchList.SelectedItems.Count > 0)
+            {
+                ListViewItem customer = searchList.SelectedItems[0];
+                searchControl1.Text = customer.Text;
+                string txt = customer.SubItems[1].Text;
+                customerName.Text = txt;
+                searchList.Visible = false;
             }
         }
     }

@@ -190,6 +190,7 @@
             this.ribbonControl1.AllowContentChangeAnimation = DevExpress.Utils.DefaultBoolean.False;
             this.ribbonControl1.AllowMinimizeRibbon = false;
             this.ribbonControl1.AllowTrimPageText = false;
+            this.ribbonControl1.ColorScheme = DevExpress.XtraBars.Ribbon.RibbonControlColorScheme.DarkBlue;
             this.ribbonControl1.ExpandCollapseItem.Id = 0;
             this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
@@ -202,12 +203,13 @@
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.customerPage});
+            this.ribbonControl1.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.MacOffice;
             this.ribbonControl1.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
             this.ribbonControl1.ShowDisplayOptionsMenuButton = DevExpress.Utils.DefaultBoolean.False;
             this.ribbonControl1.ShowExpandCollapseButton = DevExpress.Utils.DefaultBoolean.False;
             this.ribbonControl1.ShowQatLocationSelector = false;
             this.ribbonControl1.ShowToolbarCustomizeItem = false;
-            this.ribbonControl1.Size = new System.Drawing.Size(2751, 344);
+            this.ribbonControl1.Size = new System.Drawing.Size(2751, 305);
             this.ribbonControl1.Toolbar.ShowCustomizeItem = false;
             this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             this.ribbonControl1.TransparentEditorsMode = DevExpress.Utils.DefaultBoolean.False;
@@ -215,6 +217,7 @@
             // 
             // add
             // 
+            this.add.Caption = "Add";
             this.add.Id = 13;
             this.add.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("add.ImageOptions.Image")));
             this.add.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("add.ImageOptions.LargeImage")));
@@ -223,6 +226,7 @@
             // 
             // edit
             // 
+            this.edit.Caption = "Edit";
             this.edit.Id = 18;
             this.edit.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("edit.ImageOptions.Image")));
             this.edit.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("edit.ImageOptions.LargeImage")));
@@ -231,6 +235,7 @@
             // 
             // delete
             // 
+            this.delete.Caption = "Delete";
             this.delete.Id = 21;
             this.delete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("delete.ImageOptions.Image")));
             this.delete.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("delete.ImageOptions.LargeImage")));

@@ -1,24 +1,36 @@
 ﻿using DALayer.Utils;
 using System.Data.SqlClient;
 using System.Data;
-using System.Collections.Generic;
 
 namespace DALayer.Implementation
 {
     public class SqlDB_DAL
     {
-        private SqlConnection OpenDB()
+        private SqlTransaction tran;
+        private SqlConnection objSqlConnection;
+        public void OpenDB()
         {
-            SqlConnection objSqlConnection = new(Constants.ConnectionString);
+            objSqlConnection = new(Constants.ConnectionString);
             objSqlConnection.Open();
-            return objSqlConnection;
         }
 
-        private void CloseDB(SqlConnection objSqlConnection)
+        public void CloseDB()
         {
             objSqlConnection.Close();
         }
+        public void OpenTransaction()
+        {
+            tran = objSqlConnection.BeginTransaction();
+        }
+        public void CommitTransaction()
+        {
+            tran.Commit();
+        }
 
+        public void RollbackTransaction()
+        {
+            tran.Rollback();
+        }
         public DataTable GetRecords(string queryStr, params IDataParameter[] sqlParams)
         {
             DataTable dt = new();
@@ -38,43 +50,18 @@ namespace DALayer.Implementation
             return dt;
         }
 
-        public bool WriteToTable(Dictionary<string, List<SqlParameter[]>> queries)
-        {
-            bool rows = false;
-            SqlConnection objSqlConnection = OpenDB();
-            SqlTransaction sqlTran = objSqlConnection.BeginTransaction();
-            try
-            {
-                foreach (KeyValuePair<string, List<SqlParameter[]>> query in queries)
-                {
-                    SqlCommand com = new(query.Key, objSqlConnection, sqlTran);
-                    if (query.Value != null)
-                    {
-                        foreach (IDataParameter[] para in query.Value)
-                        {
-                            foreach (IDataParameter par in para)
-                            {
-                                com.Parameters.Add(par);
-                            } 
-                            com.ExecuteNonQuery();
-                            com.Parameters.Clear();
-                        }
-                    }
 
-                }
-                sqlTran.Commit();
-                rows = true;
-            }
-            catch (SqlException)
+        public bool WriteToTable(string query, params IDataParameter[] parameters)
+        {
+            SqlCommand com = new(query, objSqlConnection, tran);
+            if (parameters != null)
             {
-                sqlTran.Rollback();
-                throw;
+                    foreach (IDataParameter par in parameters)
+                    {
+                        com.Parameters.Add(par);
+                    }
             }
-            finally
-            {
-                CloseDB(objSqlConnection);
-            }
-            return rows;
+            return com.ExecuteNonQuery() > 0 ? true : false;
         }
     }
 }

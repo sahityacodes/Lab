@@ -21,67 +21,107 @@ namespace EntityManagementLayer.Implementation
         public List<SalesOrders> GetAllByKeyWord(string searchKeyWord)
         {
             SqlDB_DAL driver = new();
+
             SqlParameter[] parameters =
             {
               new SqlParameter("@Word", SqlDbType.VarChar) { Value = "%"+searchKeyWord+"%"},
             };
             return ConvertToSalesOrdersObject(driver.GetRecords(Constants.QUERY_FINDORDER, parameters));
         }
+        public bool InsertOne(SalesOrders salesOrder)
+        {
+            SqlDB_DAL driver = new();
+            try
+            {
+                driver.OpenDB();
+                driver.OpenTransaction();
+                SqlParameter[] salesOrderParams =
+                {
+                  new SqlParameter("@CustomerID", SqlDbType.Int) { Value = salesOrder.CustomerID },
+                  new SqlParameter("@DateOrder", SqlDbType.DateTime) { Value = salesOrder.DateOrder },
+                  new SqlParameter("@Payment", SqlDbType.VarChar) { Value = salesOrder.Payment},
+                };
+
+                if (driver.WriteToTable(Constants.QUERY_INSERT_ORDERS, salesOrderParams))
+                {
+                    salesOrder.OrderID = GetCurrentOrderID(driver);
+                    if (InsertRows(driver, salesOrder) && InsertTails(driver, salesOrder))
+                    {
+                        driver.CommitTransaction();
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                driver.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                driver.CloseDB();
+            }
+            return true;
+        }
 
         public bool UpdateOne(SalesOrders salesOrder)
         {
             SqlDB_DAL driver = new();
-            List<SqlParameter[]> salesOrders = new();
-            SqlParameter[] salesOrderParams =
+            try
             {
-              new SqlParameter("@OrderID", SqlDbType.Int) { Value = salesOrder.OrderID},
-              new SqlParameter("@CustomerID", SqlDbType.Int) { Value = salesOrder.CustomerID },
-              new SqlParameter("@DateOrder", SqlDbType.DateTime) { Value = salesOrder.DateOrder },
-              new SqlParameter("@Payment", SqlDbType.VarChar) { Value = salesOrder.Payment},
-            };
-            salesOrders.Add(salesOrderParams);
-            Dictionary<string, List<SqlParameter[]>> param = new();
-            param.Add(Constants.QUERY_UPDATE_ORDERS, salesOrders);
-            if (driver.WriteToTable(param))
-            {
-                return UpdateSalesOrdersRowTails(salesOrder);
+                driver.OpenDB();
+                driver.OpenTransaction();
+                SqlParameter[] salesOrderParams =
+                {
+                  new SqlParameter("@OrderID", SqlDbType.Int) { Value = salesOrder.OrderID},
+                  new SqlParameter("@CustomerID", SqlDbType.Int) { Value = salesOrder.CustomerID },
+                  new SqlParameter("@DateOrder", SqlDbType.DateTime) { Value = salesOrder.DateOrder },
+                  new SqlParameter("@Payment", SqlDbType.VarChar) { Value = salesOrder.Payment},
+                  };
+                if (driver.WriteToTable(Constants.QUERY_UPDATE_ORDERS, salesOrderParams) &&
+                    DeleteAllRows(driver, salesOrder.OrderID) && InsertRows(driver, salesOrder) && InsertTails(driver, salesOrder))
+                {
+                    driver.CommitTransaction();
+                }
             }
-            return false;
+            catch (SqlException)
+            {
+                driver.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                driver.CloseDB();
+            }
+            return true;
         }
 
-        public bool InsertOne(SalesOrders salesOrder)
-        {
-            SqlDB_DAL driver = new();
-            List<SqlParameter[]> salesOrders = new List<SqlParameter[]>();
-            SqlParameter[] salesOrderParams =
-            {
-              new SqlParameter("@CustomerID", SqlDbType.Int) { Value = salesOrder.CustomerID },
-              new SqlParameter("@DateOrder", SqlDbType.DateTime) { Value = salesOrder.DateOrder },
-              new SqlParameter("@Payment", SqlDbType.VarChar) { Value = salesOrder.Payment},
-            };
-            salesOrders.Add(salesOrderParams);
-            Dictionary<string, List<SqlParameter[]>> param = new();
-            param.Add(Constants.QUERY_INSERT_ORDERS, salesOrders);
-            if (driver.WriteToTable(param))
-            {
-                salesOrder.OrderID = GetCurrentOrderID();
-                return InsertSalesOrdersRowTails(salesOrder);
-            }
-            return false;
-        }
 
         public bool DeleteAll(int OrderId)
         {
             SqlDB_DAL driver = new();
-            SqlParameter[] parameters =
+            try
             {
+                driver.OpenDB();
+                driver.OpenTransaction();
+                SqlParameter[] parameters =
+                {
                 new SqlParameter("@OrderID", SqlDbType.Int) { Value = OrderId }
-              };
-            List<SqlParameter[]> rowParams = new List<SqlParameter[]>();
-            rowParams.Add(parameters);
-            Dictionary<string, List<SqlParameter[]>> param = new();
-            param.Add(Constants.QUERY_DELETEONE_ORDERS, rowParams);
-            return driver.WriteToTable(param);
+                };
+                if(driver.WriteToTable(Constants.QUERY_DELETE_ORDERS, parameters))
+                {
+                     driver.CommitTransaction();
+                }
+            }  
+            catch (SqlException)
+            {
+                driver.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                driver.CloseDB();
+            }
+            return true;
         }
 
         public List<SalesOrders> SortByColumnAscending(string colName)
@@ -105,9 +145,8 @@ namespace EntityManagementLayer.Implementation
             return ConvertToSalesOrdersObject(driver.GetRecords(Constants.QUERY_SORTBYCOLUMNDESC_ORDERS, parameters));
         }
 
-        private int GetCurrentOrderID()
+        private int GetCurrentOrderID(SqlDB_DAL driver)
         {
-            SqlDB_DAL driver = new();
             DataTable orderDataTable = driver.GetRecords(Constants.IDEN_QUERY_ORDERS);
             return Convert.ToInt32(orderDataTable.Rows[0].ItemArray[0]);
         }
@@ -205,64 +244,39 @@ namespace EntityManagementLayer.Implementation
             return orderList;
         }
 
-        public bool DeleteOne(int OrderId)
+        public bool DeleteAllRows(SqlDB_DAL driver, int OrderId)
         {
-            SqlDB_DAL driver = new();
             SqlParameter[] parameters =
             {
                 new SqlParameter("@OrderID", SqlDbType.Int) { Value = OrderId }
               };
-            List<SqlParameter[]> rowParams = new();
-            rowParams.Add(parameters);
-            Dictionary<string, List<SqlParameter[]>> param = new();
-            param.Add(Constants.QUERY_DELETEONE_ROW, rowParams);
-            return driver.WriteToTable(param);
+            return driver.WriteToTable(Constants.QUERY_DELETEONE_ROW, parameters);
         }
 
-        private bool UpdateSalesOrdersRowTails(SalesOrders salesOrder)
+        private bool InsertRows(SqlDB_DAL driver,SalesOrders salesOrder)
         {
-            if (DeleteOne(salesOrder.OrderID))
-            {
-                return InsertSalesOrdersRowTails(salesOrder);
-            }
-            return false;
-        }
-        private bool InsertSalesOrdersRowTails(SalesOrders salesOrder)
-        {
-            SqlDB_DAL driver = new();
-            List<SqlParameter[]> rowParams = ConvertDataRowsToObject(salesOrder);
-            List<SqlParameter[]> salesDetails = ConvertDataTailsToObject(salesOrder);
-            Dictionary<string, List<SqlParameter[]>> param = new();
-            param.Add(Constants.QUERY_INSERT_ORDERROWS, rowParams);
-            param.Add(Constants.QUERY_INSERT_ORDERDETAILS, salesDetails);
-            return driver.WriteToTable(param);
-        }
-
-        private List<SqlParameter[]> ConvertDataRowsToObject(SalesOrders salesOrder)
-        {
-            List<SqlParameter[]> rowParams = new();
             int rowID = 1;
+            bool status = true;
             foreach (SalesOrdersRows rows in salesOrder.OrderRows)
             {
                 SqlParameter[] rowParam =
                  {
-              new SqlParameter("@OrderID", SqlDbType.Int) { Value = salesOrder.OrderID},
-              new SqlParameter("@RowID", SqlDbType.Int) { Value = rowID },
-              new SqlParameter("@ProductCode", SqlDbType.VarChar) { Value = rows.ProductCode },
-              new SqlParameter("@Description", SqlDbType.VarChar) { Value = rows.Description},
-              new SqlParameter("@Qty", SqlDbType.Decimal) { Value = rows.Qty},
-              new SqlParameter("@UnitPrice", SqlDbType.Decimal) { Value = rows.UnitPrice},
-              new SqlParameter("@TotalRowPrice", SqlDbType.Decimal) { Value = rows.TotalRowPrice},
-            };
+                  new SqlParameter("@OrderID", SqlDbType.Int) { Value = salesOrder.OrderID},
+                  new SqlParameter("@RowID", SqlDbType.Int) { Value = rowID },
+                  new SqlParameter("@ProductCode", SqlDbType.VarChar) { Value = rows.ProductCode },
+                  new SqlParameter("@Description", SqlDbType.VarChar) { Value = rows.Description},
+                  new SqlParameter("@Qty", SqlDbType.Decimal) { Value = rows.Qty},
+                  new SqlParameter("@UnitPrice", SqlDbType.Decimal) { Value = rows.UnitPrice},
+                  new SqlParameter("@TotalRowPrice", SqlDbType.Decimal) { Value = rows.TotalRowPrice},
+                };
                 rowID++;
-                rowParams.Add(rowParam);
+                status = status && driver.WriteToTable(Constants.QUERY_INSERT_ORDERROWS, rowParam);
             }
-            return rowParams;
+            return status;
         }
 
-        private List<SqlParameter[]> ConvertDataTailsToObject(SalesOrders salesOrder)
+        private bool InsertTails(SqlDB_DAL driver, SalesOrders salesOrder)
         {
-            List<SqlParameter[]> salesDetails = new();
             SqlParameter[] orderSummaryParam =
             {
              new SqlParameter("@OrderID", SqlDbType.Int) { Value = salesOrder.OrderID},
@@ -272,8 +286,12 @@ namespace EntityManagementLayer.Implementation
               new SqlParameter("@DiscountAmount", SqlDbType.Decimal) { Value = salesOrder.OrderSummary.DiscountAmount },
               new SqlParameter("@TotalCost", SqlDbType.Decimal) { Value = salesOrder.OrderSummary.TotalOrder},
             };
-            salesDetails.Add(orderSummaryParam);
-            return salesDetails;
+            return driver.WriteToTable(Constants.QUERY_INSERT_ORDERDETAILS, orderSummaryParam);
+        }
+
+        public bool DeleteOne(int Id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

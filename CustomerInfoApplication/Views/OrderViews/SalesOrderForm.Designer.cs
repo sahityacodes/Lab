@@ -62,6 +62,10 @@ namespace CustomerInfoApplication.Views.OrderViews
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
             this.SuspendLayout();
             // 
+            // splashScreenManager1
+            // 
+            this.splashScreenManager1.ClosingDelay = 500;
+            // 
             // searchBox
             // 
             this.searchBox.Location = new System.Drawing.Point(49, 406);
@@ -74,6 +78,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // ribbonControl1
             // 
             this.ribbonControl1.AllowMinimizeRibbon = false;
+            this.ribbonControl1.ColorScheme = DevExpress.XtraBars.Ribbon.RibbonControlColorScheme.DarkBlue;
             this.ribbonControl1.ExpandCollapseItem.Id = 0;
             this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
@@ -88,6 +93,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.Orders});
+            this.ribbonControl1.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.MacOffice;
             this.ribbonControl1.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
             this.ribbonControl1.ShowDisplayOptionsMenuButton = DevExpress.Utils.DefaultBoolean.False;
             this.ribbonControl1.ShowExpandCollapseButton = DevExpress.Utils.DefaultBoolean.False;
@@ -95,7 +101,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.ribbonControl1.ShowPageHeadersInFormCaption = DevExpress.Utils.DefaultBoolean.True;
             this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Show;
             this.ribbonControl1.ShowToolbarCustomizeItem = false;
-            this.ribbonControl1.Size = new System.Drawing.Size(3101, 344);
+            this.ribbonControl1.Size = new System.Drawing.Size(3101, 305);
             this.ribbonControl1.Toolbar.ShowCustomizeItem = false;
             // 
             // add
@@ -314,10 +320,6 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.emptySpaceItem1.Name = "emptySpaceItem1";
             this.emptySpaceItem1.Size = new System.Drawing.Size(3304, 368);
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
-            // 
-            // splashScreenManager1
-            // 
-            splashScreenManager1.ClosingDelay = 500;
             // 
             // SalesOrderForm
             // 

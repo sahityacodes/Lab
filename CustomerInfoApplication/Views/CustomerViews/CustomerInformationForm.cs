@@ -187,7 +187,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
         {
             try
             {
-                if (CustomerBal.InsertOne(customer))
+                if (CustomerBal.UpdateOne(customer))
                 {
                     DialogResult dialog = MessageBox.Show("Updated Successfully");
                     FetchAllRecords();

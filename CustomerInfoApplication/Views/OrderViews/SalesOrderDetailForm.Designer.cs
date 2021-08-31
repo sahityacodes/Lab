@@ -70,16 +70,21 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.textTotalAmount = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.textAddress = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.textPayment = new System.Windows.Forms.ComboBox();
             this.datePicker = new System.Windows.Forms.DateTimePicker();
             this.deliveryDate = new System.Windows.Forms.DateTimePicker();
-            this.customerID = new System.Windows.Forms.ComboBox();
+            this.customerName = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.searchList = new System.Windows.Forms.ListView();
+            this.ID = new System.Windows.Forms.ColumnHeader();
+            this.cName = new System.Windows.Forms.ColumnHeader();
+            this.label2 = new System.Windows.Forms.Label();
+            this.searchControl1 = new DevExpress.XtraEditors.SearchControl();
+            this.label9 = new System.Windows.Forms.Label();
             this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
             bar2 = new DevExpress.XtraBars.Bar();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).BeginInit();
@@ -94,6 +99,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.searchControl1.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // bar2
@@ -178,7 +184,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.barButtonItem5,
             this.barButtonItem6});
             this.barManager1.MainMenu = bar2;
-            this.barManager1.MaxItemId = 44;
+            this.barManager1.MaxItemId = 66;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemComboBox1,
             this.repositoryItemImageEdit1});
@@ -301,6 +307,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.textDiscountAmount.Size = new System.Drawing.Size(99, 36);
             this.textDiscountAmount.TabIndex = 20;
             this.textDiscountAmount.Text = "0";
+            this.textDiscountAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textDiscountAmount_KeyPress);
             this.textDiscountAmount.Leave += new System.EventHandler(this.textDiscountAmount_Leave);
             // 
             // panel1
@@ -345,6 +352,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.orderRowsGrid.Size = new System.Drawing.Size(1270, 319);
             this.orderRowsGrid.TabIndex = 2;
             this.orderRowsGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderRowsGrid_CellValueChanged);
+            this.orderRowsGrid.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.orderRowsGrid_EditingControlShowing);
             // 
             // ProductCode
             // 
@@ -470,15 +478,6 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.textAddress.Size = new System.Drawing.Size(388, 36);
             this.textAddress.TabIndex = 29;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(60, 237);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(184, 29);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "Customer Name";
-            // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -542,15 +541,16 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.deliveryDate.Size = new System.Drawing.Size(388, 36);
             this.deliveryDate.TabIndex = 30;
             // 
-            // customerID
+            // customerName
             // 
-            this.customerID.AllowDrop = true;
-            this.customerID.Location = new System.Drawing.Point(262, 234);
-            this.customerID.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.customerID.Name = "customerID";
-            this.customerID.Size = new System.Drawing.Size(388, 37);
-            this.customerID.TabIndex = 32;
-            this.customerID.TextUpdate += new System.EventHandler(this.customerID_TextUpdate);
+            this.customerName.AllowDrop = true;
+            this.customerName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+            this.customerName.Enabled = false;
+            this.customerName.Location = new System.Drawing.Point(252, 317);
+            this.customerName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.customerName.Name = "customerName";
+            this.customerName.Size = new System.Drawing.Size(379, 37);
+            this.customerName.TabIndex = 32;
             // 
             // label7
             // 
@@ -573,15 +573,18 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.searchList);
+            this.splitContainer1.Panel1.Controls.Add(this.label2);
+            this.splitContainer1.Panel1.Controls.Add(this.searchControl1);
+            this.splitContainer1.Panel1.Controls.Add(this.label9);
             this.splitContainer1.Panel1.Controls.Add(this.label7);
-            this.splitContainer1.Panel1.Controls.Add(this.customerID);
+            this.splitContainer1.Panel1.Controls.Add(this.customerName);
             this.splitContainer1.Panel1.Controls.Add(this.deliveryDate);
             this.splitContainer1.Panel1.Controls.Add(this.datePicker);
             this.splitContainer1.Panel1.Controls.Add(this.textPayment);
             this.splitContainer1.Panel1.Controls.Add(this.label5);
             this.splitContainer1.Panel1.Controls.Add(this.label4);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
-            this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.textAddress);
             this.splitContainer1.Panel1.Controls.Add(this.pictureBox2);
             this.splitContainer1.Panel1MinSize = 0;
@@ -600,8 +603,67 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.splitContainer1.Panel2.Controls.Add(this.textShippingCost);
             this.splitContainer1.Panel2MinSize = 700;
             this.splitContainer1.Size = new System.Drawing.Size(1369, 1273);
-            this.splitContainer1.SplitterDistance = 498;
+            this.splitContainer1.SplitterDistance = 497;
             this.splitContainer1.TabIndex = 4;
+            // 
+            // searchList
+            // 
+            this.searchList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ID,
+            this.cName});
+            this.searchList.FullRowSelect = true;
+            this.searchList.HideSelection = false;
+            this.searchList.Location = new System.Drawing.Point(252, 278);
+            this.searchList.Name = "searchList";
+            this.searchList.Size = new System.Drawing.Size(377, 128);
+            this.searchList.TabIndex = 39;
+            this.searchList.UseCompatibleStateImageBehavior = false;
+            this.searchList.View = System.Windows.Forms.View.Details;
+            this.searchList.Visible = false;
+            this.searchList.Click += new System.EventHandler(this.searchList_Click);
+            // 
+            // ID
+            // 
+            this.ID.Text = "ID";
+            this.ID.Width = 100;
+            // 
+            // cName
+            // 
+            this.cName.Text = "Customer Name";
+            this.cName.Width = 270;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(46, 317);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(147, 29);
+            this.label2.TabIndex = 38;
+            this.label2.Text = "Customer ID";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            // 
+            // searchControl1
+            // 
+            this.searchControl1.Location = new System.Drawing.Point(252, 228);
+            this.searchControl1.MenuManager = this.barManager1;
+            this.searchControl1.Name = "searchControl1";
+            this.searchControl1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Repository.ClearButton(),
+            new DevExpress.XtraEditors.Repository.SearchButton()});
+            this.searchControl1.Properties.NullValuePrompt = "Enter Customer Name";
+            this.searchControl1.Size = new System.Drawing.Size(379, 44);
+            this.searchControl1.TabIndex = 36;
+            this.searchControl1.TextChanged += new System.EventHandler(this.searchControl1_TextChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(46, 234);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(184, 29);
+            this.label9.TabIndex = 35;
+            this.label9.Text = "Customer Name";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // 
             // barSubItem1
             // 
@@ -645,6 +707,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.searchControl1.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -666,14 +729,13 @@ namespace CustomerInfoApplication.Views.OrderViews
         private DevExpress.XtraBars.BarButtonItem Import;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox customerID;
+        private System.Windows.Forms.ComboBox customerName;
         private System.Windows.Forms.DateTimePicker deliveryDate;
         private System.Windows.Forms.DateTimePicker datePicker;
         private System.Windows.Forms.ComboBox textPayment;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textAddress;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label textTotalAmount;
@@ -698,5 +760,11 @@ namespace CustomerInfoApplication.Views.OrderViews
         private PopupMenu popupMenu1;
         private BarButtonItem barButtonItem5;
         private BarButtonItem barButtonItem6;
+        private System.Windows.Forms.Label label9;
+        private DevExpress.XtraEditors.SearchControl searchControl1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ListView searchList;
+        private System.Windows.Forms.ColumnHeader ID;
+        private System.Windows.Forms.ColumnHeader cName;
     }
 }

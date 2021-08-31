@@ -52,6 +52,8 @@ namespace CustomerInfoApplication
             // 
             // accordionControl1
             // 
+            this.accordionControl1.ContextButtonsOptions.DisabledStateOpacity = 1F;
+            this.accordionControl1.ContextButtonsOptions.NormalStateOpacity = 1F;
             this.accordionControl1.Dock = System.Windows.Forms.DockStyle.Left;
             this.accordionControl1.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.customerControl,
@@ -108,6 +110,7 @@ namespace CustomerInfoApplication
             this.Controls.Add(this.fluentDesignFormContainer1);
             this.Controls.Add(this.accordionControl1);
             this.Controls.Add(this.fluentDesignFormControl1);
+            this.EnableAcrylicAccent = false;
             this.FluentDesignFormControl = this.fluentDesignFormControl1;
             this.Name = "MainForm";
             this.NavigationControl = this.accordionControl1;
