@@ -116,6 +116,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // edit
             // 
             this.edit.Caption = "Edit";
+            this.edit.Enabled = false;
             this.edit.Id = 18;
             this.edit.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("edit.ImageOptions.Image")));
             this.edit.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("edit.ImageOptions.LargeImage")));
@@ -125,6 +126,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // delete
             // 
             this.delete.Caption = "Delete";
+            this.delete.Enabled = false;
             this.delete.Id = 21;
             this.delete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("delete.ImageOptions.Image")));
             this.delete.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("delete.ImageOptions.LargeImage")));

@@ -1,6 +1,7 @@
 ﻿using DALayer.Utils;
 using System.Data.SqlClient;
 using System.Data;
+using System.Diagnostics;
 
 namespace DALayer.Implementation
 {
@@ -33,6 +34,7 @@ namespace DALayer.Implementation
         }
         public DataTable GetRecords(string queryStr, params IDataParameter[] sqlParams)
         {
+            Debug.WriteLine(queryStr);
             DataTable dt = new();
             SqlConnection objSqlConnection = new(Constants.ConnectionString);
             SqlCommand com = new(queryStr, objSqlConnection);
@@ -53,6 +55,7 @@ namespace DALayer.Implementation
 
         public bool WriteToTable(string query, params IDataParameter[] parameters)
         {
+            Debug.WriteLine(query);
             SqlCommand com = new(query, objSqlConnection, tran);
             if (parameters != null)
             {
@@ -61,7 +64,7 @@ namespace DALayer.Implementation
                         com.Parameters.Add(par);
                     }
             }
-            return com.ExecuteNonQuery() > 0 ? true : false;
+            return com.ExecuteNonQuery() > -1 ? true : false;
         }
     }
 }

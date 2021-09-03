@@ -1,5 +1,6 @@
 ﻿using BusinessEntityLayer.Model;
 using BusinessLogic.Exceptions;
+using BusinessLogic.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

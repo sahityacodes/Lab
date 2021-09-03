@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BusinessEntityLayer.Model
 {
@@ -15,5 +16,7 @@ namespace BusinessEntityLayer.Model
         { get; set; }
         public decimal TotalOrder 
         { get; set; }
+
+        public List<FileEntity> files = new();
     }
 }

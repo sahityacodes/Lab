@@ -13,5 +13,12 @@ namespace BusinessLogic.Interfaces
         public bool DeleteAll(int Id);
         public List<T> SortByColumnAscending(string colName);
         public List<T> SortByColumnDescending(string colName);
+        public decimal CalculateTotalUnitCost(decimal Qty, decimal unitPrice);
+        public decimal CalculateTotalCost(List<decimal> rowCostList, decimal discountCost, decimal shippingCost);
+        public bool ValidateOrder(T obj);
+        public List<T> GetCustomerOrdersCost();
+        public bool CheckIfCustomerExists(int Id);
+        public bool ValidateCustomer(T obj);
+
     }
 }

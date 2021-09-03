@@ -34,7 +34,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.components = new System.ComponentModel.Container();
             DevExpress.XtraBars.Bar bar2;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesOrderDetailForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Import = new DevExpress.XtraBars.BarButtonItem();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
@@ -85,6 +85,11 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.label2 = new System.Windows.Forms.Label();
             this.searchControl1 = new DevExpress.XtraEditors.SearchControl();
             this.label9 = new System.Windows.Forms.Label();
+            this.fileList = new System.Windows.Forms.ListBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
+            this.uploadBtn = new System.Windows.Forms.Button();
             this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
             bar2 = new DevExpress.XtraBars.Bar();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).BeginInit();
@@ -100,6 +105,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.searchControl1.Properties)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // bar2
@@ -184,7 +190,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.barButtonItem5,
             this.barButtonItem6});
             this.barManager1.MainMenu = bar2;
-            this.barManager1.MaxItemId = 66;
+            this.barManager1.MaxItemId = 84;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemComboBox1,
             this.repositoryItemImageEdit1});
@@ -227,7 +233,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             // deleteBtn
             // 
-            this.deleteBtn.Caption = "Delete Current Row";
+            this.deleteBtn.Caption = "Delete Selected Order";
             this.deleteBtn.Id = 4;
             this.deleteBtn.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("deleteBtn.ImageOptions.Image")));
             this.deleteBtn.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("deleteBtn.ImageOptions.LargeImage")));
@@ -333,14 +339,14 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.Qty,
             this.UnitPrice,
             this.TotalRowPrice});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.orderRowsGrid.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.orderRowsGrid.DefaultCellStyle = dataGridViewCellStyle2;
             this.orderRowsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.orderRowsGrid.Location = new System.Drawing.Point(0, 0);
             this.orderRowsGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -591,6 +597,8 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.fileList);
+            this.splitContainer1.Panel2.Controls.Add(this.uploadBtn);
             this.splitContainer1.Panel2.Controls.Add(this.textTotalAmount);
             this.splitContainer1.Panel2.Controls.Add(this.Cancel);
             this.splitContainer1.Panel2.Controls.Add(this.Save);
@@ -665,6 +673,56 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.label9.Text = "Customer Name";
             this.label9.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // 
+            // fileList
+            // 
+            this.fileList.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.fileList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.fileList.ContextMenuStrip = this.contextMenuStrip1;
+            this.fileList.FormattingEnabled = true;
+            this.fileList.ItemHeight = 29;
+            this.fileList.Location = new System.Drawing.Point(46, 444);
+            this.fileList.Name = "fileList";
+            this.fileList.Size = new System.Drawing.Size(766, 145);
+            this.fileList.TabIndex = 30;
+            this.fileList.Visible = false;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(36, 36);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripTextBox1,
+            this.toolStripTextBox2});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.ShowImageMargin = false;
+            this.contextMenuStrip1.Size = new System.Drawing.Size(136, 98);
+            // 
+            // toolStripTextBox1
+            // 
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.ReadOnly = true;
+            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 43);
+            this.toolStripTextBox1.Text = "View";
+            this.toolStripTextBox1.Click += new System.EventHandler(this.toolStripTextBox1_Click);
+            // 
+            // toolStripTextBox2
+            // 
+            this.toolStripTextBox2.AutoSize = false;
+            this.toolStripTextBox2.Name = "toolStripTextBox2";
+            this.toolStripTextBox2.ReadOnly = true;
+            this.toolStripTextBox2.Size = new System.Drawing.Size(100, 43);
+            this.toolStripTextBox2.Text = "Delete";
+            this.toolStripTextBox2.Click += new System.EventHandler(this.toolStripTextBox2_Click);
+            // 
+            // uploadBtn
+            // 
+            this.uploadBtn.Location = new System.Drawing.Point(44, 375);
+            this.uploadBtn.Name = "uploadBtn";
+            this.uploadBtn.Size = new System.Drawing.Size(321, 52);
+            this.uploadBtn.TabIndex = 29;
+            this.uploadBtn.Text = "Upload Relevant File";
+            this.uploadBtn.UseVisualStyleBackColor = true;
+            this.uploadBtn.Click += new System.EventHandler(this.uploadBtn_Click);
+            // 
             // barSubItem1
             // 
             this.barSubItem1.Caption = "barSubItem1";
@@ -693,6 +751,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Sales Order Details";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.SalesOrderDetailForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox1)).EndInit();
@@ -708,6 +767,8 @@ namespace CustomerInfoApplication.Views.OrderViews
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.searchControl1.Properties)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
+            this.contextMenuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -766,5 +827,10 @@ namespace CustomerInfoApplication.Views.OrderViews
         private System.Windows.Forms.ListView searchList;
         private System.Windows.Forms.ColumnHeader ID;
         private System.Windows.Forms.ColumnHeader cName;
+        private System.Windows.Forms.Button uploadBtn;
+        private System.Windows.Forms.ListBox fileList;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
     }
 }

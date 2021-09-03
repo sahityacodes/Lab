@@ -8,48 +8,51 @@ using System.Linq;
 
 namespace BusinessLogic.Implementation.OrderLogic
 {
-    public class OrderBAL : IOrderBLL<SalesOrders>
+    public class OrderBAL : IBLL<SalesOrders>
     {
-        readonly IOrderEntityManager<SalesOrders> OrderDal = new OrderMapper();
-        readonly ICustomerEntityManager<Customer> CustomerDal = new CustomerMapper();
-
         public List<SalesOrders> GetAll()
         {
+            IEntityManager<SalesOrders> OrderDal = new OrderMapper();
             return OrderDal.GetAll();
         }
 
         public List<SalesOrders> GetOneByName(string name)
         {
+            IEntityManager<SalesOrders> OrderDal = new OrderMapper();
             return OrderDal.GetAllByKeyWord(name);
         }
 
         public bool InsertOne(SalesOrders order)
         {
+            IEntityManager<SalesOrders> OrderDal = new OrderMapper();
             CalculateCosts(order);
             return OrderDal.InsertOne(order);
         }
 
         public bool UpdateOne(SalesOrders order)
         {
+            IEntityManager<SalesOrders> OrderDal = new OrderMapper();
             CalculateCosts(order);
             return OrderDal.UpdateOne(order);
         }
 
         public bool DeleteAll(int Id)
         {
+            IEntityManager<SalesOrders> OrderDal = new OrderMapper();
             return OrderDal.DeleteAll(Id);
         }
 
         public List<SalesOrders> SortByColumnAscending(string ColName)
         {
+            IEntityManager<SalesOrders> OrderDal = new OrderMapper();
             return OrderDal.SortByColumnAscending(ColName);
         }
 
         public List<SalesOrders> SortByColumnDescending(string ColName)
         {
+            IEntityManager<SalesOrders> OrderDal = new OrderMapper();
             return OrderDal.SortByColumnDescending(ColName);
         }
-
 
         public decimal CalculateTotalCost(List<decimal> rowCostList, decimal discountCost, decimal shippingCost)
         {
@@ -64,6 +67,7 @@ namespace BusinessLogic.Implementation.OrderLogic
 
         public SalesOrders GetOne(int OrderID)
         {
+            IEntityManager<SalesOrders> OrderDal = new OrderMapper();
             return OrderDal.GetOne(OrderID);
         }
 
@@ -75,11 +79,13 @@ namespace BusinessLogic.Implementation.OrderLogic
 
         public bool DeleteOne(int Id)
         {
+            IEntityManager<SalesOrders> OrderDal = new OrderMapper();
             return OrderDal.DeleteOne(Id);
         }
 
         public bool ValidateOrder(SalesOrders order)
         {
+            IEntityManager<Customer> CustomerDal = new CustomerMapper();
             if (!CustomerDal.CheckIfCustomerExists(order.CustomerID))
             {
                 throw new BusinessLogicException("The entered CustomerID doesnt exist.");
@@ -97,6 +103,21 @@ namespace BusinessLogic.Implementation.OrderLogic
                 throw new BusinessLogicException("Order has no Sales Rows. Please add rows or delete the order instead.");
             }
             return true;
+        }
+
+        public List<SalesOrders> GetCustomerOrdersCost()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool CheckIfCustomerExists(int Id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool ValidateCustomer(SalesOrders obj)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

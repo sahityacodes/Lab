@@ -52,7 +52,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
         {
             try
             {
-                ICustomerBLL<Customer> CustomerBal = new CustomerBAL();
+                IBLL<Customer> CustomerBal = new CustomerBAL();
                 Customer cust = getCustomerData();
                 if (CustomerBal.ValidateCustomer(cust))
                 {

@@ -10,7 +10,7 @@ using EntityManagementLayer.Interfaces;
 
 namespace EntityManagementLayer.Implementation
 {
-    public class OrderMapper : IOrderEntityManager<SalesOrders>
+    public class OrderMapper : IEntityManager<SalesOrders>
     {
         public List<SalesOrders> GetAll()
         {
@@ -45,7 +45,7 @@ namespace EntityManagementLayer.Implementation
                 if (driver.WriteToTable(Constants.QUERY_INSERT_ORDERS, salesOrderParams))
                 {
                     salesOrder.OrderID = GetCurrentOrderID(driver);
-                    if (InsertRows(driver, salesOrder) && InsertTails(driver, salesOrder))
+                    if (InsertRows(driver, salesOrder))
                     {
                         driver.CommitTransaction();
                     }
@@ -78,10 +78,10 @@ namespace EntityManagementLayer.Implementation
                   new SqlParameter("@Payment", SqlDbType.VarChar) { Value = salesOrder.Payment},
                   };
                 if (driver.WriteToTable(Constants.QUERY_UPDATE_ORDERS, salesOrderParams) &&
-                    DeleteAllRows(driver, salesOrder.OrderID) && InsertRows(driver, salesOrder) && InsertTails(driver, salesOrder))
-                {
-                    driver.CommitTransaction();
-                }
+                    DeleteAllRows(driver, salesOrder.OrderID) && InsertRows(driver, salesOrder))
+                    {
+                        driver.CommitTransaction();
+                    }
             }
             catch (SqlException)
             {
@@ -145,7 +145,7 @@ namespace EntityManagementLayer.Implementation
             return ConvertToSalesOrdersObject(driver.GetRecords(Constants.QUERY_SORTBYCOLUMNDESC_ORDERS, parameters));
         }
 
-        private int GetCurrentOrderID(SqlDB_DAL driver)
+        internal int GetCurrentOrderID(SqlDB_DAL driver)
         {
             DataTable orderDataTable = driver.GetRecords(Constants.IDEN_QUERY_ORDERS);
             return Convert.ToInt32(orderDataTable.Rows[0].ItemArray[0]);
@@ -201,14 +201,6 @@ namespace EntityManagementLayer.Implementation
                             UnitPrice = dataRow.Field<decimal>("UnitPrice"),
                             TotalRowPrice = dataRow.Field<decimal>("TotalRowPrice"),
                         }
-                            },
-                            OrderSummary = new SalesOrdersTail
-                            {
-                                DiscountAmount = dataRow.Field<decimal>("DiscountAmount"),
-                                ShippingCost = dataRow.Field<decimal>("ShippingCost"),
-                                TotalOrder = dataRow.Field<decimal>("TotalCost"),
-                                DeliveryDate = dataRow.Field<DateTime>("DeliveryDate"),
-                                ShippingAddress = dataRow.Field<string>("ShippingAddress")
                             }
                         });
                     }
@@ -216,7 +208,7 @@ namespace EntityManagementLayer.Implementation
             }
             return orderList;
         }
-
+      
         private List<SalesOrders> ConvertToSalesOrdersObject(DataTable orderDataTable)
         {
             List<SalesOrders> orderList = new();
@@ -232,16 +224,35 @@ namespace EntityManagementLayer.Implementation
                         Payment = dataRow.Field<string>("Payment"),
                         OrderSummary = new SalesOrdersTail
                         {
-                            DiscountAmount = dataRow.Field<decimal>("DiscountAmount"),
-                            ShippingCost = dataRow.Field<decimal>("ShippingCost"),
-                            TotalOrder = dataRow.Field<decimal>("TotalCost"),
-                            DeliveryDate = dataRow.Field<DateTime>("DeliveryDate"),
+                            DiscountAmount = dataRow.IsNull("DiscountAmount")? 0 :dataRow.Field<decimal>("DiscountAmount"),
+                            ShippingCost = dataRow.IsNull("ShippingCost") ? 0 : dataRow.Field<decimal>("ShippingCost"),
+                            TotalOrder = dataRow.IsNull("TotalCost") ? 0 : dataRow.Field<decimal>("TotalCost"),
+                            DeliveryDate = dataRow.IsNull("DeliveryDate") ? new DateTime() :dataRow.Field<DateTime>("DeliveryDate"),
                             ShippingAddress = dataRow.Field<string>("ShippingAddress")
                         }
                     });
                 }
             }
             return orderList;
+        }
+
+        private bool InsertRows(SqlDB_DAL driver,SalesOrders salesOrder)
+        {
+            bool status = true;
+            foreach (SalesOrdersRows rows in salesOrder.OrderRows)
+            {
+                SqlParameter[] rowParam =
+                 {
+                  new SqlParameter("@OrderID", SqlDbType.Int) { Value = salesOrder.OrderID},
+                  new SqlParameter("@ProductCode", SqlDbType.VarChar) { Value = rows.ProductCode },
+                  new SqlParameter("@Description", SqlDbType.VarChar) { Value = rows.Description},
+                  new SqlParameter("@Qty", SqlDbType.Decimal) { Value = rows.Qty},
+                  new SqlParameter("@UnitPrice", SqlDbType.Decimal) { Value = rows.UnitPrice},
+                  new SqlParameter("@TotalRowPrice", SqlDbType.Decimal) { Value = rows.TotalRowPrice},
+                };
+                status = status && driver.WriteToTable(Constants.QUERY_INSERT_ORDERROWS, rowParam);
+            }
+            return status;
         }
 
         public bool DeleteAllRows(SqlDB_DAL driver, int OrderId)
@@ -253,43 +264,18 @@ namespace EntityManagementLayer.Implementation
             return driver.WriteToTable(Constants.QUERY_DELETEONE_ROW, parameters);
         }
 
-        private bool InsertRows(SqlDB_DAL driver,SalesOrders salesOrder)
-        {
-            int rowID = 1;
-            bool status = true;
-            foreach (SalesOrdersRows rows in salesOrder.OrderRows)
-            {
-                SqlParameter[] rowParam =
-                 {
-                  new SqlParameter("@OrderID", SqlDbType.Int) { Value = salesOrder.OrderID},
-                  new SqlParameter("@RowID", SqlDbType.Int) { Value = rowID },
-                  new SqlParameter("@ProductCode", SqlDbType.VarChar) { Value = rows.ProductCode },
-                  new SqlParameter("@Description", SqlDbType.VarChar) { Value = rows.Description},
-                  new SqlParameter("@Qty", SqlDbType.Decimal) { Value = rows.Qty},
-                  new SqlParameter("@UnitPrice", SqlDbType.Decimal) { Value = rows.UnitPrice},
-                  new SqlParameter("@TotalRowPrice", SqlDbType.Decimal) { Value = rows.TotalRowPrice},
-                };
-                rowID++;
-                status = status && driver.WriteToTable(Constants.QUERY_INSERT_ORDERROWS, rowParam);
-            }
-            return status;
-        }
-
-        private bool InsertTails(SqlDB_DAL driver, SalesOrders salesOrder)
-        {
-            SqlParameter[] orderSummaryParam =
-            {
-             new SqlParameter("@OrderID", SqlDbType.Int) { Value = salesOrder.OrderID},
-              new SqlParameter("@ShippingAddress", SqlDbType.VarChar) { Value = salesOrder.OrderSummary.ShippingAddress },
-              new SqlParameter("@ShippingCost", SqlDbType.Decimal) { Value = salesOrder.OrderSummary.ShippingCost },
-              new SqlParameter("@DeliveryDate", SqlDbType.DateTime) { Value = salesOrder.OrderSummary.DeliveryDate},
-              new SqlParameter("@DiscountAmount", SqlDbType.Decimal) { Value = salesOrder.OrderSummary.DiscountAmount },
-              new SqlParameter("@TotalCost", SqlDbType.Decimal) { Value = salesOrder.OrderSummary.TotalOrder},
-            };
-            return driver.WriteToTable(Constants.QUERY_INSERT_ORDERDETAILS, orderSummaryParam);
-        }
 
         public bool DeleteOne(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SalesOrders> GetCustomerOrdersCost()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CheckIfCustomerExists(int iD)
         {
             throw new NotImplementedException();
         }

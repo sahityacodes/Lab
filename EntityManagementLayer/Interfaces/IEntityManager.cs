@@ -13,6 +13,9 @@ namespace EntityManagementLayer.Interfaces
         bool DeleteOne(int Id);
         List<T> SortByColumnAscending(string ColName);
         List<T> SortByColumnDescending(string ColName);
-        
+
+        List<T> GetCustomerOrdersCost();
+        bool CheckIfCustomerExists(int iD);
+
     }
 }

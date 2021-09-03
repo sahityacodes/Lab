@@ -8,14 +8,13 @@ using System.Collections.Generic;
 using BusinessLogic.Exceptions;
 using BusinessLogic.Implementation.CustomerLogic;
 using DevExpress.XtraBars;
+using BusinessLogic.Implementation.FileOperationsLogic;
+using System.Diagnostics;
 
 namespace CustomerInfoApplication.Views.OrderViews
 {
     public partial class SalesOrderDetailForm : DevExpress.XtraEditors.XtraForm
     {
-
-        IOrderBLL<SalesOrders> OrderBal = new OrderBAL();
-        ICustomerBLL<Customer> CustomerBal = new CustomerBAL();
         public SalesOrderDetailForm()
         {
             InitializeComponent();
@@ -23,21 +22,36 @@ namespace CustomerInfoApplication.Views.OrderViews
         public void InitializeFormValues(SalesOrders orders)
         {
             customerName.Text = Convert.ToString(orders.CustomerID);
+            searchControl1.Text = orders.CustomerName;
+            searchList.Visible = false;
             datePicker.Value = orders.DateOrder;
             textPayment.Text = Convert.ToString(orders.Payment) ?? "";
             textAddress.Text = Convert.ToString(orders.OrderSummary.ShippingAddress) ?? "";
             textShippingCost.Text = Convert.ToString(orders.OrderSummary.ShippingCost) ?? "";
             deliveryDate.Value = orders.OrderSummary.DeliveryDate;
             textDiscountAmount.Text = Convert.ToString(orders.OrderSummary.DiscountAmount) ?? "";
-            textTotalAmount.Text = Convert.ToString(orders.OrderSummary.TotalOrder) ?? "";
             setRows(orders.OrderRows);
+            calculatecosts();
+            setFiles(orders.OrderSummary);
         }
+
+        private void setFiles(SalesOrdersTail orderSummary)
+        {
+            foreach(FileEntity file in orderSummary.files)
+            {
+                fileList.Items.Add(file);
+            }
+            if (fileList.Items.Count > 0 )
+                    fileList.Visible = true;
+        }
+
         private void setRows(List<SalesOrdersRows> rows)
         {
             foreach (SalesOrdersRows row in rows)
             {
                 orderRowsGrid.Rows.Add(row.ProductCode, row.Description, row.Qty, row.UnitPrice, row.TotalRowPrice);
             }
+            
         }
         private List<SalesOrdersRows> GetSalesOrdersRows()
         {
@@ -59,9 +73,19 @@ namespace CustomerInfoApplication.Views.OrderViews
             }
             return rows;
         }
+
+        private List<FileEntity> GetFiles()
+        {
+            List<FileEntity> files = new();
+            foreach (FileEntity item in fileList.Items) {
+                files.Add(item as FileEntity);
+            }
+            return files;
+        }
         public SalesOrders getSaleOrderInfo()
         {
             SalesOrders salesOrder = new();
+            FileOperationsImpl fileOp = new();
             try
             {
                 salesOrder = new SalesOrders
@@ -77,7 +101,8 @@ namespace CustomerInfoApplication.Views.OrderViews
                         DeliveryDate = Convert.ToDateTime(deliveryDate.Value),
                         DiscountAmount = textDiscountAmount.Text.Length > 0 ? Convert.ToDecimal(textDiscountAmount.Text) : 0,
                         TotalOrder = textTotalAmount.Text.Length > 0 ? Convert.ToDecimal(textTotalAmount.Text) : 0,
-                    }
+                        files = fileOp.ConvertFileToBinary(GetFiles())
+                    }, 
                 };
             }
             catch (FormatException)
@@ -96,6 +121,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             List<decimal> costs = new();
             try
             {
+                IBLL<SalesOrders> OrderBal = new OrderBAL();
                 if (orderRowsGrid.CurrentRow != null)
                 {
                     decimal Qty = Convert.ToDecimal(orderRowsGrid.CurrentRow.Cells[2].Value);
@@ -115,7 +141,7 @@ namespace CustomerInfoApplication.Views.OrderViews
         }
         private void Save_Click(object sender, EventArgs e)
         {
-            IOrderBLL<SalesOrders> OrderBal = new OrderBAL();
+            IBLL<SalesOrders> OrderBal = new OrderBAL();
             SalesOrders order = getSaleOrderInfo();
             try
             {
@@ -129,7 +155,6 @@ namespace CustomerInfoApplication.Views.OrderViews
                 MessageBox.Show(ud.Message);
             }
         }
-
         private void textShippingCost_Leave(object sender, EventArgs e)
         {
             calculatecosts();
@@ -142,7 +167,7 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
         {
-            IImportFeature<List<SalesOrdersRows>> fileToObj = new FileToObjectExcel();
+            FileToObjectExcel fileToObj = new FileToObjectExcel();
             SalesOrders importedRows = new();
             OpenFileDialog openFileDialog = new();
             openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
@@ -211,7 +236,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             e.Control.KeyPress -= new KeyPressEventHandler(Column_KeyPress);
             if (orderRowsGrid.CurrentCell.ColumnIndex == 2 || orderRowsGrid.CurrentCell.ColumnIndex == 3)
             {
-                System.Windows.Forms.TextBox tb = e.Control as TextBox;
+                TextBox tb = e.Control as TextBox;
                 if (tb != null)
                 {
                     tb.KeyPress += new KeyPressEventHandler(Column_KeyPress);
@@ -245,6 +270,7 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         private void searchControl1_TextChanged(object sender, EventArgs e)
         {
+            IBLL<Customer> CustomerBal = new CustomerBAL();
             searchList.Visible = true;
             searchList.Items.Clear();
             foreach (Customer cust in CustomerBal.GetOneByName(searchControl1.Text))
@@ -265,6 +291,72 @@ namespace CustomerInfoApplication.Views.OrderViews
                 string txt = customer.SubItems[1].Text;
                 customerName.Text = txt;
                 searchList.Visible = false;
+            }
+        }
+
+        private void uploadBtn_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new();
+            openFileDialog.Multiselect = true;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+               fileList.Visible = true;
+                foreach (string name in openFileDialog.FileNames)
+                {
+                    FileEntity file = new();
+                    file.FilePath = name;
+                    file.Name = name;
+                    fileList.Items.Add(file);
+                }
+            }
+        }
+
+        private void SalesOrderDetailForm_Load(object sender, EventArgs e)
+        {
+            if(orderRowsGrid.SelectedRows.Count > 0)
+                orderRowsGrid.CurrentRow.Selected = false;
+            if (fileList.SelectedItems.Count > 0)
+                orderRowsGrid.CurrentRow.Selected = false;
+        }
+
+        private void toolStripTextBox1_Click(object sender, EventArgs e)
+        {
+            fileList.Visible = true;
+            FileOperationsImpl fileOperations = new();
+            if (fileList.SelectedIndex > -1)
+            {
+                        FileEntity selectedFileObj = fileList.Items[fileList.SelectedIndex] as FileEntity;
+                        SaveFileDialog saveFileDialog1 = new();
+                        saveFileDialog1.FileName = selectedFileObj.Name;
+                        saveFileDialog1.Filter = "All Files | *." + selectedFileObj.Ext;
+                        if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            selectedFileObj.FilePath = saveFileDialog1.FileName;
+                            fileOperations.SaveFile(selectedFileObj);
+                            OpenFile(selectedFileObj.FilePath);
+                        }
+                else {
+                //    OpenFile(@Convert.ToString(fileList.Items[fileList.SelectedIndex]));
+                }
+            }
+        }
+
+        private void OpenFile(string v)
+        {
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(v)
+            {
+                UseShellExecute = true
+            };
+            p.Start();
+        }
+
+        private void toolStripTextBox2_Click(object sender, EventArgs e)
+        {
+            if (fileList.SelectedIndex > -1)
+            {
+                fileList.Items.RemoveAt(fileList.SelectedIndex);
+                fileList.Refresh();
             }
         }
     }

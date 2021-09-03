@@ -7,17 +7,16 @@ using DevExpress.XtraBars.Ribbon;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Implementation.OrderLogic;
 using System.Linq;
-using DevExpress.XtraSplashScreen;
-using System.Threading;
-using CustomerInfoApplication.Views.Misc;
-using System.Drawing;
+using DevExpress.XtraBars;
+using BusinessLogic.Implementation.CustomerLogic;
 
 namespace CustomerInfoApplication.Views.OrderViews
 {
     public partial class SalesOrderForm : RibbonForm
     {
-        readonly IOrderBLL<SalesOrders> OrderBal = new OrderBAL();
+
         bool SortCounter = true;
+
         public SalesOrderForm()
         {
             InitializeComponent();
@@ -28,17 +27,22 @@ namespace CustomerInfoApplication.Views.OrderViews
             orderGrid.Rows.Clear();
             foreach (SalesOrders order in orderList)
             {
-
                 orderGrid.Rows.Add(new object[]{order.OrderID,
                           order.CustomerID, "", order.DateOrder, order.OrderSummary.TotalOrder,  order.OrderSummary.DeliveryDate,order.OrderSummary.ShippingAddress
                 });
             }
+            if(orderList.Count > 0)
+            {
+                edit.Enabled = true;
+                delete.Enabled = true;
+            }
         }
         private void SalesOrderForm_Load(object sender, EventArgs e)
         {
-            try
+            try 
             {
-                ReloadGrid(OrderBal.GetAll());
+                    IBLL<SalesOrders> OrderBal = new OrderBAL();
+                    ReloadGrid(OrderBal.GetAll());
             }
             catch (Exception io)
             {
@@ -51,6 +55,7 @@ namespace CustomerInfoApplication.Views.OrderViews
         {
             try
             {
+                IBLL<SalesOrders> OrderBal = new OrderBAL();
                 if (searchBox.Text != null || searchBox.Text.Length != 0)
                 {
                     ReloadGrid(OrderBal.GetOneByName(searchBox.Text));
@@ -66,7 +71,9 @@ namespace CustomerInfoApplication.Views.OrderViews
         {
             try
             {
-                if (OrderBal.InsertOne(orders))
+                IBLL<SalesOrders> OrderBal = new OrderBAL();
+                IBLL<SalesOrdersTail> OrderTailsBal = new OrderTailsBAL();
+                if (OrderBal.InsertOne(orders) && OrderTailsBal.InsertOne(orders.OrderSummary))
                 {
                     DialogResult dialog = MessageBox.Show("Inserted Successfully");
                     ReloadGrid(OrderBal.GetAll());
@@ -82,7 +89,9 @@ namespace CustomerInfoApplication.Views.OrderViews
         {
             try
             {
-                if (OrderBal.UpdateOne(orders))
+                IBLL<SalesOrders> OrderBal = new OrderBAL();
+                IBLL<SalesOrdersTail> OrderTailsBal = new OrderTailsBAL();
+                if (OrderBal.UpdateOne(orders) && OrderTailsBal.UpdateOne(orders.OrderSummary))
                 {
                     DialogResult dialog = MessageBox.Show("Updated Successfully");
                     ReloadGrid(OrderBal.GetAll());
@@ -99,6 +108,7 @@ namespace CustomerInfoApplication.Views.OrderViews
         {
             if (e.ColumnIndex == 0 || e.ColumnIndex == 1 || e.ColumnIndex == 3 || e.ColumnIndex == 4 || e.ColumnIndex == 5)
             {
+                IBLL<SalesOrders> OrderBal = new OrderBAL();
                 if (SortCounter)
                 {
                     SortCounter = false;
@@ -112,13 +122,14 @@ namespace CustomerInfoApplication.Views.OrderViews
             }
         }
 
-        private void add_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void add_ItemClick(object sender, ItemClickEventArgs e)
         {
             SalesOrderDetailForm detailsForm = new();
             DialogResult dialog = detailsForm.ShowDialog();
             if (dialog == DialogResult.OK)
             {
-                InsertOrder(detailsForm.getSaleOrderInfo());
+                SalesOrders newOrder = detailsForm.getSaleOrderInfo();
+                InsertOrder(newOrder);
             }
             else
             {
@@ -126,21 +137,22 @@ namespace CustomerInfoApplication.Views.OrderViews
             }
         }
 
-        private void edit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void edit_ItemClick(object sender, ItemClickEventArgs e)
         {
+            IBLL<SalesOrders> OrderBal = new OrderBAL();
+            IBLL<SalesOrdersTail> OrderTailsBal = new OrderTailsBAL();
+            IBLL<Customer> CustomerBal = new CustomerBAL();
             SalesOrderDetailForm detailsForm = new();
             int OrderID = Convert.ToInt32(orderGrid.CurrentRow.Cells[0].Value);
             SalesOrders originalOrder = OrderBal.GetOne(OrderID);
+            originalOrder.CustomerName = CustomerBal.GetOne(originalOrder.CustomerID).Name;
+            originalOrder.OrderSummary = OrderTailsBal.GetOne(OrderID);
             detailsForm.InitializeFormValues(originalOrder);
             DialogResult dialog = detailsForm.ShowDialog();
             if (dialog == DialogResult.OK)
             {
                 SalesOrders updatedOrder = detailsForm.getSaleOrderInfo();
                 updatedOrder.OrderID = OrderID;
-                for (int i = 0; i < originalOrder.OrderRows.Count; i++)
-                {
-                    updatedOrder.OrderRows[i].RowID = originalOrder.OrderRows[i].RowID;
-                }
                 UpdateOrder(updatedOrder);
             }
             else
@@ -149,11 +161,12 @@ namespace CustomerInfoApplication.Views.OrderViews
             }
         }
 
-        private void delete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void delete_ItemClick(object sender, ItemClickEventArgs e)
         {
             DialogResult dialog = MessageBox.Show("Delete Order?", "Delete Record", MessageBoxButtons.OKCancel);
             if (dialog == DialogResult.OK)
             {
+                IBLL<SalesOrders> OrderBal = new OrderBAL();
                 if (OrderBal.DeleteAll(Convert.ToInt32(orderGrid.CurrentRow.Cells[0].Value)))
                 {
                     MessageBox.Show("Deleted Successfully");
@@ -162,12 +175,14 @@ namespace CustomerInfoApplication.Views.OrderViews
             }
         }
 
-        private void importDropdown_ListItemClick(object sender, DevExpress.XtraBars.ListItemClickEventArgs e)
+        private void importDropdown_ListItemClick(object sender,ListItemClickEventArgs e)
         {
             IImportFeature<List<SalesOrdersRows>> fileToObj = new FileToObjectExcel();
             SalesOrderDetailForm detailsForm = new();
             SalesOrders originalOrder = new();
             OpenFileDialog openFileDialog = new();
+            IBLL<SalesOrders> OrderBal = new OrderBAL();
+            IBLL<SalesOrdersTail> OrderTailsBal = new OrderTailsBAL();
             if (importDropdown.ItemIndex == 0)
             {
                 openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
@@ -178,12 +193,6 @@ namespace CustomerInfoApplication.Views.OrderViews
                     detailsForm.InitializeFormValues(originalOrder);
                     //SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true, false);
                     DialogResult dialog = detailsForm.ShowDialog();
-                 /*   for (int i = 1; i <= 100; i++)
-                    {
-                        SplashScreenManager.Default.SetWaitFormDescription(i.ToString() + "%");
-                        Thread.Sleep(25);
-                    }*/
-                    
                 }
             }
             else if (importDropdown.ItemIndex == 1)

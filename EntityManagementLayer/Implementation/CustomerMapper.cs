@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace EntityManagementLayer.Implementation
 {
-    public class CustomerMapper : ICustomerEntityManager<Customer>
+    public class CustomerMapper : IEntityManager<Customer>
     {
         public List<Customer> GetAll()
         {
@@ -137,9 +137,14 @@ namespace EntityManagementLayer.Implementation
             return ConvertDataTableToCustomer(driver.GetRecords(Constants.QUERY_SORTBYCOLUMNDESC, parameters));
         }
 
-        public Customer GetOne(int OrderID)
+        public Customer GetOne(int CustomerID)
         {
-            throw new System.NotImplementedException();
+            SqlDB_DAL driver = new();
+            SqlParameter[] parameters =
+            {
+              new SqlParameter("@CustomerID", SqlDbType.VarChar) { Value = CustomerID},
+            };
+            return ConvertDataTableToCustomer(driver.GetRecords(Constants.QUERY_GETONE, parameters))[0];
         }
 
         public List<Customer> GetCustomerOrdersCost()

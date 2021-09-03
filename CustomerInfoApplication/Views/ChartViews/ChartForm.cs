@@ -14,7 +14,7 @@ namespace CustomerInfoApplication.Views.ChartViews
 {
     public partial class ChartForm : XtraForm
     {
-        readonly ICustomerBLL<Customer> CustomerBal = new CustomerBAL();
+       
         public ChartForm()
         {
             InitializeComponent();
@@ -22,6 +22,7 @@ namespace CustomerInfoApplication.Views.ChartViews
 
         private void ChartForm_Load(object sender, EventArgs e)
         {
+            IBLL<Customer> CustomerBal = new CustomerBAL();
             try
             {
                 buildBarChart(CustomerBal.GetCustomerOrdersCost(), "Total Orders", "Customer IDs", "Total Orders", "TotalCost: {Test}");

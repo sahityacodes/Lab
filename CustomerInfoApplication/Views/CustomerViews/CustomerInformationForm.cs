@@ -12,7 +12,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
 {
     public partial class CustomerInformationForm : RibbonForm
     {
-        readonly ICustomerBLL<Customer> CustomerBal = new CustomerBAL();
+       
         bool SortCounter = true;
 
         public CustomerInformationForm()
@@ -35,6 +35,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
         }
         private void searchBox_TextChanged(object sender, EventArgs e)
         {
+            IBLL<Customer> CustomerBal = new CustomerBAL();
             try
             {
                 if (searchBox.Text != null || searchBox.Text.Length != 0)
@@ -54,6 +55,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
         {
             try
             {
+                IBLL<Customer> CustomerBal = new CustomerBAL();
                 LoadGrid(CustomerBal.GetAll());
             }
             catch (Exception io)
@@ -71,11 +73,13 @@ namespace CustomerInfoApplication.Views.CustomerViews
                 {
                     if (SortCounter)
                     {
+                        IBLL<Customer> CustomerBal = new CustomerBAL();
                         SortCounter = false;
                         LoadGrid(CustomerBal.SortByColumnAscending(Convert.ToString(e.ColumnIndex)));
                     }
                     else if (!SortCounter)
                     {
+                        IBLL<Customer> CustomerBal = new CustomerBAL();
                         LoadGrid(CustomerBal.SortByColumnDescending(Convert.ToString(e.ColumnIndex)));
                         SortCounter = true;
                     }
@@ -132,6 +136,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
         {
             try
             {
+                IBLL<Customer> CustomerBal = new CustomerBAL();
                 if (CustomerBal.DeleteAll(ID))
                 {
                     MessageBox.Show("Deleted Successfully");
@@ -161,6 +166,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
         {
             try
             {
+                IBLL<Customer> CustomerBal = new CustomerBAL();
                 if (CustomerBal.InsertOne(customer))
                 {
                     DialogResult dialog = MessageBox.Show("Inserted Successfully");
@@ -187,6 +193,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
         {
             try
             {
+                IBLL<Customer> CustomerBal = new CustomerBAL();
                 if (CustomerBal.UpdateOne(customer))
                 {
                     DialogResult dialog = MessageBox.Show("Updated Successfully");

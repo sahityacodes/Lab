@@ -7,55 +7,64 @@ using BusinessLogic.Exceptions;
 
 namespace BusinessLogic.Implementation.CustomerLogic
 {
-    public class CustomerBAL : ICustomerBLL<Customer>
+    public class CustomerBAL : IBLL<Customer>
     {
-        readonly ICustomerEntityManager<Customer> CustomerDal = new CustomerMapper();
         public List<Customer> GetAll()
         {
+            IEntityManager<Customer> CustomerDal = new CustomerMapper();
             return CustomerDal.GetAll();
         }
 
         public List<Customer> GetOneByName(string name)
         {
+            IEntityManager<Customer> CustomerDal = new CustomerMapper();
             return CustomerDal.GetAllByKeyWord(name);
         }
 
         public bool InsertOne(Customer customer)
         {
+            IEntityManager<Customer> CustomerDal = new CustomerMapper();
             return CustomerDal.InsertOne(customer);
         }
 
         public bool UpdateOne(Customer customer)
         {
+            IEntityManager<Customer> CustomerDal = new CustomerMapper();
             return CustomerDal.UpdateOne(customer);
         }
 
         public bool DeleteAll(int Id)
         {
+            IEntityManager<Customer> CustomerDal = new CustomerMapper();
             return CustomerDal.DeleteAll(Id);
         }
 
         public List<Customer> SortByColumnAscending(string colName)
         {
+            IEntityManager<Customer> CustomerDal = new CustomerMapper();
             return CustomerDal.SortByColumnAscending(colName);
         }
 
         public List<Customer> SortByColumnDescending(string colName)
         {
+            IEntityManager<Customer> CustomerDal = new CustomerMapper();
             return CustomerDal.SortByColumnDescending(colName);
         }
 
-        public Customer GetOne(int OrderID)
+        public Customer GetOne(int customerID)
         {
-            throw new System.NotImplementedException();
+            IEntityManager<Customer> CustomerDal = new CustomerMapper();
+            return CustomerDal.GetOne(customerID);
         }
 
         public List<Customer> GetCustomerOrdersCost()
         {
+            IEntityManager<Customer> CustomerDal = new CustomerMapper();
             return CustomerDal.GetCustomerOrdersCost();
         }
         public bool CheckIfCustomerExists(int ID)
         {
+            IEntityManager<Customer> CustomerDal = new CustomerMapper();
             return CustomerDal.CheckIfCustomerExists(ID);
         }
 
@@ -75,6 +84,21 @@ namespace BusinessLogic.Implementation.CustomerLogic
                 throw new BusinessLogicException("VAT is Mandatory");
             }
             return true;
+        }
+
+        public decimal CalculateTotalUnitCost(decimal Qty, decimal unitPrice)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public decimal CalculateTotalCost(List<decimal> rowCostList, decimal discountCost, decimal shippingCost)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool ValidateOrder(Customer obj)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -11,6 +11,9 @@ namespace BusinessEntityLayer.Model
         public int CustomerID
         { get; set; }
 
+        public string CustomerName
+        { get; set; }
+
         public DateTime DateOrder = DateTime.Today;
 
         public string Payment
@@ -19,5 +22,6 @@ namespace BusinessEntityLayer.Model
         public List<SalesOrdersRows> OrderRows = new List<SalesOrdersRows>();
 
         public SalesOrdersTail OrderSummary = new();
+
     }
 }
