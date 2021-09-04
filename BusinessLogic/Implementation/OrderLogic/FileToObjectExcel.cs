@@ -11,7 +11,7 @@ namespace BusinessLogic.Implementation.OrderLogic
 {
     public class FileToObjectExcel : IImportFeature<List<SalesOrdersRows>>
     {
-        public List<SalesOrdersRows> ConvertExcelToObject(string FilePath)
+        public override List<SalesOrdersRows> ConvertExcelToObject(string FilePath)
         {
             Excel.Application xlApp = new();
             Excel.Workbook xlWorkBook = xlApp.Workbooks.Open(@FilePath,null,true);
@@ -39,7 +39,7 @@ namespace BusinessLogic.Implementation.OrderLogic
             xlApp.Quit();
             return validateData(rows);
         }
-        public List<SalesOrdersRows> ConvertTextFileToObject(string FilePath)
+        public override List<SalesOrdersRows> ConvertTextFileToObject(string FilePath)
         {
             List<SalesOrdersRows> rows = new();
             StreamReader reader = File.OpenText(FilePath);
@@ -62,7 +62,7 @@ namespace BusinessLogic.Implementation.OrderLogic
             return validateData(rows);
         }
 
-        public List<SalesOrdersRows> ConvertClipboardDataToObject(string Data)
+        public override List<SalesOrdersRows> ConvertClipboardDataToObject(string Data)
         {
             if(Data.Length < 1)
             {

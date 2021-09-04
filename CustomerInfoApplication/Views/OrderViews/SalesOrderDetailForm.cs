@@ -221,6 +221,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             {
                 importedRows.OrderRows = fileToObj.ConvertClipboardDataToObject(clipboardForm.getPastedData());
                 importedRows.OrderRows.AddRange(GetSalesOrdersRows());
+                orderRowsGrid.Rows.Clear();
                 setRows(importedRows.OrderRows);
                 calculateRowCosts();
                 calculateTotalPrice();
@@ -238,6 +239,8 @@ namespace CustomerInfoApplication.Views.OrderViews
                         if (row.Index != -1)
                         {
                             orderRowsGrid.Rows.RemoveAt(row.Index);
+                            calculateRowCosts();
+                            calculateTotalPrice();
                         }
                     }
                     catch (InvalidOperationException)

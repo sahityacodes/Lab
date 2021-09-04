@@ -1,10 +1,10 @@
 ﻿
 namespace BusinessLogic.Interfaces
 {
-        public interface IImportFeature<T>
+        public abstract class IImportFeature<T>
         {
-            public T ConvertExcelToObject(string FilePath);
-            public T ConvertTextFileToObject(string FilePath);
-            public T ConvertClipboardDataToObject(string Data);
+            public abstract T ConvertExcelToObject(string FilePath);
+            public abstract T ConvertTextFileToObject(string FilePath);
+            public abstract T ConvertClipboardDataToObject(string Data);
         }
 }

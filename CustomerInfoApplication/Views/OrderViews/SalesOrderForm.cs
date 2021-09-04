@@ -36,6 +36,11 @@ namespace CustomerInfoApplication.Views.OrderViews
                 edit.Enabled = true;
                 delete.Enabled = true;
             }
+            else
+            {
+                edit.Enabled = false;
+                delete.Enabled = false;
+            }
         }
         private void SalesOrderForm_Load(object sender, EventArgs e)
         {
