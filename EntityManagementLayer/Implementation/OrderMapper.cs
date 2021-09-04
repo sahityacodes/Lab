@@ -31,6 +31,7 @@ namespace EntityManagementLayer.Implementation
         public bool InsertOne(SalesOrders salesOrder)
         {
             SqlDB_DAL driver = new();
+            bool status = false;
             try
             {
                 driver.OpenDB();
@@ -48,6 +49,7 @@ namespace EntityManagementLayer.Implementation
                     if (InsertRows(driver, salesOrder))
                     {
                         driver.CommitTransaction();
+                        status = true;
                     }
                 }
             }
@@ -60,12 +62,13 @@ namespace EntityManagementLayer.Implementation
             {
                 driver.CloseDB();
             }
-            return true;
+            return status;
         }
 
         public bool UpdateOne(SalesOrders salesOrder)
         {
             SqlDB_DAL driver = new();
+            bool status = false;
             try
             {
                 driver.OpenDB();
@@ -81,6 +84,7 @@ namespace EntityManagementLayer.Implementation
                     DeleteAllRows(driver, salesOrder.OrderID) && InsertRows(driver, salesOrder))
                     {
                         driver.CommitTransaction();
+                    status = true;
                     }
             }
             catch (SqlException)
@@ -92,13 +96,14 @@ namespace EntityManagementLayer.Implementation
             {
                 driver.CloseDB();
             }
-            return true;
+            return status;
         }
 
 
         public bool DeleteAll(int OrderId)
         {
             SqlDB_DAL driver = new();
+            bool status = false;
             try
             {
                 driver.OpenDB();
@@ -110,6 +115,7 @@ namespace EntityManagementLayer.Implementation
                 if(driver.WriteToTable(Constants.QUERY_DELETE_ORDERS, parameters))
                 {
                      driver.CommitTransaction();
+                    status = true;
                 }
             }  
             catch (SqlException)
@@ -121,7 +127,7 @@ namespace EntityManagementLayer.Implementation
             {
                 driver.CloseDB();
             }
-            return true;
+            return status;
         }
 
         public List<SalesOrders> SortByColumnAscending(string colName)
@@ -220,6 +226,7 @@ namespace EntityManagementLayer.Implementation
                     {
                         OrderID = dataRow.Field<int>("OrderID"),
                         CustomerID = dataRow.Field<int>("CustomerID"),
+                        CustomerName = dataRow.Field<string>("Name"),
                         DateOrder = dataRow.Field<DateTime>("DateOrder"),
                         Payment = dataRow.Field<string>("Payment"),
                         OrderSummary = new SalesOrdersTail

@@ -9,7 +9,6 @@ using BusinessLogic.Exceptions;
 using BusinessLogic.Implementation.CustomerLogic;
 using DevExpress.XtraBars;
 using BusinessLogic.Implementation.FileOperationsLogic;
-using System.Diagnostics;
 
 namespace CustomerInfoApplication.Views.OrderViews
 {
@@ -31,18 +30,18 @@ namespace CustomerInfoApplication.Views.OrderViews
             deliveryDate.Value = orders.OrderSummary.DeliveryDate;
             textDiscountAmount.Text = Convert.ToString(orders.OrderSummary.DiscountAmount) ?? "";
             setRows(orders.OrderRows);
-            calculatecosts();
+            calculateTotalPrice();
             setFiles(orders.OrderSummary);
         }
 
         private void setFiles(SalesOrdersTail orderSummary)
         {
-            foreach(FileEntity file in orderSummary.files)
+            foreach (FileEntity file in orderSummary.files)
             {
                 fileList.Items.Add(file);
             }
-            if (fileList.Items.Count > 0 )
-                    fileList.Visible = true;
+            if (fileList.Items.Count > 0)
+                fileList.Visible = true;
         }
 
         private void setRows(List<SalesOrdersRows> rows)
@@ -51,7 +50,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             {
                 orderRowsGrid.Rows.Add(row.ProductCode, row.Description, row.Qty, row.UnitPrice, row.TotalRowPrice);
             }
-            
+
         }
         private List<SalesOrdersRows> GetSalesOrdersRows()
         {
@@ -77,8 +76,9 @@ namespace CustomerInfoApplication.Views.OrderViews
         private List<FileEntity> GetFiles()
         {
             List<FileEntity> files = new();
-            foreach (FileEntity item in fileList.Items) {
-                files.Add(item as FileEntity);
+            foreach (FileEntity item in fileList.Items)
+            {
+                files.Add(item);
             }
             return files;
         }
@@ -90,7 +90,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             {
                 salesOrder = new SalesOrders
                 {
-                    CustomerID = customerName.Text.Split(" - ")[0].Length > 0 ? Convert.ToInt32(customerName.Text.Split(" - ")[0]) : 0,
+                    CustomerID = customerName.Text.Length > 0 ? Convert.ToInt32(customerName.Text) : -1,
                     DateOrder = Convert.ToDateTime(datePicker.Value),
                     Payment = textPayment.Text,
                     OrderRows = GetSalesOrdersRows(),
@@ -102,7 +102,7 @@ namespace CustomerInfoApplication.Views.OrderViews
                         DiscountAmount = textDiscountAmount.Text.Length > 0 ? Convert.ToDecimal(textDiscountAmount.Text) : 0,
                         TotalOrder = textTotalAmount.Text.Length > 0 ? Convert.ToDecimal(textTotalAmount.Text) : 0,
                         files = fileOp.ConvertFileToBinary(GetFiles())
-                    }, 
+                    },
                 };
             }
             catch (FormatException)
@@ -113,12 +113,12 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         private void orderRowsGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            calculatecosts();
+            calculateRowCosts();
+            calculateTotalPrice();
         }
 
-        private void calculatecosts()
+        private void calculateRowCosts()
         {
-            List<decimal> costs = new();
             try
             {
                 IBLL<SalesOrders> OrderBal = new OrderBAL();
@@ -127,12 +127,23 @@ namespace CustomerInfoApplication.Views.OrderViews
                     decimal Qty = Convert.ToDecimal(orderRowsGrid.CurrentRow.Cells[2].Value);
                     decimal UnitPrice = Convert.ToDecimal(orderRowsGrid.CurrentRow.Cells[3].Value);
                     orderRowsGrid.CurrentRow.Cells[4].Value = OrderBal.CalculateTotalUnitCost(Qty, UnitPrice);
-                    costs = orderRowsGrid.Rows
-                            .OfType<DataGridViewRow>()
-                            .Select(r => Convert.ToDecimal(r.Cells[4].Value))
-                            .ToList();
                 }
-                textTotalAmount.Text = Convert.ToString(OrderBal.CalculateTotalCost(costs, textDiscountAmount.Text.Length > 0 ? Convert.ToDecimal(textDiscountAmount.Text) : 0,
+            }
+            catch (FormatException)
+            {
+            }
+        }
+
+        private void calculateTotalPrice()
+        {
+            try
+            {
+            IBLL<SalesOrders> OrderBal = new OrderBAL();
+            List<decimal> costs = orderRowsGrid.Rows
+                                .OfType<DataGridViewRow>()
+                                .Select(r => Convert.ToDecimal(r.Cells[4].Value))
+                                .ToList();
+            textTotalAmount.Text = Convert.ToString(OrderBal.CalculateTotalCost(costs, textDiscountAmount.Text.Length > 0 ? Convert.ToDecimal(textDiscountAmount.Text) : 0,
                                             textShippingCost.Text.Length > 0 ? Convert.ToDecimal(textShippingCost.Text) : 0));
             }
             catch (FormatException)
@@ -157,12 +168,14 @@ namespace CustomerInfoApplication.Views.OrderViews
         }
         private void textShippingCost_Leave(object sender, EventArgs e)
         {
-            calculatecosts();
+            calculateRowCosts();
+            calculateTotalPrice();
         }
 
         private void textDiscountAmount_Leave(object sender, EventArgs e)
         {
-            calculatecosts();
+            calculateRowCosts();
+            calculateTotalPrice();
         }
 
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
@@ -177,7 +190,8 @@ namespace CustomerInfoApplication.Views.OrderViews
                 importedRows.OrderRows.AddRange(GetSalesOrdersRows());
                 orderRowsGrid.Rows.Clear();
                 setRows(importedRows.OrderRows);
-                calculatecosts();
+                calculateRowCosts();
+                calculateTotalPrice();
             }
         }
 
@@ -193,7 +207,8 @@ namespace CustomerInfoApplication.Views.OrderViews
                 importedRows.OrderRows.AddRange(GetSalesOrdersRows());
                 orderRowsGrid.Rows.Clear();
                 setRows(importedRows.OrderRows);
-                calculatecosts();
+                calculateRowCosts();
+                calculateTotalPrice();
             }
         }
 
@@ -207,7 +222,8 @@ namespace CustomerInfoApplication.Views.OrderViews
                 importedRows.OrderRows = fileToObj.ConvertClipboardDataToObject(clipboardForm.getPastedData());
                 importedRows.OrderRows.AddRange(GetSalesOrdersRows());
                 setRows(importedRows.OrderRows);
-                calculatecosts();
+                calculateRowCosts();
+                calculateTotalPrice();
             }
         }
 
@@ -270,15 +286,22 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         private void searchControl1_TextChanged(object sender, EventArgs e)
         {
-            IBLL<Customer> CustomerBal = new CustomerBAL();
-            searchList.Visible = true;
-            searchList.Items.Clear();
-            foreach (Customer cust in CustomerBal.GetOneByName(searchControl1.Text))
+            try
             {
-                ListViewItem lvi = new ListViewItem();
-                lvi.Text = cust.Name;
-                lvi.SubItems.Add(Convert.ToString(cust.Id));
-                searchList.Items.Add(lvi);
+                IBLL<Customer> CustomerBal = new CustomerBAL();
+                searchList.Visible = true;
+                searchList.Items.Clear();
+                foreach (Customer cust in CustomerBal.GetOneByName(searchControl1.Text))
+                {
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.Text = cust.Name;
+                    lvi.SubItems.Add(Convert.ToString(cust.Id));
+                    searchList.Items.Add(lvi);
+                }
+            }
+            catch (BusinessLogicException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -300,7 +323,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             openFileDialog.Multiselect = true;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-               fileList.Visible = true;
+                fileList.Visible = true;
                 foreach (string name in openFileDialog.FileNames)
                 {
                     FileEntity file = new();
@@ -313,7 +336,7 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         private void SalesOrderDetailForm_Load(object sender, EventArgs e)
         {
-            if(orderRowsGrid.SelectedRows.Count > 0)
+            if (orderRowsGrid.SelectedRows.Count > 0)
                 orderRowsGrid.CurrentRow.Selected = false;
             if (fileList.SelectedItems.Count > 0)
                 orderRowsGrid.CurrentRow.Selected = false;
@@ -321,34 +344,30 @@ namespace CustomerInfoApplication.Views.OrderViews
 
         private void toolStripTextBox1_Click(object sender, EventArgs e)
         {
+            try { 
             fileList.Visible = true;
             FileOperationsImpl fileOperations = new();
-            if (fileList.SelectedIndex > -1)
-            {
-                        FileEntity selectedFileObj = fileList.Items[fileList.SelectedIndex] as FileEntity;
+                if (fileList.SelectedIndex > -1)
+                {
+                    FileEntity selectedFileObj = fileList.Items[fileList.SelectedIndex] as FileEntity;
+                    if (!fileOperations.IsExists(selectedFileObj))
+                    {
                         SaveFileDialog saveFileDialog1 = new();
                         saveFileDialog1.FileName = selectedFileObj.Name;
-                        saveFileDialog1.Filter = "All Files | *." + selectedFileObj.Ext;
+                        saveFileDialog1.Filter = "All Files | *" + selectedFileObj.Ext;
                         if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                         {
                             selectedFileObj.FilePath = saveFileDialog1.FileName;
                             fileOperations.SaveFile(selectedFileObj);
-                            OpenFile(selectedFileObj.FilePath);
                         }
-                else {
-                //    OpenFile(@Convert.ToString(fileList.Items[fileList.SelectedIndex]));
+                    }
+                    fileOperations.OpenFile(selectedFileObj.FilePath);
                 }
             }
-        }
-
-        private void OpenFile(string v)
-        {
-            var p = new Process();
-            p.StartInfo = new ProcessStartInfo(v)
+            catch (BusinessLogicException ex)
             {
-                UseShellExecute = true
-            };
-            p.Start();
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void toolStripTextBox2_Click(object sender, EventArgs e)

@@ -81,6 +81,7 @@ namespace EntityManagementLayer.Implementation
         {
             SqlDB_DAL driver = new();
             OrderMapper mapper = new();
+            bool status = false;
             try
             {
                 driver.OpenDB();
@@ -98,10 +99,7 @@ namespace EntityManagementLayer.Implementation
                 if (driver.WriteToTable(Constants.QUERY_INSERT_ORDERDETAILS, orderSummaryParam) && InsertFiles(driver, obj))
                 {   
                     driver.CommitTransaction();
-                }
-                else
-                {
-                    return false;
+                    status = true;
                 }
             }
             catch (Exception)
@@ -113,7 +111,7 @@ namespace EntityManagementLayer.Implementation
             {
                 driver.CloseDB();
             }
-            return true;
+            return status;
         }
 
         private bool InsertFiles(SqlDB_DAL driver, SalesOrdersTail orders)
@@ -153,12 +151,11 @@ namespace EntityManagementLayer.Implementation
         public bool UpdateOne(SalesOrdersTail obj)
         {
             SqlDB_DAL driver = new();
-            OrderMapper mapper = new();
+            bool status = false;
             try
             {
                 driver.OpenDB();
                 driver.OpenTransaction();
-                obj.OrderId = mapper.GetCurrentOrderID(driver);
                 SqlParameter[] orderSummaryParam =
                 {
              new SqlParameter("@OrderID", SqlDbType.Int) { Value = obj.OrderId},
@@ -173,10 +170,7 @@ namespace EntityManagementLayer.Implementation
                     && InsertFiles(driver, obj))
                 {
                     driver.CommitTransaction();
-                }
-                else
-                {
-                    return false;
+                    status = true;
                 }
             }
             catch (Exception)
@@ -188,7 +182,7 @@ namespace EntityManagementLayer.Implementation
             {
                 driver.CloseDB();
             }
-            return true;
+            return status;
         }
 
         public List<SalesOrdersTail> GetCustomerOrdersCost()

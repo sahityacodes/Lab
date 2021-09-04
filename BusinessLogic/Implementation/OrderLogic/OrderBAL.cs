@@ -102,6 +102,13 @@ namespace BusinessLogic.Implementation.OrderLogic
             {
                 throw new BusinessLogicException("Order has no Sales Rows. Please add rows or delete the order instead.");
             }
+            foreach (FileEntity file in order.OrderSummary.files)
+            {
+                if (file.Ext.Equals(".exe"))
+                {
+                    throw new BusinessLogicException(".exe files are not allowed.");
+                }
+            }
             return true;
         }
 

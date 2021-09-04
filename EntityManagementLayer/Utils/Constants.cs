@@ -13,7 +13,7 @@
         public static string QUERY_SORTBYCOLUMNDESC = "Select * from Customer Order By case WHEN @orderby = '0' Then Id ELSE null END DESC,case WHEN @orderby = '6' Then AnnualRevenue ELSE null END DESC";
         public static string QUERY_CHECKIFCUSTOMER_EXISTS = "SELECT * FROM Customer where Id=@Id";
         //Order Queries
-        public static string QUERY_SELECTALLORDERS = "SELECT * FROM SalesOrders s LEFT JOIN SalesOrdersTails tail on s.OrderID = tail.OrderID";
+        public static string QUERY_SELECTALLORDERS = "SELECT * FROM SalesOrders s INNER JOIN Customer cust on s.CustomerID = cust.Id LEFT JOIN SalesOrdersTails tail on s.OrderID = tail.OrderID";
         public static string QUERY_SELECTALLORDERS_ONE = "SELECT * FROM SalesOrders s INNER JOIN SalesOrdersRows r  on s.OrderID=r.OrderID where s.OrderID=@OrderID";
         public static string QUERY_FINDORDER = "SELECT * FROM SalesOrders s INNER JOIN SalesOrdersTails tail on s.OrderID = tail.OrderID where (CAST(s.OrderID as CHAR)+ tail.ShippingAddress + CAST(s.CustomerID as CHAR))  LIKE @Word";
         public static string TOTAL_ORDER_COST = "SELECT   Customer.Id , count(SalesOrders.OrderID) TotalOrders, sum(SalesOrdersTails.TotalCost) TotalAmount FROM Customer JOIN SalesOrders ON Customer.Id = SalesOrders.CustomerID JOIN SalesOrdersTails ON SalesOrdersTails.OrderID = SalesOrders.OrderID group by Customer.Id";

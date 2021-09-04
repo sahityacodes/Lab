@@ -34,7 +34,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.components = new System.ComponentModel.Container();
             DevExpress.XtraBars.Bar bar2;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesOrderDetailForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Import = new DevExpress.XtraBars.BarButtonItem();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
@@ -80,8 +80,8 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.label7 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.searchList = new System.Windows.Forms.ListView();
-            this.ID = new System.Windows.Forms.ColumnHeader();
             this.cName = new System.Windows.Forms.ColumnHeader();
+            this.ID = new System.Windows.Forms.ColumnHeader();
             this.label2 = new System.Windows.Forms.Label();
             this.searchControl1 = new DevExpress.XtraEditors.SearchControl();
             this.label9 = new System.Windows.Forms.Label();
@@ -190,7 +190,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.barButtonItem5,
             this.barButtonItem6});
             this.barManager1.MainMenu = bar2;
-            this.barManager1.MaxItemId = 84;
+            this.barManager1.MaxItemId = 88;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemComboBox1,
             this.repositoryItemImageEdit1});
@@ -339,14 +339,14 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.Qty,
             this.UnitPrice,
             this.TotalRowPrice});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.orderRowsGrid.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.orderRowsGrid.DefaultCellStyle = dataGridViewCellStyle1;
             this.orderRowsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.orderRowsGrid.Location = new System.Drawing.Point(0, 0);
             this.orderRowsGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -617,28 +617,28 @@ namespace CustomerInfoApplication.Views.OrderViews
             // searchList
             // 
             this.searchList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ID,
-            this.cName});
+            this.cName,
+            this.ID});
             this.searchList.FullRowSelect = true;
             this.searchList.HideSelection = false;
             this.searchList.Location = new System.Drawing.Point(252, 278);
             this.searchList.Name = "searchList";
-            this.searchList.Size = new System.Drawing.Size(377, 128);
+            this.searchList.Size = new System.Drawing.Size(413, 184);
             this.searchList.TabIndex = 39;
             this.searchList.UseCompatibleStateImageBehavior = false;
             this.searchList.View = System.Windows.Forms.View.Details;
             this.searchList.Visible = false;
             this.searchList.Click += new System.EventHandler(this.searchList_Click);
             // 
+            // cName
+            // 
+            this.cName.Text = "Customer Name";
+            this.cName.Width = 310;
+            // 
             // ID
             // 
             this.ID.Text = "ID";
             this.ID.Width = 100;
-            // 
-            // cName
-            // 
-            this.cName.Text = "Customer Name";
-            this.cName.Width = 270;
             // 
             // label2
             // 

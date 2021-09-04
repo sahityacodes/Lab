@@ -1,5 +1,7 @@
 ﻿using BusinessEntityLayer.Model;
+using BusinessLogic.Exceptions;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace BusinessLogic.Implementation.FileOperationsLogic
@@ -28,8 +30,8 @@ namespace BusinessLogic.Implementation.FileOperationsLogic
                     try
                     {
                         FileStream stream = new FileStream(fileObj.FilePath, FileMode.Open, FileAccess.Read);
-                        fileObj.file = new BinaryReader(stream).ReadBytes((int)stream.Length);
                         fileObj.Ext = Path.GetExtension(fileObj.FilePath);// Path.GetExtension(fileObj.FilePath);
+                        fileObj.file = new BinaryReader(stream).ReadBytes((int)stream.Length);
                         fileObj.Name = Path.GetFileNameWithoutExtension(fileObj.FilePath);
                     }
                     catch (FileNotFoundException)
@@ -39,6 +41,24 @@ namespace BusinessLogic.Implementation.FileOperationsLogic
                 if (fileObj.file != null) newList.Add(fileObj);
             }
             return newList;
+        }
+
+        public void OpenFile(string path)
+        {
+            if (File.Exists(path))
+            {
+                var p = new Process();
+                p.StartInfo = new ProcessStartInfo(path)
+                {
+                    UseShellExecute = true
+                };
+                p.Start();
+            }
+        }
+
+        public bool IsExists(FileEntity v)
+        {
+            return File.Exists(v.FilePath);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             foreach (SalesOrders order in orderList)
             {
                 orderGrid.Rows.Add(new object[]{order.OrderID,
-                          order.CustomerID, "", order.DateOrder, order.OrderSummary.TotalOrder,  order.OrderSummary.DeliveryDate,order.OrderSummary.ShippingAddress
+                          order.CustomerID, order.CustomerName, order.DateOrder, order.OrderSummary.TotalOrder,  order.OrderSummary.DeliveryDate,order.OrderSummary.ShippingAddress
                 });
             }
             if(orderList.Count > 0)
@@ -153,6 +153,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             {
                 SalesOrders updatedOrder = detailsForm.getSaleOrderInfo();
                 updatedOrder.OrderID = OrderID;
+                updatedOrder.OrderSummary.OrderId = OrderID;
                 UpdateOrder(updatedOrder);
             }
             else
