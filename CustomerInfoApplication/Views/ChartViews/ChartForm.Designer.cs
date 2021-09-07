@@ -63,7 +63,7 @@ namespace CustomerInfoApplication.Views.ChartViews
             this.barChart.SeriesSerializable = new DevExpress.XtraCharts.Series[0];
             this.barChart.SeriesTemplate.ArgumentScaleType = DevExpress.XtraCharts.ScaleType.Qualitative;
             this.barChart.SeriesTemplate.NumericSummaryOptions.UseAxisMeasureUnit = false;
-            this.barChart.Size = new System.Drawing.Size(854, 478);
+            this.barChart.Size = new System.Drawing.Size(770, 478);
             this.barChart.TabIndex = 0;
             this.barChart.ToolTipEnabled = DevExpress.Utils.DefaultBoolean.True;
             this.barChart.ToolTipOptions.ShowForSeries = true;
@@ -125,7 +125,7 @@ namespace CustomerInfoApplication.Views.ChartViews
             // 
             this.splitContainer1.Panel2.Controls.Add(this.barChart);
             this.splitContainer1.Size = new System.Drawing.Size(1993, 1063);
-            this.splitContainer1.SplitterDistance = 1135;
+            this.splitContainer1.SplitterDistance = 1219;
             this.splitContainer1.TabIndex = 5;
             // 
             // pivotGridControl1
@@ -144,7 +144,7 @@ namespace CustomerInfoApplication.Views.ChartViews
             this.pivotGridControl1.OptionsPrint.MergeColumnFieldValues = false;
             this.pivotGridControl1.OptionsView.ShowColumnGrandTotalHeader = false;
             this.pivotGridControl1.Prefilter.Enabled = false;
-            this.pivotGridControl1.Size = new System.Drawing.Size(1135, 1063);
+            this.pivotGridControl1.Size = new System.Drawing.Size(1219, 1063);
             this.pivotGridControl1.TabIndex = 1;
             // 
             // ChartForm

@@ -7,8 +7,8 @@ namespace DALayer.Implementation
 {
     public class SqlDB_DAL
     {
-        private SqlTransaction tran;
-        private SqlConnection objSqlConnection;
+        private SqlTransaction tran = null;
+        private SqlConnection objSqlConnection = null;
         public void OpenDB()
         {
             objSqlConnection = new(Constants.ConnectionString);
