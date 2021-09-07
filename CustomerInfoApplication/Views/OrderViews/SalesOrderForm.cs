@@ -189,6 +189,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             OpenFileDialog openFileDialog = new();
             IBLL<SalesOrders> OrderBal = new OrderBAL();
             IBLL<SalesOrdersTail> OrderTailsBal = new OrderTailsBAL();
+            DialogResult dialog = DialogResult.None;
             if (importDropdown.ItemIndex == 0)
             {
                 openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
@@ -198,7 +199,7 @@ namespace CustomerInfoApplication.Views.OrderViews
                     originalOrder.OrderSummary.TotalOrder = OrderBal.CalculateTotalCost(originalOrder.OrderRows.Select(o => o.TotalRowPrice).ToList(), originalOrder.OrderSummary.DiscountAmount, originalOrder.OrderSummary.ShippingCost);
                     detailsForm.InitializeFormValues(originalOrder);
                     //SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true, false);
-                    DialogResult dialog = detailsForm.ShowDialog();
+                    dialog = detailsForm.ShowDialog();
                 }
             }
             else if (importDropdown.ItemIndex == 1)
@@ -209,7 +210,7 @@ namespace CustomerInfoApplication.Views.OrderViews
                     originalOrder.OrderRows = fileToObj.ConvertTextFileToObject(openFileDialog.FileName);
                     originalOrder.OrderSummary.TotalOrder = OrderBal.CalculateTotalCost(originalOrder.OrderRows.Select(o => o.TotalRowPrice).ToList(), originalOrder.OrderSummary.DiscountAmount, originalOrder.OrderSummary.ShippingCost);
                     detailsForm.InitializeFormValues(originalOrder);
-                    DialogResult dialog = detailsForm.ShowDialog();
+                    dialog = detailsForm.ShowDialog();
                 }
             }
             else if (importDropdown.ItemIndex == 2)
@@ -220,8 +221,17 @@ namespace CustomerInfoApplication.Views.OrderViews
                     originalOrder.OrderRows = fileToObj.ConvertClipboardDataToObject(clipboardForm.getPastedData());
                     originalOrder.OrderSummary.TotalOrder = OrderBal.CalculateTotalCost(originalOrder.OrderRows.Select(o => o.TotalRowPrice).ToList(), originalOrder.OrderSummary.DiscountAmount, originalOrder.OrderSummary.ShippingCost);
                     detailsForm.InitializeFormValues(originalOrder);
-                    DialogResult dialog = detailsForm.ShowDialog();
+                    dialog = detailsForm.ShowDialog();
                 }
+            }
+            if (dialog == DialogResult.OK)
+            {
+                SalesOrders newOrder = detailsForm.getSaleOrderInfo();
+                InsertOrder(newOrder);
+            }
+            else
+            {
+                detailsForm.Close();
             }
         }
     }
