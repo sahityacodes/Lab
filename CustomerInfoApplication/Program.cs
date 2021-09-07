@@ -14,7 +14,14 @@ namespace CustomerInfoApplication
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(true);
-            Application.Run(new MainForm());
+            try
+            {
+                Application.Run(new MainForm());
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error in the application.");
+            }
         }
     }
 }

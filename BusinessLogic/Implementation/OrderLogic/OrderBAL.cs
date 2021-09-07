@@ -83,7 +83,7 @@ namespace BusinessLogic.Implementation.OrderLogic
             return OrderDal.DeleteOne(Id);
         }
 
-        public bool ValidateOrder(SalesOrders order)
+        public bool ValidateObject(SalesOrders order)
         {
             IEntityManager<Customer> CustomerDal = new CustomerMapper();
             if (!CustomerDal.CheckIfCustomerExists(order.CustomerID))

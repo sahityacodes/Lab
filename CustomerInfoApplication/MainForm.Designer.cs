@@ -105,6 +105,7 @@ namespace CustomerInfoApplication
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(2696, 1436);
             this.ControlContainer = this.fluentDesignFormContainer1;
             this.Controls.Add(this.fluentDesignFormContainer1);
@@ -112,6 +113,7 @@ namespace CustomerInfoApplication
             this.Controls.Add(this.fluentDesignFormControl1);
             this.EnableAcrylicAccent = false;
             this.FluentDesignFormControl = this.fluentDesignFormControl1;
+            this.MinimumSize = new System.Drawing.Size(1200, 1000);
             this.Name = "MainForm";
             this.NavigationControl = this.accordionControl1;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

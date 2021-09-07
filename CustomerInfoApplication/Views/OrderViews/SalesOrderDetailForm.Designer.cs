@@ -190,7 +190,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.barButtonItem5,
             this.barButtonItem6});
             this.barManager1.MainMenu = bar2;
-            this.barManager1.MaxItemId = 88;
+            this.barManager1.MaxItemId = 92;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemComboBox1,
             this.repositoryItemImageEdit1});
@@ -292,6 +292,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.textShippingCost.Size = new System.Drawing.Size(99, 36);
             this.textShippingCost.TabIndex = 21;
             this.textShippingCost.Text = "0";
+            this.textShippingCost.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textShippingCost_KeyPress);
             this.textShippingCost.Leave += new System.EventHandler(this.textShippingCost_Leave);
             // 
             // label1
@@ -611,7 +612,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.splitContainer1.Panel2.Controls.Add(this.textShippingCost);
             this.splitContainer1.Panel2MinSize = 700;
             this.splitContainer1.Size = new System.Drawing.Size(1369, 1273);
-            this.splitContainer1.SplitterDistance = 497;
+            this.splitContainer1.SplitterDistance = 496;
             this.splitContainer1.TabIndex = 4;
             // 
             // searchList
@@ -717,7 +718,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             // 
             this.uploadBtn.Location = new System.Drawing.Point(44, 375);
             this.uploadBtn.Name = "uploadBtn";
-            this.uploadBtn.Size = new System.Drawing.Size(321, 52);
+            this.uploadBtn.Size = new System.Drawing.Size(265, 52);
             this.uploadBtn.TabIndex = 29;
             this.uploadBtn.Text = "Upload Relevant File";
             this.uploadBtn.UseVisualStyleBackColor = true;
@@ -746,6 +747,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             this.LookAndFeel.SkinName = "Office 2019 Colorful";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.MinimumSize = new System.Drawing.Size(1373, 1403);
             this.Name = "SalesOrderDetailForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

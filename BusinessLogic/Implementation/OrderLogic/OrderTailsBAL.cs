@@ -1,5 +1,4 @@
 ﻿using BusinessEntityLayer.Model;
-using BusinessLogic.Implementation.FileOperationsLogic;
 using BusinessLogic.Interfaces;
 using EntityManagementLayer.Implementation;
 using EntityManagementLayer.Interfaces;
@@ -10,7 +9,6 @@ namespace BusinessLogic.Implementation.OrderLogic
 {
     public class OrderTailsBAL : IBLL<SalesOrdersTail>
     {
-
         public bool DeleteAll(int Id)
         {
             throw new NotImplementedException();
@@ -66,7 +64,7 @@ namespace BusinessLogic.Implementation.OrderLogic
             throw new NotImplementedException();
         }
 
-        public bool ValidateOrder(SalesOrdersTail obj)
+        public bool ValidateObject(SalesOrdersTail obj)
         {
             throw new NotImplementedException();
         }
@@ -81,9 +79,5 @@ namespace BusinessLogic.Implementation.OrderLogic
             throw new NotImplementedException();
         }
 
-        public bool ValidateCustomer(SalesOrdersTail obj)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

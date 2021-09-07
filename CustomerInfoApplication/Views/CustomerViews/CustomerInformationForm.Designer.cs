@@ -213,7 +213,6 @@
             this.ribbonControl1.Toolbar.ShowCustomizeItem = false;
             this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             this.ribbonControl1.TransparentEditorsMode = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl1.Click += new System.EventHandler(this.ribbonControl1_Click);
             // 
             // add
             // 

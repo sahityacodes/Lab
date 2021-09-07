@@ -40,8 +40,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             {
                 fileList.Items.Add(file);
             }
-            if (fileList.Items.Count > 0)
-                fileList.Visible = true;
+            changeProperties();
         }
 
         private void setRows(List<SalesOrdersRows> rows)
@@ -156,7 +155,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             SalesOrders order = getSaleOrderInfo();
             try
             {
-                if (OrderBal.ValidateOrder(order))
+                if (OrderBal.ValidateObject(order))
                 {
                     Save.DialogResult = DialogResult.OK;
                 }
@@ -379,6 +378,25 @@ namespace CustomerInfoApplication.Views.OrderViews
             {
                 fileList.Items.RemoveAt(fileList.SelectedIndex);
                 fileList.Refresh();
+            }
+            changeProperties();
+        }
+
+        private void changeProperties()
+        {
+            
+            if (fileList.Items.Count > 0)
+            {
+                if (fileList.SelectedIndex > -1)
+                {
+                    fileList.Visible = true;
+                    contextMenuStrip1.Visible = true;
+                }
+            }
+            else
+            {
+                fileList.Visible = false;
+                contextMenuStrip1.Visible = false;
             }
         }
     }

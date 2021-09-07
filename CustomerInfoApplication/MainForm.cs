@@ -37,6 +37,7 @@ namespace CustomerInfoApplication
         {
             fluentDesignFormContainer1.Controls.Clear();
             ChartForm costOrderChart = new();
+            //PivotTableForm costOrderChart = new();
             costOrderChart.TopLevel = false;
             costOrderChart.Dock = System.Windows.Forms.DockStyle.Fill;
             fluentDesignFormContainer1.Controls.Add(costOrderChart);

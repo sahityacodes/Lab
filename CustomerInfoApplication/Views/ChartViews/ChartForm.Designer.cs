@@ -36,15 +36,26 @@ namespace CustomerInfoApplication.Views.ChartViews
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.pivotGridControl1 = new DevExpress.XtraPivotGrid.PivotGridControl();
             ((System.ComponentModel.ISupportInitialize)(this.barChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pivotGridControl1)).BeginInit();
             this.SuspendLayout();
             // 
             // barChart
             // 
+            this.barChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.barChart.BorderOptions.Visibility = DevExpress.Utils.DefaultBoolean.False;
             this.barChart.CrosshairOptions.ArgumentLineColor = System.Drawing.Color.White;
             this.barChart.Legend.Visibility = DevExpress.Utils.DefaultBoolean.True;
-            this.barChart.Location = new System.Drawing.Point(166, 87);
+            this.barChart.Location = new System.Drawing.Point(0, 156);
             this.barChart.Name = "barChart";
             this.barChart.PaletteName = "Accent";
             this.barChart.PaletteRepository.Add("Accent", new DevExpress.XtraCharts.Palette("Accent", DevExpress.XtraCharts.PaletteScaleMode.Repeat, new DevExpress.XtraCharts.PaletteEntry[] {
@@ -52,7 +63,7 @@ namespace CustomerInfoApplication.Views.ChartViews
             this.barChart.SeriesSerializable = new DevExpress.XtraCharts.Series[0];
             this.barChart.SeriesTemplate.ArgumentScaleType = DevExpress.XtraCharts.ScaleType.Qualitative;
             this.barChart.SeriesTemplate.NumericSummaryOptions.UseAxisMeasureUnit = false;
-            this.barChart.Size = new System.Drawing.Size(1643, 891);
+            this.barChart.Size = new System.Drawing.Size(854, 478);
             this.barChart.TabIndex = 0;
             this.barChart.ToolTipEnabled = DevExpress.Utils.DefaultBoolean.True;
             this.barChart.ToolTipOptions.ShowForSeries = true;
@@ -99,12 +110,49 @@ namespace CustomerInfoApplication.Views.ChartViews
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Size = new System.Drawing.Size(0, 1063);
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Cursor = System.Windows.Forms.Cursors.VSplit;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.pivotGridControl1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.barChart);
+            this.splitContainer1.Size = new System.Drawing.Size(1993, 1063);
+            this.splitContainer1.SplitterDistance = 1135;
+            this.splitContainer1.TabIndex = 5;
+            // 
+            // pivotGridControl1
+            // 
+            this.pivotGridControl1.ActiveFilterEnabled = false;
+            this.pivotGridControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.pivotGridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pivotGridControl1.Location = new System.Drawing.Point(0, 0);
+            this.pivotGridControl1.Name = "pivotGridControl1";
+            this.pivotGridControl1.OptionsCustomization.AllowFilter = false;
+            this.pivotGridControl1.OptionsCustomization.AllowFilterBySummary = false;
+            this.pivotGridControl1.OptionsCustomization.FilterPanelVisible = DevExpress.XtraPivotGrid.FilterPanelVisible.Never;
+            this.pivotGridControl1.OptionsData.DataProcessingEngine = DevExpress.XtraPivotGrid.PivotDataProcessingEngine.Optimized;
+            this.pivotGridControl1.OptionsFilter.AllowMRUFilterList = DevExpress.Utils.DefaultBoolean.False;
+            this.pivotGridControl1.OptionsMenu.EnablePinColumnMenu = DevExpress.Utils.DefaultBoolean.False;
+            this.pivotGridControl1.OptionsPrint.MergeColumnFieldValues = false;
+            this.pivotGridControl1.OptionsView.ShowColumnGrandTotalHeader = false;
+            this.pivotGridControl1.Prefilter.Enabled = false;
+            this.pivotGridControl1.Size = new System.Drawing.Size(1135, 1063);
+            this.pivotGridControl1.TabIndex = 1;
+            // 
             // ChartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1993, 1063);
-            this.Controls.Add(this.barChart);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
@@ -115,6 +163,11 @@ namespace CustomerInfoApplication.Views.ChartViews
             this.Load += new System.EventHandler(this.ChartForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.barChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pivotGridControl1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -128,5 +181,7 @@ namespace CustomerInfoApplication.Views.ChartViews
         private DevExpress.XtraBars.BarDockControl barDockControlBottom;
         private DevExpress.XtraBars.BarDockControl barDockControlLeft;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private DevExpress.XtraPivotGrid.PivotGridControl pivotGridControl1;
     }
 }

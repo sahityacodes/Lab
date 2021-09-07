@@ -73,7 +73,7 @@ namespace BusinessLogic.Implementation.CustomerLogic
             throw new System.NotImplementedException();
         }
 
-        public bool ValidateCustomer(Customer customer)
+        public bool ValidateObject(Customer customer)
         {
             if (customer.Name.Length == 0)
             {

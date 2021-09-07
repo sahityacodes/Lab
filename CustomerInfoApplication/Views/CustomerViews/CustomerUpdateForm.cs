@@ -54,7 +54,7 @@ namespace CustomerInfoApplication.Views.CustomerViews
             {
                 IBLL<Customer> CustomerBal = new CustomerBAL();
                 Customer cust = getCustomerData();
-                if (CustomerBal.ValidateCustomer(cust))
+                if (CustomerBal.ValidateObject(cust))
                 {
                     btnOK.DialogResult = DialogResult.OK;
                 }

@@ -28,6 +28,16 @@ namespace CustomerInfoApplication.Views.CustomerViews
                 customerGrid.Rows.Add(new object[]{customer.Id,
                           customer.Name, customer.VAT, customer.Phone ?? "", customer.Address ?? "", customer.City ?? "", customer.AnnualRevenue });
             }
+            if (customerGrid.Rows.Count > 0)
+            {
+                edit.Enabled = true;
+                delete.Enabled = true;
+            }
+            else
+            {
+                edit.Enabled = false;
+                delete.Enabled = false;
+            }
         }
         private void CustomerInformationForm_Load(object sender, EventArgs e)
         {
@@ -103,34 +113,6 @@ namespace CustomerInfoApplication.Views.CustomerViews
             cust.AnnualRevenue = Convert.ToDecimal(customerGridRow.Cells[6].Value.ToString().Trim());
             return cust;
         }
-
-     /*   private void customerGrid_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex > -1 && e.ColumnIndex == 8)
-            {
-                CustomerUpdateForm updateForm = new();
-                updateForm.initializeForm(true, true, RowToObject(customerGrid.Rows[e.RowIndex]));
-                DialogResult dialog = updateForm.ShowDialog();
-                if (dialog == DialogResult.OK)
-                {
-                    UpdateCustomer(updateForm.getCustomerData());
-                }
-                else
-                {
-                    updateForm.Close();
-                }
-            }
-            if (e.RowIndex > -1 && e.ColumnIndex == 7)
-            {
-                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-                DialogResult dialog = MessageBox.Show("Are you sure you want to delete?", "Delete Record", buttons);
-                if (dialog == DialogResult.Yes)
-                {
-                    DeleteCustomer(Convert.ToInt32(customerGrid.Rows[e.RowIndex].Cells[0].Value.ToString()));
-                }
-
-            }
-        } */
 
         private void DeleteCustomer(int ID)
         {
@@ -253,11 +235,6 @@ namespace CustomerInfoApplication.Views.CustomerViews
             {
                 DeleteCustomer(Convert.ToInt32(customerGrid.CurrentRow.Cells[0].Value.ToString()));
             }
-        }
-
-        private void ribbonControl1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
