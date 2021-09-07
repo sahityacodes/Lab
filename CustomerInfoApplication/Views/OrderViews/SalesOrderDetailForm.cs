@@ -387,9 +387,9 @@ namespace CustomerInfoApplication.Views.OrderViews
             
             if (fileList.Items.Count > 0)
             {
+                fileList.Visible = true;
                 if (fileList.SelectedIndex > -1)
                 {
-                    fileList.Visible = true;
                     contextMenuStrip1.Visible = true;
                 }
             }
