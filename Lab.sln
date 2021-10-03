@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerInfoApplication", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityManagementLayer", "EntityManagementLayer\EntityManagementLayer.csproj", "{E12AD7F9-4816-4C6D-A681-435BE0493AE3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerApp", "CustomerApp\CustomerApp.csproj", "{3E9EE471-F68C-4F31-A45B-532FD1E5F966}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{E12AD7F9-4816-4C6D-A681-435BE0493AE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E12AD7F9-4816-4C6D-A681-435BE0493AE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E12AD7F9-4816-4C6D-A681-435BE0493AE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E9EE471-F68C-4F31-A45B-532FD1E5F966}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E9EE471-F68C-4F31-A45B-532FD1E5F966}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E9EE471-F68C-4F31-A45B-532FD1E5F966}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E9EE471-F68C-4F31-A45B-532FD1E5F966}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

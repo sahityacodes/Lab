@@ -1,0 +1,157 @@
+﻿@page "/fetchdata"
+@inject NavigationManager NavigationManager
+@inject IBLL<Customer> customerService
+@using System.Diagnostics;
+
+<h1>Customers</h1>
+@if (PopupVisible)
+{
+    <CustomerDetails customerID=@currentCustomerId isFormNew=@isFormNew />
+}
+@if (ErrorMessage.Length > 0)
+{
+    <p><em>@ErrorMessage</em></p>
+}
+else
+{
+    <div class="inline">
+        <button type="button" class="btn btn-primary" @onclick=@(() => SetCurrentCustomerId(currentCustomerId, true))>Add New Customer</button>
+        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+               aria-describedby="search-addon" @oninput="@((ui) => { SearchTextChanged((string)ui.Value);})" />
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th  @onclick=@(() => sortColumnID("0"))>ID <i class="@((sortID? "fa fa-sort-down" : "fa fa-sort-up"))"></i></th>
+                <th>FullName</th>
+                <th>Phone</th>
+                <th>VAT</th>
+                <th>Address</th>
+                <th>City</th>
+                <th  @onclick=@(() => sortColumnSalary("6"))>Annual Revenue <i class="@((sortSalary? "fa fa-sort-down" : "fa fa-sort-up"))"></i></th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Customer cust in customerList)
+            {
+                <tr>
+                    <td>@cust.Id</td>
+                    <td>@cust.Name</td>
+                    <td>@cust.Phone</td>
+                    <td>@cust.VAT</td>
+                    <td>@cust.Address</td>
+                    <td>@cust.City</td>
+                    <td>@cust.AnnualRevenue</td>
+                    <td class="inline">
+                        <button @onclick=@(() => SetCurrentCustomerId(cust.Id, false)) class="btn btn-default" aria-label="Left Align">
+                            <i class="fas fa-user-edit fa-md"></i>
+                        </button>
+
+                        <button class="btn btn-default" aria-label="Left Align">
+                            <i class="fas fa-trash fa-md"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Customer> customerList = new();
+    private bool PopupVisible { get; set; } = false;
+    private bool isFormNew = true;
+    private int currentCustomerId;
+    private bool sortID = true, sortSalary = true;
+
+    private string ErrorMessage = "";
+
+    private void SearchTextChanged(string text)
+    {
+        if (text.Length > 0)
+        {
+            try
+            {
+                customerList = customerService.GetOneByName(text);
+                Debug.WriteLine(text);
+            }
+            catch (Exception)
+            {
+                ErrorMessage = "Error while loading information.";
+            }
+        }
+        else
+        {
+            LoadTable();
+        }
+    }
+
+    private void sortColumnID(string colName)
+    {
+        if (sortID)
+        {
+            sortID = false;
+            FetchAscSortedResults(colName);
+        }
+        else if (!sortID)
+        {
+            sortID = true;
+            FetchDescSortedResults(colName);
+        }
+    }
+
+    private void sortColumnSalary(string colName)
+    {
+        if (sortSalary)
+        {
+            sortSalary = false;
+            FetchAscSortedResults(colName);
+        }
+        else if (!sortSalary)
+        {
+            sortSalary = true;
+            FetchDescSortedResults(colName);
+        }
+    }
+
+    private void FetchAscSortedResults(string colName)
+    {
+        customerList = customerService.SortByColumnAscending(colName);
+    }
+
+    private void FetchDescSortedResults(string colName)
+    {
+        customerList = customerService.SortByColumnDescending(colName);
+    }
+
+    private void ShowPopup(MouseEventArgs args)
+    {
+        PopupVisible = true;
+    }
+
+    protected override void OnInitialized()
+    {
+        LoadTable();
+    }
+
+    private void LoadTable()
+    {
+        try
+        {
+            customerList = customerService.GetAll();
+        }
+        catch (Exception)
+        {
+            ErrorMessage = "Error while loading information.";
+        }
+    }
+
+    void SetCurrentCustomerId(int id, bool formStatus)
+    {
+        PopupVisible = true;
+        currentCustomerId = id;
+        isFormNew = formStatus;
+    }
+}
+

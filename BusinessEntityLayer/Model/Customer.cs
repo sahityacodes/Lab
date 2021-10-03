@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BusinessEntityLayer.Model
 {
@@ -6,10 +6,13 @@ namespace BusinessEntityLayer.Model
     {
         public int Id
         { get; set; }
+
+        [Required(ErrorMessage = "Name is required")]
         public string Name
         { get; set; }
         public string Phone
         { get; set; }
+        [Required(ErrorMessage = "VAT is required")]
         public string VAT
         { get; set; }
         public string Address
