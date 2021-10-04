@@ -19,17 +19,22 @@ else
         <button type="button" class="btn btn-primary" @onclick=@(() => ShowEditCustomerForm(new Customer(), true))>Add New Customer</button>
         <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
                aria-describedby="search-addon" @oninput="@((ui) => { SearchTextChanged((string)ui.Value);})" />
+        <div class="show-mobile">
+            <label>Sort By:</label>
+            <button type="button" class="btn btn-mobile-primary" @onclick=@(() => sortColumnID())>ID</button>
+            <button type="button" class="btn btn-mobile-primary" @onclick=@(() => sortColumnSalary())>Annual Revenue</button>
+        </div>
     </div>
     <table class="table">
         <thead>
             <tr>
-                <th @onclick=@(() => sortColumnID("0"))>ID <i class="@((sortID? "fa fa-sort-up" : "fa fa-sort-down"))"></i></th>
+                <th @onclick=@(() => sortColumnID())>ID <i class="@((sortID? "fa fa-sort-up" : "fa fa-sort-down"))"></i></th>
                 <th>Full Name</th>
                 <th>Phone</th>
                 <th>VAT</th>
                 <th>Address</th>
                 <th>City</th>
-                <th @onclick=@(() => sortColumnSalary("6"))>Annual Revenue <i class="@((sortSalary? "fa fa-sort-up" : "fa fa-sort-down"))"></i></th>
+                <th @onclick=@(() => sortColumnSalary())>Annual Revenue <i class="@((sortSalary? "fa fa-sort-up" : "fa fa-sort-down"))"></i></th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -105,31 +110,31 @@ else
         }
     }
 
-    private void sortColumnID(string colName)
+    private void sortColumnID()
     {
         if (sortID)
         {
             sortID = false;
-            FetchAscSortedResults(colName);
+            FetchAscSortedResults("0");
         }
         else if (!sortID)
         {
             sortID = true;
-            FetchDescSortedResults(colName);
+            FetchDescSortedResults("0");
         }
     }
 
-    private void sortColumnSalary(string colName)
+    private void sortColumnSalary()
     {
         if (sortSalary)
         {
             sortSalary = false;
-            FetchAscSortedResults(colName);
+            FetchAscSortedResults("6");
         }
         else if (!sortSalary)
         {
             sortSalary = true;
-            FetchDescSortedResults(colName);
+            FetchDescSortedResults("6");
         }
     }
 
