@@ -166,26 +166,26 @@ else
         }
     }
 
-    void ShowEditCustomerForm(Customer cust, bool formStatus)
+    private void ShowEditCustomerForm(Customer cust, bool formStatus)
     {
         PopupVisible = true;
         currentCust = cust;
         isFormNew = formStatus;
     }
 
-    void OpenDeleteDialog(Customer cust)
+    private void OpenDeleteDialog(Customer cust)
     {
         currentCust = cust;
         showDeleteDialog = true;
     }
 
-    void CloseDeleteDialog()
+    private void CloseDeleteDialog()
     {
         showDeleteDialog = false;
         deleteErrorMessage = "";
     }
 
-    void DeleteCustomer()
+    private void DeleteCustomer()
     {
         try
         {
