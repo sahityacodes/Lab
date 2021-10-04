@@ -11,7 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 10px;
-    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+    background: linear-gradient(135deg, #bdd2e5, #325c81);
 }
 
 .container {
@@ -42,7 +42,7 @@ body {
             height: 3px;
             width: 30px;
             border-radius: 5px;
-            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+            background: linear-gradient(135deg, #bdd2e5, #325c81);
         }
 .container .closebtn {
     position: absolute;
@@ -65,11 +65,6 @@ form .user-details .input-box {
     width: calc(100% / 2 - 20px);
 }
 
-/*form .input-box span.details {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 5px;
-}*/
 .user-details .input-box input {
     height: 45px;
     width: 100%;
@@ -84,7 +79,10 @@ form .user-details .input-box {
 
     .user-details .input-box input:focus,
     .user-details .input-box input:valid {
-        border-color: #9b59b6;
+        border-color: #4681b4;
+    }
+    .user-details .input-box input:invalid {
+        border-color: red;
     }
 
 
@@ -111,7 +109,7 @@ form .category {
             width: 18px;
             border-radius: 50%;
             margin-right: 10px;
-            background: #d9d9d9;
+            background: #4681b4;
             border: 5px solid transparent;
             transition: all 0.3s ease;
         }
@@ -119,8 +117,8 @@ form .category {
 #dot-1:checked ~ .category label .one,
 #dot-2:checked ~ .category label .two,
 #dot-3:checked ~ .category label .three {
-    background: #9b59b6;
-    border-color: #d9d9d9;
+    background: #4681b4;
+    border-color: #4681b4;
 }
 
 form input[type="radio"] {
@@ -145,12 +143,11 @@ form .button {
         letter-spacing: 1px;
         cursor: pointer;
         transition: all 0.3s ease;
-        background: linear-gradient(135deg, #71b7e6, #9b59b6);
+        background: linear-gradient(135deg, #bdd2e5, #325c81);
     }
 
         form .button input:hover {
-            /* transform: scale(0.99); */
-            background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+            background: linear-gradient(-135deg, #bdd2e5, #325c81);
         }
 form .error-text {
     color: red;
@@ -159,7 +156,7 @@ form .error-text {
 }
 @media(max-width: 584px) {
     .container {
-        max-width: 100%;
+        max-width: 90%;
     }
 
     form .user-details .input-box {
@@ -201,7 +198,7 @@ form .error-text {
     position: fixed;
     top: 50%;
     left: 100%;
-    background-color: #f1c40f;
+    background-color: #4681b4;
     border-radius: 5px;
     text-align: center;
     z-index: 11; /* 1px higher than the overlay layer */
@@ -218,7 +215,7 @@ form .error-text {
     width: 280px;
     height: 50px;
     background-color: #ffffff;
-    border: 3px solid #9b59b6;
+    border: 3px solid #4681b4;
     border-radius: 5px;
     font-family: 'roboto', 'roboto', 'sans-serif';
     font-size: 16px;

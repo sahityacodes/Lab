@@ -1,48 +1,15 @@
 ﻿using BusinessEntityLayer.Model;
 using DALayer.Implementation;
-using EntityManagementLayer.Interfaces;
 using EntityManagementLayer.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace EntityManagementLayer.Implementation
 {
-    public class OrderTailsMapper : IEntityManager<SalesOrdersTail>
+    public class OrderTailsMapper
     {
-        public bool DeleteAll(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteOne(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<SalesOrdersTail> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<SalesOrdersTail> GetAllByKeyWord(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public SalesOrdersTail GetOne(int OrderID)
-        {
-            SqlParameter[] parameters =
-            {
-              new SqlParameter("@OrderID", SqlDbType.VarChar) { Value = OrderID},
-            };
-            SqlDB_DAL driver = new();
-            return driver.GetRecords(Constants.QUERY_SELECTORDERTAILS, parameters).Rows.Count > 0 ?
-                ConvertToObject(driver.GetRecords(Constants.QUERY_SELECTORDERTAILS, parameters))[0] : new SalesOrdersTail();
-        }
-
         private List<SalesOrdersTail> ConvertToObject(DataTable orderDataTable)
         {
             List<SalesOrdersTail> tailList = new();
@@ -77,9 +44,18 @@ namespace EntityManagementLayer.Implementation
             return tailList;
         }
 
-        public bool InsertOne(SalesOrdersTail obj)
+        public SalesOrdersTail GetOne(SqlDB_DAL driver, int OrderID)
         {
-            SqlDB_DAL driver = new();
+            SqlParameter[] parameters =
+            {
+              new SqlParameter("@OrderID", SqlDbType.VarChar) { Value = OrderID},
+            };
+            return driver.GetRecords(Constants.QUERY_SELECTORDERTAILS, parameters).Rows.Count > 0 ?
+                ConvertToObject(driver.GetRecords(Constants.QUERY_SELECTORDERTAILS, parameters))[0] : new SalesOrdersTail();
+        }
+
+        public bool InsertOne(SqlDB_DAL driver,SalesOrdersTail obj)
+        {
             OrderMapper mapper = new();
             bool status = false;
             try
@@ -97,7 +73,7 @@ namespace EntityManagementLayer.Implementation
                   new SqlParameter("@TotalCost", SqlDbType.Decimal) { Value = obj.TotalOrder},
             };
                 if (driver.WriteToTable(Constants.QUERY_INSERT_ORDERDETAILS, orderSummaryParam) && InsertFiles(driver, obj))
-                {   
+                {
                     driver.CommitTransaction();
                     status = true;
                 }
@@ -138,19 +114,9 @@ namespace EntityManagementLayer.Implementation
                 };
             return driver.WriteToTable(Constants.QUERY_DEL_FILES, rowParam);
         }
-        public List<SalesOrdersTail> SortByColumnAscending(string ColName)
-        {
-            throw new NotImplementedException();
-        }
 
-        public List<SalesOrdersTail> SortByColumnDescending(string ColName)
+        public bool UpdateOne(SqlDB_DAL driver, SalesOrdersTail obj)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool UpdateOne(SalesOrdersTail obj)
-        {
-            SqlDB_DAL driver = new();
             bool status = false;
             try
             {
@@ -183,16 +149,6 @@ namespace EntityManagementLayer.Implementation
                 driver.CloseDB();
             }
             return status;
-        }
-
-        public List<SalesOrdersTail> GetCustomerOrdersCost()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool CheckIfCustomerExists(int iD)
-        {
-            throw new NotImplementedException();
         }
     }
 }

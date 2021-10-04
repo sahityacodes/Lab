@@ -77,8 +77,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             try
             {
                 IBLL<SalesOrders> OrderBal = new OrderBAL();
-                IBLL<SalesOrdersTail> OrderTailsBal = new OrderTailsBAL();
-                if (OrderBal.InsertOne(orders) && OrderTailsBal.InsertOne(orders.OrderSummary))
+                if (OrderBal.InsertOne(orders))
                 {
                     DialogResult dialog = MessageBox.Show("Inserted Successfully");
                     ReloadGrid(OrderBal.GetAll());
@@ -95,8 +94,7 @@ namespace CustomerInfoApplication.Views.OrderViews
             try
             {
                 IBLL<SalesOrders> OrderBal = new OrderBAL();
-                IBLL<SalesOrdersTail> OrderTailsBal = new OrderTailsBAL();
-                if (OrderBal.UpdateOne(orders) && OrderTailsBal.UpdateOne(orders.OrderSummary))
+                if (OrderBal.UpdateOne(orders))
                 {
                     DialogResult dialog = MessageBox.Show("Updated Successfully");
                     ReloadGrid(OrderBal.GetAll());
@@ -145,13 +143,11 @@ namespace CustomerInfoApplication.Views.OrderViews
         private void edit_ItemClick(object sender, ItemClickEventArgs e)
         {
             IBLL<SalesOrders> OrderBal = new OrderBAL();
-            IBLL<SalesOrdersTail> OrderTailsBal = new OrderTailsBAL();
             IBLL<Customer> CustomerBal = new CustomerBAL();
             SalesOrderDetailForm detailsForm = new();
             int OrderID = Convert.ToInt32(orderGrid.CurrentRow.Cells[0].Value);
             SalesOrders originalOrder = OrderBal.GetOne(OrderID);
             originalOrder.CustomerName = CustomerBal.GetOne(originalOrder.CustomerID).Name;
-            originalOrder.OrderSummary = OrderTailsBal.GetOne(OrderID);
             detailsForm.InitializeFormValues(originalOrder);
             DialogResult dialog = detailsForm.ShowDialog();
             if (dialog == DialogResult.OK)
@@ -188,7 +184,6 @@ namespace CustomerInfoApplication.Views.OrderViews
             SalesOrders originalOrder = new();
             OpenFileDialog openFileDialog = new();
             IBLL<SalesOrders> OrderBal = new OrderBAL();
-            IBLL<SalesOrdersTail> OrderTailsBal = new OrderTailsBAL();
             DialogResult dialog = DialogResult.None;
             if (importDropdown.ItemIndex == 0)
             {

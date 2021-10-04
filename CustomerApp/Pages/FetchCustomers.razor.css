@@ -1,0 +1,188 @@
+﻿.title {
+    font-size: 25px;
+    font-weight: 500;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 15px;
+    background: linear-gradient(135deg, #a7c4dd, #325c81);
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #325c81 !important;
+    border-color: #325c81 !important;
+    margin-bottom: 2px;
+}
+
+    .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+        background-color: #5d92c0 !important;
+        border-color: #5d92c0 !important;
+        margin-bottom: 2px;
+    }
+
+table {
+    width: 100%;
+    border: thin;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 1em;
+}
+
+    table thead tr {
+        background-color: #325c81 !important;
+        text-align: left;
+        color: white;
+        font-size: medium;
+        border-start-end-radius: 1em;
+    }
+
+    table tbody tr:hover td {
+        background-color: #d3e1ee;
+    }
+
+tr:nth-of-type(odd) {
+    background: #fff;
+}
+
+th {
+    color: white;
+    font-weight: 100;
+}
+
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+    tr {
+        border: 1px solid #ccc;
+    }
+
+    td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+    }
+
+        td:before {
+            /* Now like a table header */
+            position: absolute;
+            /* Top/left values mimic padding */
+            top: 6px;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+
+        /*
+	Label the data
+	*/
+        td:nth-of-type(1):before {
+            content: "ID";
+        }
+
+        td:nth-of-type(2):before {
+            content: "Full Name";
+        }
+
+        td:nth-of-type(3):before {
+            content: "Phone";
+        }
+
+        td:nth-of-type(4):before {
+            content: "VAT";
+        }
+
+        td:nth-of-type(5):before {
+            content: "Address";
+        }
+
+        td:nth-of-type(6):before {
+            content: "City";
+        }
+
+        td:nth-of-type(7):before {
+            content: "Annual Revenue";
+        }
+
+        td:nth-of-type(8):before {
+            content: "Actions";
+        }
+}
+
+.fa-user-edit:hover {
+    color: #f58d38 !important;
+}
+
+.fa-trash:hover {
+    color: #ff0000 !important;
+}
+
+.container {
+    max-width: 400px;
+    width: 85%;
+    top: 50%;
+    left: 50%;
+    background-color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+    position: fixed;
+    z-index: 11;
+    transform: translate(-50%, -50%);
+}
+
+    .container p {
+        margin: 0;
+        font-weight: 500;
+        font-size: 1.2em;
+        text-align: center;
+        opacity: 0.7;
+    }
+
+        .container p strong {
+            color: #f58d38;
+        }
+
+    .container div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 15px 0 6px 0;
+    }
+
+        .container div .buttonCancel {
+            float: left;
+            margin-left: 20%
+        }
+
+        .container div .buttonDelete {
+            float: right;
+            margin-right: 20%
+        }
+
+    .container .error-text {
+        color: red;
+        text-align-last: center;
+    }
+
+.overlay-form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10;
+}

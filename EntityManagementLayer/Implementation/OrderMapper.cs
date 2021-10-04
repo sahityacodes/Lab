@@ -31,6 +31,7 @@ namespace EntityManagementLayer.Implementation
         public bool InsertOne(SalesOrders salesOrder)
         {
             SqlDB_DAL driver = new();
+            OrderTailsMapper tailMapper = new();
             bool status = false;
             try
             {
@@ -46,7 +47,7 @@ namespace EntityManagementLayer.Implementation
                 if (driver.WriteToTable(Constants.QUERY_INSERT_ORDERS, salesOrderParams))
                 {
                     salesOrder.OrderID = GetCurrentOrderID(driver);
-                    if (InsertRows(driver, salesOrder))
+                    if (InsertRows(driver, salesOrder) && tailMapper.InsertOne(driver,salesOrder.OrderSummary))
                     {
                         driver.CommitTransaction();
                         status = true;
@@ -68,6 +69,7 @@ namespace EntityManagementLayer.Implementation
         public bool UpdateOne(SalesOrders salesOrder)
         {
             SqlDB_DAL driver = new();
+            OrderTailsMapper tailMapper = new();
             bool status = false;
             try
             {
@@ -81,7 +83,8 @@ namespace EntityManagementLayer.Implementation
                   new SqlParameter("@Payment", SqlDbType.VarChar) { Value = salesOrder.Payment},
                   };
                 if (driver.WriteToTable(Constants.QUERY_UPDATE_ORDERS, salesOrderParams) &&
-                    DeleteAllRows(driver, salesOrder.OrderID) && InsertRows(driver, salesOrder))
+                    DeleteAllRows(driver, salesOrder.OrderID) && InsertRows(driver, salesOrder)
+                    && tailMapper.UpdateOne(driver, salesOrder.OrderSummary))
                     {
                         driver.CommitTransaction();
                     status = true;
@@ -164,7 +167,11 @@ namespace EntityManagementLayer.Implementation
               new SqlParameter("@OrderID", SqlDbType.VarChar) { Value = OrderID},
             };
             SqlDB_DAL driver = new();
-            return ConvertToObject(driver.GetRecords(Constants.QUERY_SELECTALLORDERS_ONE, parameters))[0];
+            OrderTailsMapper tailMapper = new();
+            SalesOrdersTail tails = tailMapper.GetOne(driver,OrderID);
+            SalesOrders order = ConvertToObject(driver.GetRecords(Constants.QUERY_SELECTALLORDERS_ONE, parameters))[0];
+            order.OrderSummary = tails;
+            return order;
 
         }
 

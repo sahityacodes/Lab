@@ -83,7 +83,6 @@
 
     protected override void OnInitialized()
     {
-        Console.WriteLine(isFormNew);
         if (!isFormNew)
         {
             try
@@ -109,7 +108,7 @@
                 {
                     showForm = false;
                     await ShowDialog();
-                    NavigationManager.NavigateTo("/fetchdata", forceLoad: true);
+                    NavigationManager.NavigateTo("/", forceLoad: true);
                 }
             }
             catch (SqlException sqlExc)
@@ -133,7 +132,7 @@
                 {
                     showForm = false;
                     await ShowDialog();
-                    NavigationManager.NavigateTo("/fetchdata", forceLoad: true);
+                    NavigationManager.NavigateTo("/", forceLoad: true);
                 }
             }
             catch (SqlException sqlExc)
@@ -155,7 +154,7 @@
     {
         try
         {
-            NavigationManager.NavigateTo("/fetchdata", forceLoad: true);
+            NavigationManager.NavigateTo("/", forceLoad: true);
         }
         catch (Exception)
         {

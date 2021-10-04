@@ -1,12 +1,13 @@
-﻿@page "/fetchdata"
+﻿@page "/"
 @inject NavigationManager NavigationManager
 @inject IBLL<Customer> customerService
 @using System.Diagnostics;
+@using System.Data.SqlClient;
 
 <h1>Customers</h1>
 @if (PopupVisible)
 {
-    <CustomerDetails customerID=@currentCustomerId isFormNew=@isFormNew />
+    <CustomerDetails customerID=@currentCust.Id isFormNew=@isFormNew />
 }
 @if (ErrorMessage.Length > 0)
 {
@@ -15,20 +16,20 @@
 else
 {
     <div class="inline">
-        <button type="button" class="btn btn-primary" @onclick=@(() => SetCurrentCustomerId(currentCustomerId, true))>Add New Customer</button>
+        <button type="button" class="btn btn-primary" @onclick=@(() => ShowEditCustomerForm(new Customer(), true))>Add New Customer</button>
         <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
                aria-describedby="search-addon" @oninput="@((ui) => { SearchTextChanged((string)ui.Value);})" />
     </div>
     <table class="table">
         <thead>
             <tr>
-                <th  @onclick=@(() => sortColumnID("0"))>ID <i class="@((sortID? "fa fa-sort-down" : "fa fa-sort-up"))"></i></th>
-                <th>FullName</th>
+                <th @onclick=@(() => sortColumnID("0"))>ID <i class="@((sortID? "fa fa-sort-up" : "fa fa-sort-down"))"></i></th>
+                <th>Full Name</th>
                 <th>Phone</th>
                 <th>VAT</th>
                 <th>Address</th>
                 <th>City</th>
-                <th  @onclick=@(() => sortColumnSalary("6"))>Annual Revenue <i class="@((sortSalary? "fa fa-sort-down" : "fa fa-sort-up"))"></i></th>
+                <th @onclick=@(() => sortColumnSalary("6"))>Annual Revenue <i class="@((sortSalary? "fa fa-sort-up" : "fa fa-sort-down"))"></i></th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -44,11 +45,11 @@ else
                     <td>@cust.City</td>
                     <td>@cust.AnnualRevenue</td>
                     <td class="inline">
-                        <button @onclick=@(() => SetCurrentCustomerId(cust.Id, false)) class="btn btn-default" aria-label="Left Align">
+                        <button @onclick=@(() => ShowEditCustomerForm(cust, false)) class="btn btn-default" aria-label="Left Align">
                             <i class="fas fa-user-edit fa-md"></i>
                         </button>
 
-                        <button class="btn btn-default" aria-label="Left Align">
+                        <button @onclick=@(() => OpenDeleteDialog(cust)) class="btn btn-default" aria-label="Left Align">
                             <i class="fas fa-trash fa-md"></i>
                         </button>
                     </td>
@@ -56,15 +57,32 @@ else
             }
         </tbody>
     </table>
+
+    @if (showDeleteDialog)
+    {
+        <div class="overlay-form"></div>
+        <div class="container">
+            <p>Delete the record for</p>
+            <p>ID: <strong>@currentCust.Id</strong> Name: <strong>@currentCust.Name</strong>?</p>
+            @if (deleteErrorMessage.Length > 0)
+            {
+                <div>
+                    <text class="error-text">@deleteErrorMessage</text>
+                </div>
+            }
+            <div>
+                <button type="button" class="btn btn-primary buttonCancel" @onclick=@(() => CloseDeleteDialog())>Cancel</button>
+                <button type="button" class="btn btn-primary buttonDelete" @onclick=@(() => DeleteCustomer())>Delete</button>
+            </div>
+        </div>
+    }
 }
 
 @code {
     private List<Customer> customerList = new();
-    private bool PopupVisible { get; set; } = false;
-    private bool isFormNew = true;
-    private int currentCustomerId;
-    private bool sortID = true, sortSalary = true;
-
+    private bool showDeleteDialog = false, PopupVisible = false, isFormNew = true, sortID = true, sortSalary = true;
+    private Customer currentCust = null;
+    private string deleteErrorMessage = "";
     private string ErrorMessage = "";
 
     private void SearchTextChanged(string text)
@@ -140,6 +158,7 @@ else
         try
         {
             customerList = customerService.GetAll();
+
         }
         catch (Exception)
         {
@@ -147,11 +166,46 @@ else
         }
     }
 
-    void SetCurrentCustomerId(int id, bool formStatus)
+    void ShowEditCustomerForm(Customer cust, bool formStatus)
     {
         PopupVisible = true;
-        currentCustomerId = id;
+        currentCust = cust;
         isFormNew = formStatus;
+    }
+
+    void OpenDeleteDialog(Customer cust)
+    {
+        currentCust = cust;
+        showDeleteDialog = true;
+    }
+
+    void CloseDeleteDialog()
+    {
+        showDeleteDialog = false;
+        deleteErrorMessage = "";
+    }
+
+    void DeleteCustomer()
+    {
+        try
+        {
+            customerService.DeleteAll(currentCust.Id);
+            showDeleteDialog = false;
+            LoadTable();
+        }
+        catch (SqlException sqlExc)
+        {
+            Debug.WriteLine(sqlExc.Message);
+            if (sqlExc.Number == 547)
+            {
+                deleteErrorMessage = "Customer has orders, please delete the orders first to proceed.";
+            }
+        }
+        catch (Exception io)
+        {
+            Debug.WriteLine("Error in btnDel_Click", io.Message);
+            deleteErrorMessage = "Error in the system.";
+        }
     }
 }
 
