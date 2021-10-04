@@ -21,8 +21,11 @@ else
                aria-describedby="search-addon" @oninput="@((ui) => { SearchTextChanged((string)ui.Value);})" />
         <div class="show-mobile">
             <label>Sort By:</label>
-            <button type="button" class="btn btn-mobile-primary" @onclick=@(() => sortColumnID())>ID</button>
-            <button type="button" class="btn btn-mobile-primary" @onclick=@(() => sortColumnSalary())>Annual Revenue</button>
+            <button type="button" class="btn btn-mobile-primary" @onclick=@(() => sortColumnID())>
+             ID<span class="@((sortID? "fa fa-sort-up" : "fa fa-sort-down"))"></span>
+            </button>
+            <button type="button" class="btn btn-mobile-primary" @onclick=@(() => sortColumnSalary())>Annual Revenue
+            <span class="@((sortSalary? "fa fa-sort-up" : "fa fa-sort-down"))"></span></button>
         </div>
     </div>
     <table class="table">
