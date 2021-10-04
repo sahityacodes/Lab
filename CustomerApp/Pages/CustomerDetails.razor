@@ -14,17 +14,17 @@
                     <DataAnnotationsValidator />
                     <div class="input-box">
                         <label>Name</label>
-                        <input @bind="customer.Name" placeholder="Enter your Name" maxlength="25" />
+                        <input type="text" @bind="customer.Name" placeholder="Enter your Name" maxlength="25" />
                         <ValidationMessage For="@(() => customer.Name)" />
                     </div>
                     <div class="input-box">
                         <label>Phone</label>
-                        <input @bind="customer.Phone" placeholder="Enter your Phone Number" maxlength="13" />
+                        <input type="number" @bind="customer.Phone" placeholder="Enter your Phone Number" maxlength="13" />
                         <ValidationMessage For="@(() => customer.Phone)" />
                     </div>
                     <div class="input-box">
                         <label>VAT</label>
-                        <input @bind="customer.VAT" placeholder="Enter your VAT" maxlength="16"/>
+                        <input type="text" @bind="customer.VAT" placeholder="Enter your VAT" maxlength="16"/>
                         <ValidationMessage For="@(() => customer.VAT)" />
                     </div>
                     <div class="input-box">
@@ -73,11 +73,7 @@
 
     private Customer customer = new Customer();
 
-    private bool submissionSuccess;
-
-    private bool showForm = true;
-
-    public RenderFragment successDialog { get; set; }
+    private bool submissionSuccess, showForm = true;
 
     private string dialogText = "Inserted Successfully";
 
