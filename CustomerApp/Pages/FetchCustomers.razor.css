@@ -8,6 +8,10 @@
     background: linear-gradient(135deg, #a7c4dd, #325c81);
 }
 
+.search {
+    width: 50%;
+    float: right;
+}
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
     background-color: #325c81 !important;
     border-color: #325c81 !important;
@@ -24,7 +28,6 @@ table {
     width: 100%;
     border: thin;
     border-collapse: collapse;
-    margin: 25px 0;
     font-size: 0.9em;
     font-family: sans-serif;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -32,9 +35,8 @@ table {
 }
 
     table thead tr {
-        background-color: #325c81 !important;
+        background-color: #d6d5d5 !important;
         text-align: left;
-        color: white;
         font-size: medium;
         border-start-end-radius: 1em;
     }
@@ -48,7 +50,7 @@ tr:nth-of-type(odd) {
 }
 
 th {
-    color: white;
+    color: black;
     font-weight: 100;
 }
 
@@ -56,98 +58,12 @@ th {
     display: none;
 }
 
-@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-    .show-mobile {
-        display: inline-block;
-        margin-top: 2px;
-        width: 100%;
-    }
-
-    .btn-mobile-primary, .btn-mobile-primary:hover, .btn-mobile-primary:active, .btn-mobile-primary:visited {
-        padding: 0.2em 0.1em !important;
-        background-color: #325c81 !important;
-        border-color: #325c81 !important;
-        margin-bottom: 2px;
-        color: white;
-    }
-
-        .btn-mobile-primary:hover, .btn-mobile-primary:active, .btn-mobile-primary:visited {
-            background-color: #f58d38 !important;
-            border-color: #f58d38 !important;
-            margin-bottom: 2px;
-            color: white;
-        }
-    table, thead, tbody, th, td, tr {
-        display: block;
-    }
-
-        thead tr {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-        }
-
-    tr {
-        border: 1px solid #ccc;
-    }
-
-    td {
-        border: none;
-        position: relative;
-        padding-left: 50%;
-    }
-
-        td:before {
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            width: 45%;
-            padding-right: 10px;
-            white-space: nowrap;
-        }
-
-        /*
-	Label the data
-	*/
-        td:nth-of-type(1):before {
-            content: "ID";
-        }
-
-        td:nth-of-type(2):before {
-            content: "Full Name";
-        }
-
-        td:nth-of-type(3):before {
-            content: "Phone";
-        }
-
-        td:nth-of-type(4):before {
-            content: "VAT";
-        }
-
-        td:nth-of-type(5):before {
-            content: "Address";
-        }
-
-        td:nth-of-type(6):before {
-            content: "City";
-        }
-
-        td:nth-of-type(7):before {
-            content: "Annual Revenue";
-        }
-
-        td:nth-of-type(8):before {
-            content: "Actions";
-        }
+.fa-user-edit {
+    color: #ffc729 !important;
 }
 
-.fa-user-edit:hover {
-    color: #f58d38 !important;
-}
-
-.fa-trash:hover {
-    color: #ff0000 !important;
+.fa-trash {
+    color: #f5564a !important;
 }
 
 .container-modal-form {
@@ -185,4 +101,132 @@ th {
     width: 100%;
     background-color: rgba(0,0,0,0.5);
     z-index: 10;
+}
+
+.table-wrapper {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+}
+
+.table-title {
+    padding-bottom: 15px;
+    background: #325c81;
+    color: #fff;
+    padding: 16px 30px;
+    margin: -20px -25px 10px;
+    border-radius: 3px 3px 0 0;
+}
+    .table-title h2 {
+        margin: 5px 0 0;
+        font-size: 24px;
+    }
+
+    .table-title .btn {
+        color: #fff;
+        font-size: 13px;
+        border: none;
+        border-radius: 2px;
+        border: none;
+        outline: none !important;
+        margin-left: 10px;
+    }
+.op{
+    background-color: #325c81;
+    border: none;
+}
+
+.btn-mobile {
+    display: none;
+}
+
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+    .table-wrapper {
+        display: block;
+    }
+    .table-title {
+        display: block;
+    }
+        .table-title h2{
+            font-size: 22px;
+        }
+        .table-title .btn{
+            font-size: 10px;
+            
+        }
+            .table-title .btn-mobile {
+            display: block !important;
+        }
+    .btn-success{
+        display: none;
+    }
+    .search {
+        width: 100%;
+    }
+    .show-mobile {
+        display: flex;
+        justify-content: center;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+    tr {
+        border: 1px solid #ccc;
+    }
+
+    td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+    }
+
+        td:before {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+
+        td:nth-of-type(1):before {
+            content: "ID";
+        }
+
+        td:nth-of-type(2):before {
+            content: "Full Name";
+        }
+
+        td:nth-of-type(3):before {
+            content: "Phone";
+        }
+
+        td:nth-of-type(4):before {
+            content: "VAT";
+        }
+
+        td:nth-of-type(5):before {
+            content: "Address";
+        }
+
+        td:nth-of-type(6):before {
+            content: "City";
+        }
+
+        td:nth-of-type(7):before {
+            content: "Annual Revenue";
+        }
+
+        td:nth-of-type(8):before {
+            content: "Actions";
+        }
 }
