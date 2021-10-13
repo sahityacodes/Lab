@@ -2,7 +2,7 @@
 {
     sealed class Constants
     {
-        public static string ConnectionString = @"Data Source=  np:\\.\pipe\LOCALDB#32464B48\tsql\query;Initial Catalog=CustomerDB;Integrated Security=True;";
+        public static string ConnectionString = @"Server= (localdb)\localdb;Database=CustomerDB;User Id=sa;Password=1234qwer;Integrated Security=false";
         public static string DBNull = ""; 
     }
 }

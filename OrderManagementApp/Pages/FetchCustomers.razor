@@ -18,13 +18,23 @@ else
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6 form-inline">
-                    <h2>Manage Customers</h2>
+                    <h2>Customers</h2>
                     <button type="button" class="btn btn-success btn-mobile" @onclick=@(() => ShowEditCustomerForm(new Customer(), true))><span class="fa fa-plus"></span></button>
                 </div>
                 <div class="col-sm-6">
                     <div class="modal-footer op">
                         <button type="button" class="btn btn-success" @onclick=@(() => ShowEditCustomerForm(new Customer(), true))><span class="fa fa-plus"></span> Add New Customer</button>
                         <input type="text" class="form-control search" placeholder="Search" @oninput="@((ui) => { SearchTextChanged((string)ui.Value);})" />
+
+                    </div>
+                    <div class="show-mobile">
+                        <button type="button" class="btn btn-warning  btn-sm" @onclick=@(() => sortColumnID())>
+                            ID<span class="@((sortID? "fa fa-sort-up" : "fa fa-sort-down"))"></span>
+                        </button>
+                        <button type="button" class="btn btn-warning  btn-sm" @onclick=@(() => sortColumnSalary())>
+                            Annual Revenue
+                            <span class="@((sortSalary? "fa fa-sort-up" : "fa fa-sort-down"))"></span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -33,7 +43,7 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th @onclick=@(() => sortColumnID())>ID <i class="@((sortID? "fa fa-sort" : "fa fa-sort-down"))"></i></th>
+                <th @onclick=@(() => sortColumnID())>ID <i class="@((sortID? "fa fa-sort-up" : "fa fa-sort-down"))"></i></th>
                 <th>Full Name</th>
                 <th>Phone</th>
                 <th>VAT</th>
